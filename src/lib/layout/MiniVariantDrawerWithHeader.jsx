@@ -15,7 +15,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from "react-router-dom";
+import classes from "./MiniVariantDrawerWithHeader.module.css";
 
 const drawerWidth = 240;
 
@@ -85,8 +86,10 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniVariantDrawerWithHeader(props) {
-
   const [open, setOpen] = React.useState(false);
+  const [selectedPath, setSelectedPath] = React.useState(window.location.href);
+
+  console.log("MiniVariantDrawerWithHeader rendered");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,7 +102,7 @@ export default function MiniVariantDrawerWithHeader(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      
+
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -119,10 +122,15 @@ export default function MiniVariantDrawerWithHeader(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      
+
       <Drawer variant="permanent" open={open}>
-        
-        <DrawerHeader style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+        <DrawerHeader
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
@@ -135,36 +143,40 @@ export default function MiniVariantDrawerWithHeader(props) {
         </DrawerHeader>
 
         <Divider />
-        
+
         <List>
-          {props.menuItems.map((menu,index) => (
-            <ListItem key={menu} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {props.menuItems.map((menu, index) => (
+            <Link key={menu} to={props.menuPaths[index]} >
+              <ListItem disablePadding sx={{ display: "block" }} >
+                <ListItemButton
+                  onClick = {() => setSelectedPath(props.menuPaths[index])}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    backgroundColor: selectedPath.includes(props.menuPaths[index])? "lightblue" :"white"
                   }}
                 >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
                     {props.menuIcons[index]}
-                </ListItemIcon>
-                <ListItemText primary={menu} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+                  </ListItemIcon>
+                  <ListItemText primary={menu} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
-        
+
       </Drawer>
-      
+
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
-        <Outlet/> 
+        <Outlet />
       </Box>
     </Box>
   );

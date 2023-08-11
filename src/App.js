@@ -26,6 +26,10 @@ function App() {
       ),
       children: [
         {
+          path: "/",
+          element: <p>Welcome to React_BasicLayeredService</p>
+        },
+        {
           path: menuPaths[0],
           element: menuPages[0],
           //loader: postsLoader,
@@ -45,7 +49,7 @@ function App() {
         },
         {
           path: "test",
-          element: <p>tetstrtewtewt</p>,
+          element: <p>test</p>,
         },
       ],
     },
