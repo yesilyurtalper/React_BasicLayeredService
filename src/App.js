@@ -4,9 +4,24 @@ import IngredientsIcon from "@mui/icons-material/Mail";
 import UserPosting from "./pages/UserPosting";
 import Ingredients from "./pages/Ingredients";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { AuthProvider } from "react-oidc-context";
 import React from "react";
+import "./constants.js";
+import CustomStatusBar from "./components/CustomStatusBar";
 
 function App() {
+  console.log(window.OIDC_CLIENT);
+
+  const oidcConfig = {
+    authority: window.OIDC_AUTHORITY,
+    client_id: window.OIDC_CLIENT,
+    redirect_uri: window.location.href,
+    onSigninCallback: (_user) => {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      window.user = _user;
+    },
+  };
+
   const menuPaths = ["posting", "ingredients"];
   const menuItems = ["User Posting", "Ingredients"];
   const menuIcons = [<PostingIcon />, <IngredientsIcon />];
@@ -17,17 +32,18 @@ function App() {
       path: "/",
       element: (
         <MiniVariantDrawerWithHeader
-          title="React_BasicLayeredService"
+          title={window.PROJECT_TITLE}
           menuPaths={menuPaths}
           menuItems={menuItems}
           menuIcons={menuIcons}
           menuPages={menuPages}
+          customStatusBar={<CustomStatusBar/>}
         />
       ),
       children: [
         {
           path: "/",
-          element: <p>Welcome to React_BasicLayeredService</p>
+          element: <p>Welcome to React_BasicLayeredService</p>,
         },
         {
           path: menuPaths[0],
@@ -57,7 +73,9 @@ function App() {
 
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider {...oidcConfig}>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </React.StrictMode>
   );
 }

@@ -11,3 +11,13 @@ a:active {
   color: #3f50b5;
 }
 
+.toolBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
