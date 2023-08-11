@@ -8,6 +8,7 @@ import { AuthProvider } from "react-oidc-context";
 import React from "react";
 import "./constants.js";
 import CustomStatusBar from "./components/CustomStatusBar";
+import WelcomePage from "./components/WelcomePage";
 
 function App() {
   console.log(window.OIDC_CLIENT);
@@ -19,6 +20,7 @@ function App() {
     onSigninCallback: (_user) => {
       window.history.replaceState({}, document.title, window.location.pathname);
       window.user = _user;
+      console.log(window.location.href);
     },
   };
 
@@ -43,7 +45,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <p>Welcome to React_BasicLayeredService</p>,
+          element: <WelcomePage/>
         },
         {
           path: menuPaths[0],

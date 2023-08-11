@@ -13,7 +13,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Outlet, Link } from "react-router-dom";
-import { useAuth, hasAuthParams } from "react-oidc-context";
+import { useAuth } from "react-oidc-context";
 import classes from "./MiniVariantDrawerWithHeader.module.css";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantDrawerHelpers";
 import { Button } from "@mui/material";
@@ -32,19 +32,6 @@ export default function MiniVariantDrawerWithHeader(props) {
   };
 
   console.log("MiniVariantDrawerWithHeader rendered");
-
-  /* React.useEffect(() => {
-    if (!auth.isAuthenticated) {
-      auth.signinRedirect();
-    }
-  }, [auth.isAuthenticated, auth.signinRedirect]); */
-
-  /* switch (auth.activeNavigator) {
-    case "signinSilent":
-      return <div>Signing you in...</div>;
-    case "signoutRedirect":
-      return <div>Signing you out...</div>;
-  } */
 
   return (
     <Box sx={{ display: "flex" }}>
