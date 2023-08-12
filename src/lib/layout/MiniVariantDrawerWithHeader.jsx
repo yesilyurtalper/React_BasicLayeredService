@@ -17,13 +17,17 @@ import { useAuth } from "react-oidc-context";
 import classes from "./MiniVariantDrawerWithHeader.module.css";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantDrawerHelpers";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
+import ErrorPage from "../../components/ErrorPage";
+import LoadingPage from "../../components/LoadingPage";
+import { useEffect } from "react";
 
 export default function MiniVariantDrawerWithHeader(props) {
   const [open, setOpen] = React.useState(false);
   const [selectedPath, setSelectedPath] = React.useState(window.location.href);
   const auth = useAuth();
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -33,7 +37,11 @@ export default function MiniVariantDrawerWithHeader(props) {
     setOpen(false);
   };
 
-  console.log("MiniVariantDrawerWithHeader rendered");
+  useEffect(() => {
+    const key = `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT}`;
+    const temp = sessionStorage.getItem(key);
+    if (temp) window.user = JSON.parse(temp);
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -165,7 +173,9 @@ export default function MiniVariantDrawerWithHeader(props) {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
-        <Outlet />
+        {props.error && <ErrorPage />}
+        {!props.error && navigation.state === "loading" && <LoadingPage/>}
+        {!props.error && navigation.state != "loading" && <Outlet />}
       </Box>
     </Box>
   );

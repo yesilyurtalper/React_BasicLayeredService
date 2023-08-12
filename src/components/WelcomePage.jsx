@@ -5,10 +5,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function WelcomePage(props) {
+  
   const auth = useAuth();
   const navigate = useNavigate();
-
-  console.log("customStatusBar rendered");
 
   if (auth.isLoading || auth.activeNavigator) {
     return (

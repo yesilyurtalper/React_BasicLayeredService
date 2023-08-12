@@ -1,7 +1,10 @@
 import MiniVariantDrawerWithHeader from "./lib/layout/MiniVariantDrawerWithHeader";
-import PostingIcon from "@mui/icons-material/MoveToInbox";
+import PostsIcon from "@mui/icons-material/MoveToInbox";
 import IngredientsIcon from "@mui/icons-material/Mail";
-import UserPosting from "./pages/UserPosting";
+import Posts from './pages/Posts';
+import { postsLoader } from "./loaders/postsLoader";
+import NewPost, { action as newPostAction } from './components/posts/NewPost';
+import PostDetails, { loader as postDetailsLoader } from './components/posts/PostDetails';
 import Ingredients from "./pages/Ingredients";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
@@ -11,7 +14,6 @@ import CustomStatusBar from "./components/CustomStatusBar";
 import WelcomePage from "./components/WelcomePage";
 
 function App() {
-  console.log(window.location.href);
 
   const oidcConfig = {
     authority: window.OIDC_AUTHORITY,
@@ -20,18 +22,19 @@ function App() {
     onSigninCallback: (_user) => {
       window.history.replaceState({}, document.title, window.location.pathname);
       window.location.href = window.location.href;
+      window.user = _user;
     },
   };
 
-  const menuPaths = ["posting", "ingredients"];
-  const menuItems = ["User Posting", "Ingredients"];
-  const menuIcons = [<PostingIcon />, <IngredientsIcon />];
-  const menuPages = [<UserPosting />, <Ingredients />];
+  const menuPaths = ["posts", "ingredients"];
+  const menuItems = ["User Posts", "Ingredients"];
+  const menuIcons = [<PostsIcon />, <IngredientsIcon />];
+  const menuPages = [<Posts />, <Ingredients />];
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
+      element: 
         <MiniVariantDrawerWithHeader
           title={window.PROJECT_TITLE}
           menuPaths={menuPaths}
@@ -39,8 +42,17 @@ function App() {
           menuIcons={menuIcons}
           menuPages={menuPages}
           customStatusBar={<CustomStatusBar />}
-        />
-      ),
+        />,
+      errorElement: 
+      <MiniVariantDrawerWithHeader
+          title={window.PROJECT_TITLE}
+          menuPaths={menuPaths}
+          menuItems={menuItems}
+          menuIcons={menuIcons}
+          menuPages={menuPages}
+          customStatusBar={<CustomStatusBar />}
+          error
+        />,
       children: [
         {
           path: "/",
@@ -49,10 +61,11 @@ function App() {
         {
           path: menuPaths[0],
           element: menuPages[0],
-          //loader: postsLoader,
+          //errorElement: <MenuError/>,
+          loader: postsLoader,
           children: [
-            { path: "newpost", element: <p>create-post</p> }, //, action: newPostAction },
-            { path: ":postId", element: <p>post-details</p> }, //, loader: postDetailsLoader }
+            { path: "newpost", element: <NewPost/>, action: newPostAction },
+            { path: ":postId", element: <PostDetails/> ,loader: postDetailsLoader }
           ],
         },
         {
