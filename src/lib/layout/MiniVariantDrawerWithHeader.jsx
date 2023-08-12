@@ -17,11 +17,13 @@ import { useAuth } from "react-oidc-context";
 import classes from "./MiniVariantDrawerWithHeader.module.css";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantDrawerHelpers";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function MiniVariantDrawerWithHeader(props) {
   const [open, setOpen] = React.useState(false);
   const [selectedPath, setSelectedPath] = React.useState(window.location.href);
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -80,14 +82,25 @@ export default function MiniVariantDrawerWithHeader(props) {
           )}
 
           {auth.isAuthenticated && (
-            <div style={{ display: "flex", flexDirection:"row", justifyContent:"space-between", gap: "10px", alignItems:"center" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: "10px",
+                alignItems: "center",
+              }}
+            >
               {props.customStatusBar}
               <Typography variant="h6" noWrap component="div">
                 {auth.user?.profile.name}{" "}
               </Typography>
               <Button
                 variant="contained"
-                onClick={() => {auth.removeUser();}}
+                onClick={() => {
+                  auth.removeUser();
+                  navigate("/");
+                }}
               >
                 Log out
               </Button>

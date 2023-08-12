@@ -11,7 +11,7 @@ import CustomStatusBar from "./components/CustomStatusBar";
 import WelcomePage from "./components/WelcomePage";
 
 function App() {
-  console.log(window.OIDC_CLIENT);
+  console.log(window.location.href);
 
   const oidcConfig = {
     authority: window.OIDC_AUTHORITY,
@@ -19,8 +19,7 @@ function App() {
     redirect_uri: window.location.href,
     onSigninCallback: (_user) => {
       window.history.replaceState({}, document.title, window.location.pathname);
-      window.user = _user;
-      console.log(window.location.href);
+      window.location.href = window.location.href;
     },
   };
 
@@ -39,13 +38,13 @@ function App() {
           menuItems={menuItems}
           menuIcons={menuIcons}
           menuPages={menuPages}
-          customStatusBar={<CustomStatusBar/>}
+          customStatusBar={<CustomStatusBar />}
         />
       ),
       children: [
         {
           path: "/",
-          element: <WelcomePage/>
+          element: <WelcomePage />,
         },
         {
           path: menuPaths[0],
