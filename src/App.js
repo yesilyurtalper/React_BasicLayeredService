@@ -87,8 +87,8 @@ function App() {
 
   const key = `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT}`;
   const temp = sessionStorage.getItem(key);
-  if (temp) window.user = JSON.parse(temp);
-  console.log("app rendered");
+  if (temp) 
+    window.user = JSON.parse(temp);
 
   return (
     <React.StrictMode>
