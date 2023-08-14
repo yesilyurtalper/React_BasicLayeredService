@@ -11,7 +11,7 @@ import { AuthProvider } from "react-oidc-context";
 import React from "react";
 import "./constants.js";
 import CustomStatusBar from "./components/CustomStatusBar";
-import WelcomePage from "./components/WelcomePage";
+import WelcomePage from "./pages/WelcomePage";
 
 function App() {
 
@@ -21,7 +21,7 @@ function App() {
     redirect_uri: window.location.href,
     onSigninCallback: (_user) => {
       window.history.replaceState({}, document.title, window.location.pathname);
-      window.location.href = window.location.href;
+      window.location.href = "/";
       window.user = _user;
     },
   };
@@ -84,6 +84,11 @@ function App() {
       ],
     },
   ]);
+
+  const key = `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT}`;
+  const temp = sessionStorage.getItem(key);
+  if (temp) window.user = JSON.parse(temp);
+  console.log("app rendered");
 
   return (
     <React.StrictMode>

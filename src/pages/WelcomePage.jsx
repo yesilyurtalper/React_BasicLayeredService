@@ -5,36 +5,30 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function WelcomePage(props) {
-  
   const auth = useAuth();
   const navigate = useNavigate();
 
   if (auth.isLoading || auth.activeNavigator) {
     return (
-      <Typography
-        variant="h6"
-        noWrap
-        component="div"
-        style={{ textAlign: "center", marginTop: "1rem" }}
-      >
-        Signing you in...
-      </Typography>
+      <main>
+        <p>
+          Signing you in...
+        </p>
+      </main>
     );
   }
 
   return (
-    <div
+    <main
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "2rem",
         alignItems: "center",
-        marginTop: "1rem",
       }}
     >
-      <Typography variant="h6" noWrap component="div">
+      <p>
         Welcome to React_BasicLayeredService
-      </Typography>
+      </p>
 
       {!auth.isAuthenticated && (
         <Button variant="contained" onClick={() => void auth.signinRedirect()}>
@@ -42,11 +36,11 @@ export default function WelcomePage(props) {
         </Button>
       )}
 
-      {/* {auth.isAuthenticated && (
-        <Typography variant="h6" noWrap component="div">
+      {auth.isAuthenticated && (
+        <p>
           {auth.user?.profile.name}{" "}
-        </Typography>
-      )} */}
+        </p>
+      )}
 
       {auth.isAuthenticated && (
         <Button
@@ -59,6 +53,6 @@ export default function WelcomePage(props) {
           Log out
         </Button>
       )}
-    </div>
+    </main>
   );
 }

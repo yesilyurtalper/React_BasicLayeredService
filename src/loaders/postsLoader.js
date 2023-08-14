@@ -1,4 +1,5 @@
 export async function postsLoader() {
+  console.log("postsloader called")
   /* fetch(
     `${window.API_BASE_URL}posts/author/${window.user.profile.preferred_username}`,
     {

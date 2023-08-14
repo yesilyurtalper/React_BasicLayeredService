@@ -1,8 +1,7 @@
-export default function Ingredients (props) {
-  
+export default function Ingredients(props) {
   return (
-    <p>
-        Ingredients
-    </p>
+    <main>
+      <p>Ingredients</p>
+    </main>
   );
-};
+}

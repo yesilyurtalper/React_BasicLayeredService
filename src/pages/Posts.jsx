@@ -9,7 +9,7 @@ export default function Posts() {
   const auth = useAuth();
 
   return (
-    <>
+    <main>
       {posts.length > 0 && (
         <ul className={classes.posts}>
           {posts.map((post) => (
@@ -28,6 +28,6 @@ export default function Posts() {
           <p>Start adding some!</p>
         </div>
       )}
-    </>
+    </main>
   );
 }

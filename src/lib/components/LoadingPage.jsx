@@ -8,18 +8,10 @@ export default function LoadingPage(props) {
   const error = useRouteError();
   
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "2rem",
-        alignItems: "center",
-        marginTop: "1rem",
-      }}
-    >
-      <Typography variant="h6" noWrap component="div">
+    <main>
+      <p>
         Loading...
-      </Typography>
-    </div>
+      </p>
+    </main>
   );
 }

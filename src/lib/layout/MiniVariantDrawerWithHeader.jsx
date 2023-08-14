@@ -18,8 +18,8 @@ import classes from "./MiniVariantDrawerWithHeader.module.css";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantDrawerHelpers";
 import { Button } from "@mui/material";
 import { useNavigate, useNavigation } from "react-router-dom";
-import ErrorPage from "../../components/ErrorPage";
-import LoadingPage from "../../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
+import LoadingPage from "../components/LoadingPage";
 import { useEffect } from "react";
 
 export default function MiniVariantDrawerWithHeader(props) {
@@ -36,12 +36,6 @@ export default function MiniVariantDrawerWithHeader(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    const key = `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT}`;
-    const temp = sessionStorage.getItem(key);
-    if (temp) window.user = JSON.parse(temp);
-  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -174,7 +168,7 @@ export default function MiniVariantDrawerWithHeader(props) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
         {props.error && <ErrorPage />}
-        {!props.error && navigation.state === "loading" && <LoadingPage/>}
+        {!props.error && navigation.state === "loading" && <LoadingPage />}
         {!props.error && navigation.state != "loading" && <Outlet />}
       </Box>
     </Box>
