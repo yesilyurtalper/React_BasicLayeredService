@@ -146,7 +146,7 @@ export default function MiniVariantDrawerWithHeader(props) {
                     backgroundColor: selectedPath.includes(
                       props.menuPaths[index]
                     )
-                      ? "lightblue"
+                      ? "#dae4ef"
                       : "white",
                   }}
                 >

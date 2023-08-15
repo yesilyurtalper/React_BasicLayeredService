@@ -10,7 +10,7 @@ export async function postsLoader() {
     }
   );
 
-  if (!response.status.ok)
+  if (!response.ok)
     throw Error(`Http error occured: statuscode = ${response.status}`);
 
   const result = await response.json();

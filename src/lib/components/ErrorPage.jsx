@@ -15,6 +15,14 @@ export default function ErrorPage(props) {
       <p>
         {`Error: ${errorMessage}`}
       </p>
+      { errorMessage.includes("401")  && 
+        <p>
+        {`You are unauthorized, try log out and log in again`}
+      </p>}
+      { errorMessage.includes("403")  && 
+        <p>
+        {`You are forbidden for this action!`}
+      </p>}
     </main>
   );
 }
