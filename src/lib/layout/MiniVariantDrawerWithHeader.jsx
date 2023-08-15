@@ -101,6 +101,7 @@ export default function MiniVariantDrawerWithHeader(props) {
                 variant="contained"
                 onClick={() => {
                   auth.removeUser();
+                  window.user = null;
                   navigate("/");
                 }}
               >
@@ -168,8 +169,8 @@ export default function MiniVariantDrawerWithHeader(props) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
         {props.error && <ErrorPage />}
-        {!props.error && navigation.state === "loading" && <LoadingPage />}
-        {!props.error && navigation.state != "loading" && <Outlet />}
+        {(auth.isLoading || navigation.state === "loading") && <LoadingPage />}
+        {!props.error && navigation.state != "loading" &&  !auth.isLoading && <Outlet/>}
       </Box>
     </Box>
   );

@@ -11,7 +11,7 @@ import { AuthProvider } from "react-oidc-context";
 import React from "react";
 import "./constants.js";
 import CustomStatusBar from "./components/CustomStatusBar";
-import WelcomePage from "./pages/WelcomePage";
+import HomePage from "./pages/HomePage";
 
 function App() {
 
@@ -56,7 +56,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <WelcomePage />,
+          element: <HomePage />,
         },
         {
           path: menuPaths[0],

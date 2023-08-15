@@ -1,22 +1,11 @@
 import { useAuth } from "react-oidc-context";
 import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function WelcomePage(props) {
+export default function HomePage(props) {
   const auth = useAuth();
-  const navigate = useNavigate();
 
-  if (auth.isLoading || auth.activeNavigator) {
-    return (
-      <main>
-        <p>
-          Signing you in...
-        </p>
-      </main>
-    );
-  }
+  console.log("WelcomePage rendered");
 
   return (
     <main
@@ -26,9 +15,9 @@ export default function WelcomePage(props) {
         alignItems: "center",
       }}
     >
-      <p>
-        Welcome to React_BasicLayeredService
-      </p>
+      <p>Welcome to React_BasicLayeredService</p>
+
+      {!auth.isAuthenticated && <p>Please log in to continue</p>}
 
       {!auth.isAuthenticated && (
         <Button variant="contained" onClick={() => void auth.signinRedirect()}>
@@ -36,18 +25,14 @@ export default function WelcomePage(props) {
         </Button>
       )}
 
-      {auth.isAuthenticated && (
-        <p>
-          {auth.user?.profile.name}{" "}
-        </p>
-      )}
+      {auth.isAuthenticated && <p>{auth.user?.profile.name} </p>}
 
       {auth.isAuthenticated && (
         <Button
           variant="contained"
           onClick={() => {
             auth.removeUser();
-            navigate("/");
+            window.user = null;
           }}
         >
           Log out

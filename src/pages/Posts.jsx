@@ -1,12 +1,19 @@
 import { useLoaderData} from "react-router-dom";
-
 import Post from "../components/posts/Post";
 import classes from "./Posts.module.css";
 import { useAuth } from "react-oidc-context";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function Posts() {
-  const posts = useLoaderData();
+export default function Ingredients(props) {
   const auth = useAuth();
+  const navigate = useNavigate();
+  const posts = useLoaderData();
+
+  useEffect(()=>{
+    if (!auth.isAuthenticated) 
+      navigate("/");
+  },[auth.isAuthenticated, navigate]);
 
   return (
     <main>

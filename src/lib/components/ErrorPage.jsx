@@ -1,16 +1,19 @@
-import { useAuth } from "react-oidc-context";
-import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import React from "react";
-import { useRouteError } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 
 export default function ErrorPage(props) {
+
   const error = useRouteError();
+  let errorMessage = error.message;
+  console.log(JSON.stringify(error));
+
+  if(isRouteErrorResponse(error))
+    errorMessage = `${error.statusText} : ${error.data}`;
   
   return (
     <main>
       <p>
-        {`Error: ${error.message}`}
+        {`Error: ${errorMessage}`}
       </p>
     </main>
   );
