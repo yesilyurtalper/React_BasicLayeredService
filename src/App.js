@@ -1,4 +1,4 @@
-import MiniVariantDrawerWithHeader from "./lib/layout/MiniVariantDrawerWithHeader";
+import MiniVariantDrawerWithHeader from "./lib/layouts/MiniVariantLeftDrawer";
 import PostsIcon from "@mui/icons-material/MoveToInbox";
 import IngredientsIcon from "@mui/icons-material/Mail";
 import Posts from './pages/Posts';
@@ -41,7 +41,7 @@ function App() {
           menuItems={menuItems}
           menuIcons={menuIcons}
           menuPages={menuPages}
-          customStatusBar={<CustomStatusBar />}
+          //customStatusBar={<CustomStatusBar />}
         />,
       errorElement: 
       <MiniVariantDrawerWithHeader
@@ -50,7 +50,7 @@ function App() {
           menuItems={menuItems}
           menuIcons={menuIcons}
           menuPages={menuPages}
-          customStatusBar={<CustomStatusBar />}
+          //customStatusBar={<CustomStatusBar />}
           error
         />,
       children: [

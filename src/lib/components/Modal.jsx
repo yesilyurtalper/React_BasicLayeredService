@@ -12,7 +12,7 @@ function Modal({ children }) {
   return (
     <>
       <div className={classes.backdrop} onClick={closeHandler} />
-      <dialog open className={classes.modal}>
+      <dialog open className={classes.overlay}>
         {children}
       </dialog>
     </>

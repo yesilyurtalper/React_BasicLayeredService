@@ -14,8 +14,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import classes from "./MiniVariantDrawerWithHeader.module.css";
-import { Drawer, DrawerHeader, AppBar } from "./MiniVariantDrawerHelpers";
+import classes from "./MiniVariantLeftDrawer.module.css";
+import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
 import { Button } from "@mui/material";
 import { useNavigate, useNavigation } from "react-router-dom";
 import ErrorPage from "../components/ErrorPage";
@@ -30,18 +30,14 @@ export default function MiniVariantDrawerWithHeader(props) {
   const navigation = useNavigation();
 
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen((prev) => !prev);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={false}>
         <Toolbar
           style={{
             display: "flex",
@@ -63,7 +59,6 @@ export default function MiniVariantDrawerWithHeader(props) {
               edge="start"
               sx={{
                 marginRight: 5,
-                ...(open && { display: "none" }),
               }}
             >
               <MenuIcon />
@@ -120,49 +115,55 @@ export default function MiniVariantDrawerWithHeader(props) {
             justifyContent: "space-between",
           }}
         >
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
         </DrawerHeader>
 
         <Divider />
 
         <List>
           {props.menuItems.map((menu, index) => (
-            <Link key={menu} to={props.menuPaths[index]}>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  onClick={() => setSelectedPath(props.menuPaths[index])}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                    backgroundColor: selectedPath.includes(
-                      props.menuPaths[index]
-                    )
-                      ? "#dae4ef"
-                      : "white",
-                  }}
-                >
-                  <ListItemIcon
+            <div
+              key={menu}
+              style={{
+                borderRadius: "10px",
+                overflow: "hidden",
+                margin: "5px",
+                backgroundColor: selectedPath.includes(props.menuPaths[index])
+                  ? "#dae4ef"
+                  : "white",
+              }}
+            >
+              <Link key={menu} to={props.menuPaths[index]}>
+                <ListItem disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    onClick={() => setSelectedPath(props.menuPaths[index])}
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      backgroundColor: selectedPath.includes(
+                        props.menuPaths[index]
+                      )
+                        ? "#dae4ef"
+                        : "white",
                     }}
                   >
-                    {props.menuIcons[index]}
-                  </ListItemIcon>
-                  <ListItemText primary={menu} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {props.menuIcons[index]}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={menu}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </div>
           ))}
         </List>
       </Drawer>
@@ -170,7 +171,9 @@ export default function MiniVariantDrawerWithHeader(props) {
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
         {props.error && <ErrorPage />}
         {(auth.isLoading || navigation.state === "loading") && <LoadingPage />}
-        {!props.error && navigation.state != "loading" &&  !auth.isLoading && <Outlet/>}
+        {!props.error && navigation.state != "loading" && !auth.isLoading && (
+          <Outlet />
+        )}
       </Box>
     </Box>
   );
