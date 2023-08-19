@@ -2,7 +2,7 @@ import MiniVariantDrawerWithHeader from "./lib/layouts/MiniVariantLeftDrawer";
 import PostsIcon from "@mui/icons-material/MoveToInbox";
 import IngredientsIcon from "@mui/icons-material/Mail";
 import Posts from "./pages/Posts";
-import { postsLoader } from "./loaders/postsLoader";
+import { postListLoader } from "./loaders/postListLoader";
 import { postDetailsLoader } from "./loaders/postDetailsLoader";
 import NewPost, { action as newPostAction } from "./components/posts/NewPost";
 import PostDetails from "./components/posts/PostDetails";
@@ -62,7 +62,7 @@ function App() {
           path: menuPaths[0],
           element: menuPages[0],
           children: [
-            {index: true, element: <PostList />, loader: postsLoader },
+            {index: true, element: <PostList />, loader: postListLoader },
             {path: ":id", element: <PostDetails />, loader: postDetailsLoader },
             { path: "new", element: <NewPost />, action: newPostAction },
           ],
