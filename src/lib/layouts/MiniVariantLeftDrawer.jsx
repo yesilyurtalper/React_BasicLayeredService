@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -17,7 +16,7 @@ import { useAuth } from "react-oidc-context";
 import classes from "./MiniVariantLeftDrawer.module.css";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
 import { Button } from "@mui/material";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ErrorPage from "../components/ErrorPage";
 import LoadingPage from "../components/LoadingPage";
 import { useEffect } from "react";
@@ -27,7 +26,6 @@ export default function MiniVariantDrawerWithHeader(props) {
   const [selectedPath, setSelectedPath] = React.useState(window.location.href);
   const auth = useAuth();
   const navigate = useNavigate();
-  const navigation = useNavigation();
 
   const handleDrawerOpen = () => {
     setOpen((prev) => !prev);
@@ -170,8 +168,8 @@ export default function MiniVariantDrawerWithHeader(props) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
         {props.error && <ErrorPage />}
-        {(auth.isLoading || navigation.state === "loading") && <LoadingPage />}
-        {!props.error && navigation.state != "loading" && !auth.isLoading && (
+        {auth.isLoading && <LoadingPage />}
+        {!props.error && !auth.isLoading && (
           <Outlet />
         )}
       </Box>

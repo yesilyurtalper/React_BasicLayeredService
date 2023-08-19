@@ -6,7 +6,7 @@ function Modal({ children }) {
   const navigate = useNavigate();
 
   function closeHandler() {
-    navigate('..');
+    navigate('..',{relative:"path"});
   }
 
   return (

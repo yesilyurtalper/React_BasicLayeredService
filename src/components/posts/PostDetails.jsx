@@ -1,10 +1,12 @@
-import { useLoaderData, Link } from 'react-router-dom';
+import { useLoaderData, Link } from "react-router-dom";
+import { TextField } from "@mui/material";
+import Modal from "../../lib/components/Modal";
+import classes from "./PostDetails.module.css";
 
-import Modal from '../../lib/components/Modal';
-import classes from './PostDetails.module.css';
-
-function PostDetails() {
+export default function PostDetails() {
   const post = useLoaderData();
+
+  console.log(post);
 
   if (!post) {
     return (
@@ -13,7 +15,7 @@ function PostDetails() {
           <h1>Could not find post</h1>
           <p>Unfortunately, the requested post could not be found.</p>
           <p>
-            <Link to=".." className={classes.btn}>
+            <Link to=".." relative="path" className={classes.btn}>
               Okay
             </Link>
           </p>
@@ -21,20 +23,54 @@ function PostDetails() {
       </Modal>
     );
   }
+
   return (
     <Modal>
       <main className={classes.details}>
-        <p className={classes.author}>{post.author}</p>
-        <p className={classes.text}>{post.body}</p>
+        <TextField
+          label="Post Id"
+          value={post.id}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="standard"
+        />
+        <TextField
+          label="Author"
+          value={post.author}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="standard"
+        />
+        <TextField
+          label="Title"
+          value={post.title}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="standard"
+        />
+        <TextField
+          label="Body"
+          value={post.description}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="standard"
+          multiline
+          maxRows={5}
+        />
+        <TextField
+          label="Date"
+          value={post.dateCreated}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="standard"
+          type="datetime"
+        />
       </main>
     </Modal>
   );
-}
-
-export default PostDetails;
-
-export async function loader({params}) {
-  const response = await fetch('http://localhost:8080/posts/' + params.postId);
-  const resData = await response.json();
-  return resData.post;
 }

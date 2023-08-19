@@ -5,7 +5,7 @@ import React from "react";
 export default function HomePage(props) {
   const auth = useAuth();
 
-  console.log("WelcomePage rendered");
+  console.log("HomePage rendered");
 
   return (
     <main
