@@ -1,10 +1,16 @@
-import { useRouteLoaderData, Link } from "react-router-dom";
+import { useRouteLoaderData, useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../../lib/components/Modal";
 import classes from "./PostDetails.module.css";
+import { Button } from "@mui/material";
 
 export default function PostDetails() {
   const post = useRouteLoaderData("postdetails");
+  const navigate = useNavigate();
+
+  function closeHandler() {
+    navigate("..", { relative: "path" });
+  }
 
   console.log(post);
 
@@ -14,11 +20,6 @@ export default function PostDetails() {
         <main className={classes.details}>
           <h1>Could not find post</h1>
           <p>Unfortunately, the requested post could not be found.</p>
-          <p>
-            <Link to=".." relative="path" className={classes.btn}>
-              Okay
-            </Link>
-          </p>
         </main>
       </Modal>
     );
@@ -35,6 +36,7 @@ export default function PostDetails() {
           }}
           variant="standard"
         />
+
         <TextField
           label="Author"
           value={post.author}
@@ -43,6 +45,7 @@ export default function PostDetails() {
           }}
           variant="standard"
         />
+
         <TextField
           label="Title"
           value={post.title}
@@ -51,6 +54,7 @@ export default function PostDetails() {
           }}
           variant="standard"
         />
+
         <TextField
           label="Body"
           value={post.description}
@@ -59,10 +63,12 @@ export default function PostDetails() {
           }}
           variant="standard"
           multiline
+          rows={3}
           maxRows={5}
         />
+
         <TextField
-          label="Date"
+          label="Created Date"
           value={post.dateCreated}
           InputProps={{
             readOnly: true,
@@ -70,6 +76,22 @@ export default function PostDetails() {
           variant="standard"
           type="datetime"
         />
+
+        <TextField
+          label="Updated Date"
+          value={post.dateModified}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="standard"
+          type="datetime"
+        />
+
+        <p className={classes.actions}>
+          <Button onClick={closeHandler} variant="contained">
+            Close
+          </Button>
+        </p>
       </main>
     </Modal>
   );
