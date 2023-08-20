@@ -1,4 +1,4 @@
-export async function postListLoader() {
+export default async function postListLoader() {
   if (window.user == null) return [];
   const response = await fetch(
     `${window.API_BASE_URL}posts/author/${window.user.profile.preferred_username}`,

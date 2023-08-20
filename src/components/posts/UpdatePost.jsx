@@ -1,10 +1,10 @@
-import { useRouteLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../../lib/components/Modal";
 import classes from "./PostDetails.module.css";
 
-export default function PostDetails() {
-  const post = useRouteLoaderData("postdetails");
+export default function UpdatePost() {
+  const post = useLoaderData();
 
   console.log(post);
 

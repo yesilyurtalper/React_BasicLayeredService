@@ -1,7 +1,7 @@
-export default async function postDetailsLoader({ params }) {
-  if (window.user == null) return {};
+export default async function eventListLoader() {
+  if (window.user == null) return [];
   const response = await fetch(
-    `${window.API_BASE_URL}posts/id/${params.id}`,
+    `${window.API_BASE_URL}events/author/${window.user.profile.preferred_username}`,
     {
       headers: {
         "Content-Type": "application/json",

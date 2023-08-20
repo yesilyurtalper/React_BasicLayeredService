@@ -1,7 +1,7 @@
-export default async function postDetailsLoader({ params }) {
+export default async function eventDetailsLoader({ params }) {
   if (window.user == null) return {};
   const response = await fetch(
-    `${window.API_BASE_URL}posts/id/${params.id}`,
+    `${window.API_BASE_URL}events/id/${params.id}`,
     {
       headers: {
         "Content-Type": "application/json",

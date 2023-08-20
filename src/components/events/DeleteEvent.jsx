@@ -1,19 +1,19 @@
-import { useRouteLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../../lib/components/Modal";
-import classes from "./PostDetails.module.css";
+import classes from "./EventDetails.module.css";
 
-export default function PostDetails() {
-  const post = useRouteLoaderData("postdetails");
+export default function DeleteEvent() {
+  const event = useLoaderData();
 
-  console.log(post);
+  console.log(event);
 
-  if (!post) {
+  if (!event) {
     return (
       <Modal>
         <main className={classes.details}>
-          <h1>Could not find post</h1>
-          <p>Unfortunately, the requested post could not be found.</p>
+          <h1>Could not find event</h1>
+          <p>Unfortunately, the requested event could not be found.</p>
           <p>
             <Link to=".." relative="path" className={classes.btn}>
               Okay
@@ -28,8 +28,8 @@ export default function PostDetails() {
     <Modal>
       <main className={classes.details}>
         <TextField
-          label="Post Id"
-          value={post.id}
+          label="Event Id"
+          value={event.id}
           InputProps={{
             readOnly: true,
           }}
@@ -37,7 +37,7 @@ export default function PostDetails() {
         />
         <TextField
           label="Author"
-          value={post.author}
+          value={event.author}
           InputProps={{
             readOnly: true,
           }}
@@ -45,7 +45,7 @@ export default function PostDetails() {
         />
         <TextField
           label="Title"
-          value={post.title}
+          value={event.title}
           InputProps={{
             readOnly: true,
           }}
@@ -53,7 +53,7 @@ export default function PostDetails() {
         />
         <TextField
           label="Body"
-          value={post.description}
+          value={event.description}
           InputProps={{
             readOnly: true,
           }}
@@ -63,7 +63,7 @@ export default function PostDetails() {
         />
         <TextField
           label="Date"
-          value={post.dateCreated}
+          value={event.dateCreated}
           InputProps={{
             readOnly: true,
           }}

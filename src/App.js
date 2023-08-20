@@ -1,19 +1,46 @@
-import MiniVariantDrawerWithHeader from "./lib/layouts/MiniVariantLeftDrawer";
-import PostsIcon from "@mui/icons-material/MoveToInbox";
-import IngredientsIcon from "@mui/icons-material/Mail";
-import Posts from "./pages/Posts";
-import { postListLoader } from "./loaders/postListLoader";
-import { postDetailsLoader } from "./loaders/postDetailsLoader";
-import NewPost, { action as newPostAction } from "./components/posts/NewPost";
-import PostDetails from "./components/posts/PostDetails";
-import Ingredients from "./pages/Ingredients";
+import "./constants.js";
+import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
-import React from "react";
-import "./constants.js";
+
 import CustomStatusBar from "./components/CustomStatusBar";
 import HomePage from "./pages/HomePage";
+import MiniVariantDrawerWithHeader from "./lib/layouts/MiniVariantLeftDrawer";
+
+//menu icons
+import PostsIcon from "@mui/icons-material/PostAdd.js";
+import EventsIcon from "@mui/icons-material/Event.js";
+import IngredientsIcon from "@mui/icons-material/Settings.js";
+
+//route pages
+import Posts from "./pages/Posts";
 import PostList from "./components/posts/PostList";
+import CreatePost from "./components/posts/CreatePost.jsx";
+import PostDetails from "./components/posts/PostDetails";
+import UpdatePost from "./components/posts/UpdatePost.jsx"; 
+import DeletePost from "./components/posts/DeletePost";
+
+import Events from "./pages/Events";
+import EventList from "./components/events/EventList";
+import CreateEvent from "./components/events/CreateEvent.jsx";
+import EventDetails from "./components/events/EventDetails";
+import UpdateEvent from "./components/events/UpdateEvent.jsx"; 
+import DeleteEvent from "./components/events/DeleteEvent";
+
+import Ingredients from "./pages/Ingredients";
+
+//loaders and actions
+import postListLoader from "./loaders/postListLoader";
+import postDetailsLoader from "./loaders/postDetailsLoader";
+import eventListLoader from "./loaders/eventListLoader";
+import eventDetailsLoader from "./loaders/eventDetailsLoader";
+
+import createPostAction from "./actions/createPostAction";
+import updatePostAction from "./actions/updatePostAction";
+import deletePostAction from "./actions/deletePostAction";
+import createEventAction from "./actions/createEventAction";
+import updateEventAction from "./actions/updateEventAction";
+import deleteEventAction from "./actions/deleteEventAction";
 
 function App() {
   const oidcConfig = {
@@ -27,10 +54,10 @@ function App() {
     },
   };
 
-  const menuPaths = ["posts", "ingredients"];
-  const menuItems = ["User Posts", "Ingredients"];
-  const menuIcons = [<PostsIcon />, <IngredientsIcon />];
-  const menuPages = [<Posts />, <Ingredients />];
+  const menuPaths = ["posts", "events", "ingredients"];
+  const menuItems = ["User Posts", "Technology Events", "Ingredients"];
+  const menuIcons = [<PostsIcon />, <EventsIcon />, <IngredientsIcon/>];
+  const menuPages = [<Posts />, <Events />, <Ingredients/>];
 
   const router = createBrowserRouter([
     {
@@ -56,26 +83,54 @@ function App() {
           error
         />
       ),
+
       children: [
         { index: true, element: <HomePage /> },
+
         {
-          path: menuPaths[0],
+          path: menuPaths[0],//posts
           element: menuPages[0],
           children: [
             {index: true, element: <PostList />, loader: postListLoader },
-            {path: ":id", element: <PostDetails />, loader: postDetailsLoader },
-            { path: "new", element: <NewPost />, action: newPostAction },
+            {path: "new", element: <CreatePost />, action: createPostAction },
+            {
+              path: ":id",  
+              id: "postdetails",
+              loader: postDetailsLoader,
+              children: [
+                {index: true, element: <PostDetails/> },
+                {path: "edit", element: <UpdatePost/>, action: updatePostAction },
+                {path: "delete", element: <DeletePost/>, action: deletePostAction },
+              ] 
+            },
+            
           ],
         },
 
         {
-          path: menuPaths[1],
+          path: menuPaths[1],//events
           element: menuPages[1],
           children: [
-            { path: "new", element: <p>create-ingredient</p> },
-            { path: ":id", element: <p>ingredient-details</p> }
+            {index: true, element: <EventList />, loader: eventListLoader },
+            {path: "new", element: <CreateEvent />, action: createEventAction },
+            {
+              path: ":id",  
+              id: "eventdetails",
+              loader: eventDetailsLoader,
+              children: [
+                {index: true, element: <EventDetails/> },
+                {path: "edit", element: <UpdateEvent/>, action: updateEventAction },
+                {path: "delete", element: <DeleteEvent/>, action: deleteEventAction },
+              ] 
+            },
           ],
         },
+
+        {
+          path: menuPaths[2],//ingredients
+          element: menuPages[2],
+        },
+
       ],
     },
   ]);
