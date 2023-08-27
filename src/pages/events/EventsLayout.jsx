@@ -1,12 +1,11 @@
-import { useNavigation, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
-import classes from "./Events.module.css"
+import classes from "./EventsLayout.module.css"
 
-export default function Events(props) {
+export default function EventsLayout(props) {
   const auth = useAuth();
-  const navigation = useNavigation();
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -16,7 +15,7 @@ export default function Events(props) {
 
   return (
     <main className={classes.events}>
-      <Button variant="contained" onClick={() => navigate("new")}>New Event</Button>
+      <Button variant="contained" onClick={() => navigate("create")}>New Event</Button>
       <Outlet/>
     </main>
   );

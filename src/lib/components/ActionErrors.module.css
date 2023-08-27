@@ -1,0 +1,5 @@
+.errors {
+    color: red;
+    overflow: scroll;
+    max-height: 10rem;
+  }

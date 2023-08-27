@@ -1,10 +1,7 @@
 .details {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  gap: 1rem;
+  padding: 0.5rem;
   width: 30rem;
-}
-
-.details a {
-  text-decoration: none;
 }

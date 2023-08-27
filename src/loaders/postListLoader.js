@@ -1,7 +1,11 @@
-export default async function postListLoader() {
+
+import { defer } from "react-router-dom";
+
+async function loadCurrentPosts () {
   if (window.user == null) return [];
+  
   const response = await fetch(
-    `${window.API_BASE_URL}posts/author/${window.user.profile.preferred_username}`,
+    `${window.API_BASE_URL}posts/latest/10`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -16,4 +20,10 @@ export default async function postListLoader() {
   const result = await response.json();
 
   return result.data;
+}
+
+export default function postListLoader() {
+  return defer({
+    posts: loadCurrentPosts(),
+  });
 }

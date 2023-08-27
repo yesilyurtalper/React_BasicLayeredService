@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { TextField } from "@mui/material";
 import classes from "./Post.module.css";
 
-function Post({ id, title, body }) {
+function Post({ id, author, title, body }) {
   return (
-    <li className={classes.post}>
-      <Link to={`${id}`}>
+    <Link to={`${id}`} className={classes.post}>
+      <li >
+        <p className={classes.author}>by {author}</p>
         <p className={classes.title}>{title}</p>
         <p className={classes.body}>{body}</p>
-      </Link>
-    </li>
+      </li>
+    </Link>
   );
 }
 

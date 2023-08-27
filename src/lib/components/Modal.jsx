@@ -1,18 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+
 import classes from './Modal.module.css';
+import { useNavigate } from 'react-router-dom';
 
-function Modal({ children }) {
+function Modal(props) {
   const navigate = useNavigate();
-
-  function closeHandler() {
-    navigate('..',{relative:"path"});
-  }
-
+  
   return (
     <>
-      <div className={classes.backdrop} onClick={closeHandler} />
+      <div className={classes.backdrop} onClick={()=> navigate("..")} />
       <dialog open className={classes.overlay}>
-        {children}
+        {props.children}
       </dialog>
     </>
   );

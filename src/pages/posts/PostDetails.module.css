@@ -6,10 +6,6 @@
   width: 30rem;
 }
 
-.details a {
-  text-decoration: none;
-}
-
 .actions {
   display: flex;
   justify-content: flex-end;

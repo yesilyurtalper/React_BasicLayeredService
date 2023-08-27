@@ -13,19 +13,20 @@ import EventsIcon from "@mui/icons-material/Event.js";
 import IngredientsIcon from "@mui/icons-material/Settings.js";
 
 //route pages
-import Posts from "./pages/Posts";
-import PostList from "./components/posts/PostList";
-import CreatePost from "./components/posts/CreatePost.jsx";
-import PostDetails from "./components/posts/PostDetails";
-import UpdatePost from "./components/posts/UpdatePost.jsx"; 
-import DeletePost from "./components/posts/DeletePost";
+import PostsLayout from "./pages/posts/PostsLayout";
+import PostList from "./pages/posts/PostList";
+import CreatePost from "./pages/posts/CreatePost.jsx";
+import PostDetails from "./pages/posts/PostDetails";
+import UpdatePost from "./pages/posts/UpdatePost.jsx"; 
+import CopyPost from "./pages/posts/CopyPost";
 
-import Events from "./pages/Events";
-import EventList from "./components/events/EventList";
-import CreateEvent from "./components/events/CreateEvent.jsx";
-import EventDetails from "./components/events/EventDetails";
-import UpdateEvent from "./components/events/UpdateEvent.jsx"; 
-import DeleteEvent from "./components/events/DeleteEvent";
+//route events
+import EventsLayout from "./pages/events/EventsLayout";
+import EventList from "./pages/events/EventList";
+import CreateEvent from "./pages/events/CreateEvent.jsx";
+import EventDetails from "./pages/events/EventDetails";
+import UpdateEvent from "./pages/events/UpdateEvent.jsx"; 
+import CopyEvent from "./pages/events/CopyEvent";
 
 import Ingredients from "./pages/Ingredients";
 
@@ -35,12 +36,8 @@ import postDetailsLoader from "./loaders/postDetailsLoader";
 import eventListLoader from "./loaders/eventListLoader";
 import eventDetailsLoader from "./loaders/eventDetailsLoader";
 
-import createPostAction from "./actions/createPostAction";
-import updatePostAction from "./actions/updatePostAction";
-import deletePostAction from "./actions/deletePostAction";
-import createEventAction from "./actions/createEventAction";
-import updateEventAction from "./actions/updateEventAction";
-import deleteEventAction from "./actions/deleteEventAction";
+import postAction from "./actions/postAction";
+import eventAction from "./actions/eventAction";
 
 function App() {
   const oidcConfig = {
@@ -57,7 +54,7 @@ function App() {
   const menuPaths = ["posts", "events", "ingredients"];
   const menuItems = ["User Posts", "Technology Events", "Ingredients"];
   const menuIcons = [<PostsIcon />, <EventsIcon />, <IngredientsIcon/>];
-  const menuPages = [<Posts />, <Events />, <Ingredients/>];
+  const menuPages = [<PostsLayout/>, <EventsLayout/>, <Ingredients/>];
 
   const router = createBrowserRouter([
     {
@@ -88,19 +85,19 @@ function App() {
         { index: true, element: <HomePage /> },
 
         {
-          path: menuPaths[0],//posts
-          element: menuPages[0],
+          path: menuPaths[0], //posts
+          element: menuPages[0], //PostsLayout
           children: [
             {index: true, element: <PostList />, loader: postListLoader },
-            {path: "new", element: <CreatePost />, action: createPostAction },
+            {path: "create", element: <CreatePost />, action: postAction },
             {
               path: ":id",  
               id: "postdetails",
               loader: postDetailsLoader,
               children: [
-                {index: true, element: <PostDetails/> },
-                {path: "edit", element: <UpdatePost/>, action: updatePostAction },
-                {path: "delete", element: <DeletePost/>, action: deletePostAction },
+                {index: true, element: <PostDetails/>, action: postAction},
+                {path: "update", element: <UpdatePost/>, action: postAction },
+                {path: "copy", element: <CopyPost/>, action: postAction }
               ] 
             },
             
@@ -108,21 +105,22 @@ function App() {
         },
 
         {
-          path: menuPaths[1],//events
-          element: menuPages[1],
+          path: menuPaths[1], //events
+          element: menuPages[1], //EventsLayout
           children: [
             {index: true, element: <EventList />, loader: eventListLoader },
-            {path: "new", element: <CreateEvent />, action: createEventAction },
+            {path: "create", element: <CreateEvent />, action: eventAction },
             {
               path: ":id",  
               id: "eventdetails",
               loader: eventDetailsLoader,
               children: [
-                {index: true, element: <EventDetails/> },
-                {path: "edit", element: <UpdateEvent/>, action: updateEventAction },
-                {path: "delete", element: <DeleteEvent/>, action: deleteEventAction },
+                {index: true, element: <EventDetails/>, action: eventAction},
+                {path: "update", element: <UpdateEvent/>, action: eventAction },
+                {path: "copy", element: <CopyEvent/>, action: eventAction }
               ] 
             },
+            
           ],
         },
 

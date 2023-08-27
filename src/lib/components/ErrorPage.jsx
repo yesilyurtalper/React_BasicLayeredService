@@ -1,7 +1,10 @@
+import { Button } from "@mui/material";
 import React from "react";
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse, useNavigate } from "react-router-dom";
 
 export default function ErrorPage(props) {
+  const navigate = useNavigate();
+
   const error = useRouteError();
   let errorMessage = error.message;
   console.log(JSON.stringify(error));
@@ -22,9 +25,10 @@ export default function ErrorPage(props) {
     warning = <p>Something went wrong on the server!</p>;
 
   return (
-    <main>
+    <main style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
       <p>{`Error: ${errorMessage}`}</p>
       {warning}
+      <Button variant="contained" onClick={() => navigate("..", {relative:"path"})}>Back</Button>
     </main>
   );
 }
