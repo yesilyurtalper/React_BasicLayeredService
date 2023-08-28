@@ -3,18 +3,18 @@ import { Suspense } from "react";
 import { TextField } from "@mui/material";
 import Modal from "../../lib/components/Modal";
 import classes from "./PostDetails.module.css";
-import ActionErrors from "../../lib/components/ActionErrors";
+import ActionResult from "../../lib/components/ActionResult";
 import Actions from "../../lib/components/Actions";
 
 export default function PostDetails() {
-  const { post } = useRouteLoaderData("postdetails");
+  const { data } = useRouteLoaderData("postdetails");
   const navigate = useNavigate();
 
   return (
     <Suspense
       fallback={<p style={{ textAlign: "center" }}>Loading selected post...</p>}
     >
-      <Await resolve={post}>
+      <Await resolve={data}>
         {(post) => (
           <Modal onClose={() => navigate("..")}>
             <main className={classes.details}>
@@ -26,7 +26,7 @@ export default function PostDetails() {
               )}
               {post && (
                 <>
-                  <ActionErrors />
+                  <ActionResult/>
 
                   <TextField
                     label="Post Id"
@@ -86,7 +86,7 @@ export default function PostDetails() {
                     value={post.dateModified}
                   />
 
-                  <Actions />
+                  <Actions/>
                 </>
               )}
             </main>

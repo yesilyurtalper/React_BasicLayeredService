@@ -31,13 +31,8 @@ import CopyEvent from "./pages/events/CopyEvent";
 import Ingredients from "./pages/Ingredients";
 
 //loaders and actions
-import postListLoader from "./loaders/postListLoader";
-import postDetailsLoader from "./loaders/postDetailsLoader";
-import eventListLoader from "./loaders/eventListLoader";
-import eventDetailsLoader from "./loaders/eventDetailsLoader";
-
-import postAction from "./actions/postAction";
-import eventAction from "./actions/eventAction";
+import loader from "./services/loader.js";
+import action from "./services/action.js";
 
 function App() {
   const oidcConfig = {
@@ -88,16 +83,16 @@ function App() {
           path: menuPaths[0], //posts
           element: menuPages[0], //PostsLayout
           children: [
-            {index: true, element: <PostList />, loader: postListLoader },
-            {path: "create", element: <CreatePost />, action: postAction },
+            {index: true, element: <PostList />, loader: loader },
+            {path: "create", element: <CreatePost />, action: action },
             {
-              path: ":id",  
+              path: "id/:id",  
               id: "postdetails",
-              loader: postDetailsLoader,
+              loader: loader,
               children: [
-                {index: true, element: <PostDetails/>, action: postAction},
-                {path: "update", element: <UpdatePost/>, action: postAction },
-                {path: "copy", element: <CopyPost/>, action: postAction }
+                {index: true, element: <PostDetails/>, action: action},
+                {path: "update", element: <UpdatePost/>, action: action },
+                {path: "copy", element: <CopyPost/>, action: action }
               ] 
             },
             
@@ -108,16 +103,16 @@ function App() {
           path: menuPaths[1], //events
           element: menuPages[1], //EventsLayout
           children: [
-            {index: true, element: <EventList />, loader: eventListLoader },
-            {path: "create", element: <CreateEvent />, action: eventAction },
+            {index: true, element: <EventList />, loader: loader },
+            {path: "create", element: <CreateEvent />, action: action },
             {
-              path: ":id",  
+              path: "id/:id",  
               id: "eventdetails",
-              loader: eventDetailsLoader,
+              loader: loader,
               children: [
-                {index: true, element: <EventDetails/>, action: eventAction},
-                {path: "update", element: <UpdateEvent/>, action: eventAction },
-                {path: "copy", element: <CopyEvent/>, action: eventAction }
+                {index: true, element: <EventDetails/>, action: action},
+                {path: "update", element: <UpdateEvent/>, action: action },
+                {path: "copy", element: <CopyEvent/>, action: action }
               ] 
             },
             

@@ -1,8 +1,13 @@
 import { defer } from "react-router-dom";
 
-async function loadCurrentPost(params) {
+async function load(request) {
+
   if (window.user == null) return {};
-  const response = await fetch(`${window.API_BASE_URL}posts/id/${params.id}`, {
+
+  let relUrl = request.url.split(`${window.location.origin}/`)[1];
+  let url = `${window.API_BASE_URL}${relUrl}`;
+  
+  const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer  ${window.user.access_token}`,
@@ -17,8 +22,8 @@ async function loadCurrentPost(params) {
   return result.data;
 }
 
-export default function postDetailsLoader({ params }) {
+export default function loader({request}) {
   return defer({
-    post: loadCurrentPost(params),
+    data: load(request),
   });
 }

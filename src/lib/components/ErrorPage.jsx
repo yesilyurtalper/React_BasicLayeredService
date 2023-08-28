@@ -7,7 +7,6 @@ export default function ErrorPage(props) {
 
   const error = useRouteError();
   let errorMessage = error.message;
-  console.log(JSON.stringify(error));
 
   if (isRouteErrorResponse(error))
     errorMessage = `${error.statusText} : ${error.data}`;

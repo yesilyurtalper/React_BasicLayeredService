@@ -4,7 +4,7 @@ import Event from "../../components/events/Event";
 import classes from "./EventList.module.css";
 
 export default function EventList() {
-  const {events} = useLoaderData();
+  const {data} = useLoaderData();
   
   return (
     
@@ -13,7 +13,7 @@ export default function EventList() {
           <p style={{ textAlign: "center" }}>Loading current events...</p>
         }
       >
-        <Await resolve={events}>
+        <Await resolve={data}>
           {(events) => (
             <main>
               {events.length > 0 && (

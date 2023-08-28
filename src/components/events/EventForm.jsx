@@ -3,8 +3,8 @@ import classes from "../../pages/events/EventDetails.module.css";
 import Modal from "../../lib/components/Modal";
 import { useAuth } from "react-oidc-context";
 import {TextField } from "@mui/material";
-import ActionErrors from "../../lib/components/ActionErrors";
 import Actions from "../../lib/components/Actions";
+import ActionResult from "../../lib/components/ActionResult";
 
 export default function EventForm({ method, event }) {
   const auth = useAuth();
@@ -12,7 +12,7 @@ export default function EventForm({ method, event }) {
   return (
     <Modal>
       <Form method={method} className={classes.details}>
-        <ActionErrors />
+        <ActionResult />
 
         <TextField
           label="Event Id"

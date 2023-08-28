@@ -3,7 +3,7 @@ import classes from "./Post.module.css";
 
 function Post({ id, author, title, body }) {
   return (
-    <Link to={`${id}`} className={classes.post}>
+    <Link to={`id/${id}`} className={classes.post}>
       <li >
         <p className={classes.author}>by {author}</p>
         <p className={classes.title}>{title}</p>

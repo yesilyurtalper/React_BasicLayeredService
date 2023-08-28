@@ -11,10 +11,8 @@ export default function Actions(props) {
 
   function handleDelete() {
     const proceed = window.confirm("Are you sure to delete?");
-
-    if (proceed) {
-      submit(null, { method: "DELETE" });
-    }
+    if (proceed) 
+      submit(null, { method: "DELETE"});
   }
 
   return (

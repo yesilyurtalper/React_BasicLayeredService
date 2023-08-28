@@ -4,8 +4,8 @@ import Post from "../../components/posts/Post";
 import classes from "./PostList.module.css";
 
 export default function PostList() {
-  const {posts} = useLoaderData();
-  
+  const {data} = useLoaderData();
+
   return (
     
       <Suspense
@@ -13,7 +13,7 @@ export default function PostList() {
           <p style={{ textAlign: "center" }}>Loading current posts...</p>
         }
       >
-        <Await resolve={posts}>
+        <Await resolve={data}>
           {(posts) => (
             <main>
               {posts.length > 0 && (

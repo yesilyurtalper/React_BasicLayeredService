@@ -2,9 +2,9 @@ import { Form } from "react-router-dom";
 import classes from "../../pages/posts/PostDetails.module.css";
 import Modal from "../../lib/components/Modal";
 import { useAuth } from "react-oidc-context";
-import ActionErrors from "../../lib/components/ActionErrors";
 import Actions from "../../lib/components/Actions";
 import { TextField } from "@mui/material";
+import ActionResult from "../../lib/components/ActionResult";
 
 export default function PostForm({ method, post }) {
   const auth = useAuth();
@@ -12,7 +12,7 @@ export default function PostForm({ method, post }) {
   return (
     <Modal>
       <Form method={method} className={classes.details}>
-        <ActionErrors />
+        <ActionResult />
 
         <TextField
           label="Post Id"

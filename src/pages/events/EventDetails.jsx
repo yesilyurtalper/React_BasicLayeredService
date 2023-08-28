@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import { TextField } from "@mui/material";
 import Modal from "../../lib/components/Modal";
 import classes from "./EventDetails.module.css";
-import ActionErrors from "../../lib/components/ActionErrors";
+import ActionResult from "../../lib/components/ActionResult";
 import Actions from "../../lib/components/Actions";
 
 export default function EventDetails() {
-  const { event } = useRouteLoaderData("eventdetails");
+  const { data } = useRouteLoaderData("eventdetails");
 
   return (
     <Suspense
@@ -15,7 +15,7 @@ export default function EventDetails() {
         <p style={{ textAlign: "center" }}>Loading selected event...</p>
       }
     >
-      <Await resolve={event}>
+      <Await resolve={data}>
         {(event) => (
           <Modal>
             <main className={classes.details}>
@@ -27,7 +27,7 @@ export default function EventDetails() {
               )}
               {event && (
                 <>
-                  <ActionErrors />
+                  <ActionResult />
 
                   <TextField
                     label="Event Id"
@@ -87,7 +87,7 @@ export default function EventDetails() {
                     value={event.dateModified}
                   />
 
-                  <Actions />
+                  <Actions/>
                 </>
               )}
             </main>

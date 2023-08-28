@@ -1,0 +1,10 @@
+.error {
+  color: red;
+  overflow: scroll;
+  max-height: 10rem;
+}
+
+.success {
+  color: green;
+  text-align: center;
+}
