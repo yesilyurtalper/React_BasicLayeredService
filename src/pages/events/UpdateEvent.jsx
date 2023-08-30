@@ -1,19 +1,13 @@
-import { useRouteLoaderData, Await } from "react-router-dom";
-import { Suspense } from "react";
+import { useRouteLoaderData} from "react-router-dom";
 
 import EventForm from "../../components/events/EventForm";
 
 function UpdateEvent() {
-  const { data } = useRouteLoaderData("eventdetails");
+
+  const  event = useRouteLoaderData("eventdetails");
 
   return (
-    <Suspense
-      fallback={<p style={{ textAlign: "center" }}>Loading selected event...</p>}
-    >
-      <Await resolve={data}>
-        {(event) => <EventForm method="PUT" event={event} />}
-      </Await>
-    </Suspense>
+    <EventForm method="PUT" event={event} />
   );
 }
 

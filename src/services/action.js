@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-export default async function action({ request, params }) {
+export default async function action({ request }) {
   const method = request.method;
 
   let relUrl = request.url.split(`${window.location.origin}/`)[1];
@@ -23,7 +23,7 @@ export default async function action({ request, params }) {
   });
 
   const result = await response.json();
-  if (!response.ok || method === "GET") 
+  if (!response.ok) 
     return result;
   else if (method === "DELETE") 
     return redirect("..");

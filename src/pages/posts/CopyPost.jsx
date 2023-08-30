@@ -4,16 +4,11 @@ import { Suspense } from "react";
 import PostForm from "../../components/posts/PostForm";
 
 function CopyPost() {
-  const { data } = useRouteLoaderData("postdetails");
+
+  const post = useRouteLoaderData("postdetails");
 
   return (
-    <Suspense
-      fallback={<p style={{ textAlign: "center" }}>Loading selected post...</p>}
-    >
-      <Await resolve={data}>
-        {(post) => <PostForm method="POST" post={post} />}
-      </Await>
-    </Suspense>
+    <PostForm method="post" post={post} />
   );
 }
 

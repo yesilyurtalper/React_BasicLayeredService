@@ -1,11 +1,12 @@
-import { defer } from "react-router-dom";
 
-async function load(request) {
-
+export default async function loader({request, params}) {
   if (window.user == null) return {};
 
   let relUrl = request.url.split(`${window.location.origin}/`)[1];
-  let url = `${window.API_BASE_URL}${relUrl}`;
+  let item = relUrl.split("/")[0];
+  let url = `${window.API_BASE_URL}${item}`;
+  if(params.id)
+    url = `${url}/id/${params.id}`;
   
   const response = await fetch(url, {
     headers: {
@@ -20,10 +21,4 @@ async function load(request) {
   const result = await response.json();
 
   return result.data;
-}
-
-export default function loader({request}) {
-  return defer({
-    data: load(request),
-  });
 }

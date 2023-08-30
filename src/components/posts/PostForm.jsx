@@ -17,20 +17,16 @@ export default function PostForm({ method, post }) {
         <TextField
           label="Post Id"
           name="Id"
-          InputProps={{
-            readOnly: true,
-          }}
+          InputProps={{readOnly: true }}
           variant="standard"
-          defaultValue={method === "PUT" ? post.id : 0}
-          style={method === "PUT" ? undefined : { display: "none" }}
+          defaultValue={method === "put" ? post.id : 0}
+          style={method === "put" ? undefined : { display: "none" }}
         />
 
         <TextField
           label="Author"
           name="Author"
-          InputProps={{
-            readOnly: true,
-          }}
+          InputProps={{readOnly: true }}
           variant="standard"
           defaultValue={auth.user.profile.preferred_username}
         />
@@ -39,9 +35,6 @@ export default function PostForm({ method, post }) {
           label="Title"
           name="Title"
           required
-          InputProps={{
-            readOnly: false,
-          }}
           variant="standard"
           defaultValue={post ? post.title : ""}
         />
@@ -50,9 +43,6 @@ export default function PostForm({ method, post }) {
           label="Body"
           name="Body"
           required
-          InputProps={{
-            readOnly: false,
-          }}
           multiline
           rows={5}
           variant="standard"

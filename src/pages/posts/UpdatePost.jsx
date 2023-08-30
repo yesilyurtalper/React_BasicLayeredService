@@ -1,19 +1,12 @@
-import { useRouteLoaderData, Await } from "react-router-dom";
-import { Suspense } from "react";
+import { useRouteLoaderData } from "react-router-dom";
 
 import PostForm from "../../components/posts/PostForm";
 
 function UpdatePost() {
-  const { data } = useRouteLoaderData("postdetails");
+  const post = useRouteLoaderData("postdetails");
 
   return (
-    <Suspense
-      fallback={<p style={{ textAlign: "center" }}>Loading selected post...</p>}
-    >
-      <Await resolve={data}>
-        {(post) => <PostForm method="PUT" post={post} />}
-      </Await>
-    </Suspense>
+    <PostForm method="put" post={post} />
   );
 }
 

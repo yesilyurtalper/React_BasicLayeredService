@@ -94,8 +94,7 @@ function App() {
                 {path: "update", element: <UpdatePost/>, action: action },
                 {path: "copy", element: <CopyPost/>, action: action }
               ] 
-            },
-            
+            },        
           ],
         },
 
