@@ -27,7 +27,7 @@ export default function ErrorPage(props) {
     <main style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
       <p>{`Error: ${errorMessage}`}</p>
       {warning}
-      <Button variant="contained" onClick={() => navigate("..", {relative:"path"})}>Back</Button>
+      <Button variant="contained" onClick={() => navigate("/", {relative:"path"})}>Home</Button>
     </main>
   );
 }

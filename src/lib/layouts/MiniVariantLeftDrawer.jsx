@@ -170,11 +170,9 @@ export default function MiniVariantDrawerWithHeader(props) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
         {props.error && <ErrorPage />}
-        {auth.isLoading && <LoadingPage />}
+        {auth.isLoading && <p>Signing you in...</p>}
         {routerLoading && <LoadingPage />}
-        {!props.error && !auth.isLoading && !routerLoading &&(
-          <Outlet />
-        )}
+        {!props.error && !auth.isLoading && !routerLoading && <Outlet /> }
       </Box>
     </Box>
   );

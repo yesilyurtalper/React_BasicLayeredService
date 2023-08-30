@@ -1,13 +1,24 @@
 
-import { useLoaderData} from "react-router-dom";
+import { useLoaderData, useNavigate} from "react-router-dom";
 import Event from "../../components/events/Event";
 import classes from "./EventList.module.css";
+import { Button } from "@mui/material";
+import { useEffect } from "react";
+import { useAuth } from "react-oidc-context";
 
 export default function EventList() {
   const events = useLoaderData();
+  const navigate = useNavigate();
+  const auth = useAuth();
+
+  useEffect(()=>{
+    if (!auth.isAuthenticated) 
+      navigate("/");
+  },[auth.isAuthenticated, navigate]);
 
   return (
-    <main>
+    <main className={classes.events}>
+      <Button variant="contained" onClick={() => navigate("create")}>New Event</Button>
       {events.length > 0 && (
         <ul className={classes.list}>
           {events.map((event) => (

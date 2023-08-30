@@ -21,7 +21,6 @@ import UpdatePost from "./pages/posts/UpdatePost.jsx";
 import CopyPost from "./pages/posts/CopyPost";
 
 //route events
-import EventsLayout from "./pages/events/EventsLayout";
 import EventList from "./pages/events/EventList";
 import CreateEvent from "./pages/events/CreateEvent.jsx";
 import EventDetails from "./pages/events/EventDetails";
@@ -49,7 +48,7 @@ function App() {
   const menuPaths = ["posts", "events", "ingredients"];
   const menuItems = ["User Posts", "Technology Events", "Ingredients"];
   const menuIcons = [<PostsIcon />, <EventsIcon />, <IngredientsIcon/>];
-  const menuPages = [<PostsLayout/>, <EventsLayout/>, <Ingredients/>];
+  const menuPages = [<PostsLayout/>, <EventList/>, <Ingredients/>];
 
   const router = createBrowserRouter([
     {
@@ -100,7 +99,6 @@ function App() {
 
         {
           path: menuPaths[1], //events
-          element: menuPages[1], //EventsLayout
           children: [
             {index: true, element: <EventList />, loader: loader },
             {path: "create", element: <CreateEvent />, action: action },

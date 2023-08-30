@@ -1,5 +1,4 @@
-import { useRouteLoaderData, Await } from "react-router-dom";
-import { Suspense } from "react";
+import { useRouteLoaderData} from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../../lib/components/Modal";
 import classes from "./EventDetails.module.css";
