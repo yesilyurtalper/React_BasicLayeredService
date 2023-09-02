@@ -1,9 +1,9 @@
 import { useRouteLoaderData, useNavigate, Await } from "react-router-dom";
 import { TextField } from "@mui/material";
-import Modal from "../../lib/components/Modal";
+import Modal from "../../components/Modal";
 import classes from "./PostDetails.module.css";
-import ActionResult from "../../lib/components/ActionResult";
-import Actions from "../../lib/components/Actions";
+import ActionResult from "../../components/ActionResult";
+import Actions from "../../components/ActionButtons";
 
 export default function PostDetails() {
   const post = useRouteLoaderData("postdetails");

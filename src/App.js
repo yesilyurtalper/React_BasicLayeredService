@@ -5,7 +5,7 @@ import { AuthProvider } from "react-oidc-context";
 
 import CustomStatusBar from "./components/CustomStatusBar";
 import HomePage from "./pages/HomePage";
-import MiniVariantDrawerWithHeader from "./lib/layouts/MiniVariantLeftDrawer";
+import MiniVariantDrawerWithHeader from "./components/MiniVariantLeftDrawer";
 
 //menu icons
 import PostsIcon from "@mui/icons-material/PostAdd.js";
@@ -17,21 +17,24 @@ import PostsLayout from "./pages/posts/PostsLayout";
 import PostList from "./pages/posts/PostList";
 import CreatePost from "./pages/posts/CreatePost.jsx";
 import PostDetails from "./pages/posts/PostDetails";
-import UpdatePost from "./pages/posts/UpdatePost.jsx"; 
+import UpdatePost from "./pages/posts/UpdatePost.jsx";
 import CopyPost from "./pages/posts/CopyPost";
 
 //route events
-import EventList from "./pages/events/EventList";
+import EventsPage from "./pages/events/EventsPage.jsx";
 import CreateEvent from "./pages/events/CreateEvent.jsx";
 import EventDetails from "./pages/events/EventDetails";
-import UpdateEvent from "./pages/events/UpdateEvent.jsx"; 
+import UpdateEvent from "./pages/events/UpdateEvent.jsx";
 import CopyEvent from "./pages/events/CopyEvent";
 
 import Ingredients from "./pages/Ingredients";
 
 //loaders and actions
 import loader from "./services/loader.js";
-import action from "./services/action.js";
+import manipulateItemAction from "./services/manipulateItemAction.js";
+import queryAction from "./services/queryAction.js";
+import deleteAction from "./services/deleteItemAction.js"
+import deleteItemAction from "./services/deleteItemAction.js";
 
 function App() {
   const oidcConfig = {
@@ -47,8 +50,8 @@ function App() {
 
   const menuPaths = ["posts", "events", "ingredients"];
   const menuItems = ["User Posts", "Technology Events", "Ingredients"];
-  const menuIcons = [<PostsIcon />, <EventsIcon />, <IngredientsIcon/>];
-  const menuPages = [<PostsLayout/>, <EventList/>, <Ingredients/>];
+  const menuIcons = [<PostsIcon />, <EventsIcon />, <IngredientsIcon />];
+  const menuPages = [<PostsLayout />, <EventsPage />, <Ingredients />];
 
   const router = createBrowserRouter([
     {
@@ -82,45 +85,48 @@ function App() {
           path: menuPaths[0], //posts
           element: menuPages[0], //PostsLayout
           children: [
-            {index: true, element: <PostList />, loader: loader },
-            {path: "create", element: <CreatePost />, action: action },
+            { index: true, element: <PostList />, loader: loader },
+            { path: "create", element: <CreatePost />, action: manipulateItemAction },
             {
-              path: "id/:id",  
+              path: "id/:id",
               id: "postdetails",
               loader: loader,
               children: [
-                {index: true, element: <PostDetails/>, action: action},
-                {path: "update", element: <UpdatePost/>, action: action },
-                {path: "copy", element: <CopyPost/>, action: action }
-              ] 
-            },        
+                { index: true, element: <PostDetails />, action: deleteItemAction },
+                { path: "update", element: <UpdatePost />, action: manipulateItemAction },
+                { path: "copy", element: <CopyPost />, action: manipulateItemAction },
+              ],
+            },
           ],
         },
 
         {
           path: menuPaths[1], //events
           children: [
-            {index: true, element: <EventList />, loader: loader },
-            {path: "create", element: <CreateEvent />, action: action },
             {
-              path: "id/:id",  
+              index: true,
+              element: <EventsPage />,
+              errorElement: <EventsPage />,
+              action: queryAction,
+            },
+            { path: "create", element: <CreateEvent />, action: manipulateItemAction },
+            {
+              path: "id/:id",
               id: "eventdetails",
               loader: loader,
               children: [
-                {index: true, element: <EventDetails/>, action: action},
-                {path: "update", element: <UpdateEvent/>, action: action },
-                {path: "copy", element: <CopyEvent/>, action: action }
-              ] 
+                { index: true, element: <EventDetails />, action: deleteItemAction },
+                { path: "update", element: <UpdateEvent />, action: manipulateItemAction },
+                { path: "copy", element: <CopyEvent />, action: manipulateItemAction },
+              ],
             },
-            
           ],
         },
 
         {
-          path: menuPaths[2],//ingredients
+          path: menuPaths[2], //ingredients
           element: menuPages[2],
         },
-
       ],
     },
   ]);

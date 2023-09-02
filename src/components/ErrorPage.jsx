@@ -1,6 +1,11 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { useRouteError, isRouteErrorResponse, useNavigate } from "react-router-dom";
+import {
+  useRouteError,
+  isRouteErrorResponse,
+  useNavigate,
+} from "react-router-dom";
+import classes from "./ErrorPage.module.css";
 
 export default function ErrorPage(props) {
   const navigate = useNavigate();
@@ -11,7 +16,7 @@ export default function ErrorPage(props) {
   if (isRouteErrorResponse(error))
     errorMessage = `${error.statusText} : ${error.data}`;
 
-  let warning = <p/>;
+  let warning = <p />;
   if (errorMessage.includes("400"))
     warning = <p>Check your request parameters!</p>;
   else if (errorMessage.includes("401"))
@@ -24,10 +29,20 @@ export default function ErrorPage(props) {
     warning = <p>Something went wrong on the server!</p>;
 
   return (
-    <main style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+    <main className={classes.page}>
       <p>{`Error: ${errorMessage}`}</p>
       {warning}
-      <Button variant="contained" onClick={() => navigate("/", {relative:"path"})}>Home</Button>
+      <div className={classes.actions}>
+        <Button
+          variant="contained"
+          onClick={() => navigate("..", { relative: "path" })}
+        >
+          Back
+        </Button>
+        <Button variant="contained" onClick={() => navigate("/")}>
+          Home
+        </Button>
+      </div>
     </main>
   );
 }

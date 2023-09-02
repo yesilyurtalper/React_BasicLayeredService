@@ -1,10 +1,10 @@
 import { Form } from "react-router-dom";
 import classes from "../../pages/events/EventDetails.module.css";
-import Modal from "../../lib/components/Modal";
+import Modal from "../Modal";
 import { useAuth } from "react-oidc-context";
 import {TextField } from "@mui/material";
-import Actions from "../../lib/components/Actions";
-import ActionResult from "../../lib/components/ActionResult";
+import Actions from "../ActionButtons";
+import ActionResult from "../../components/ActionResult";
 
 export default function EventForm({ method, event }) {
   const auth = useAuth();

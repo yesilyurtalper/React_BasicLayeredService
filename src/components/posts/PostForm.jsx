@@ -1,10 +1,10 @@
 import { Form } from "react-router-dom";
 import classes from "../../pages/posts/PostDetails.module.css";
-import Modal from "../../lib/components/Modal";
+import Modal from "../Modal";
 import { useAuth } from "react-oidc-context";
-import Actions from "../../lib/components/Actions";
+import Actions from "../ActionButtons";
 import { TextField } from "@mui/material";
-import ActionResult from "../../lib/components/ActionResult";
+import ActionResult from "../../components/ActionResult";
 
 export default function PostForm({ method, post }) {
   const auth = useAuth();

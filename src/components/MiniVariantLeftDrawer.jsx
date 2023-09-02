@@ -13,13 +13,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import classes from "./MiniVariantLeftDrawer.module.css";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useNavigate, useNavigation } from "react-router-dom";
-import ErrorPage from "../components/ErrorPage";
-import LoadingPage from "../components/LoadingPage";
-import { useEffect } from "react";
+import ErrorPage from "./ErrorPage";
+import classes from "./MiniVariantLeftDrawer.module.css";
 
 export default function MiniVariantDrawerWithHeader(props) {
   const [open, setOpen] = React.useState(false);
@@ -168,10 +166,10 @@ export default function MiniVariantDrawerWithHeader(props) {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 8 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 10}}>
         {props.error && <ErrorPage />}
         {auth.isLoading && <p>Signing you in...</p>}
-        {routerLoading && <LoadingPage />}
+        {routerLoading && <CircularProgress style={{position:"relative", left:"50%"}} />}
         {!props.error && !auth.isLoading && !routerLoading && <Outlet /> }
       </Box>
     </Box>

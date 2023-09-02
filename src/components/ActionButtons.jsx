@@ -1,4 +1,4 @@
-import classes from "./Actions.module.css";
+import classes from "./ActionButtons.module.css";
 import { Button } from "@mui/material";
 import { useNavigate, useSubmit, useNavigation } from "react-router-dom";
 

@@ -1,7 +1,6 @@
 
 export default async function loader({request, params}) {
-  if (window.user == null) return {};
-
+  
   let relUrl = request.url.split(`${window.location.origin}/`)[1];
   let item = relUrl.split("/")[0];
   let url = `${window.API_BASE_URL}${item}`;

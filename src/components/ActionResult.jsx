@@ -12,13 +12,13 @@ export default function ActionResult() {
     return (
       <ul className={classes.error}>
         <li
-          key={actionData.resultCode}
+          key={1}
           style={{ listStyleType: "none", textAlign: "center" }}
         >
           Result Code: {actionData.resultCode}
         </li>
         <li
-          key={actionData.message}
+          key={2}
           style={{ listStyleType: "none", textAlign: "center" }}
         >
           {actionData.message}

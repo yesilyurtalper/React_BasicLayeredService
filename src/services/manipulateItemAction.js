@@ -1,20 +1,16 @@
 import { redirect } from "react-router-dom";
 
-export default async function action({ request }) {
-  const method = request.method;
+export default async function manipulateItemAction({ request}) {
 
   let relUrl = request.url.split(`${window.location.origin}/`)[1];
   let url = `${window.API_BASE_URL}${relUrl}`;
 
-  let body = null;
-  if (method === "POST" || method === "PUT") {
-    const formData = await request.formData();
-    const postData = Object.fromEntries(formData); // { body: '...', author: '...' }
-    body = JSON.stringify(postData);
-  }
+  const formData = await request.formData();
+  const postData = Object.fromEntries(formData); // { body: '...', author: '...' }
+  const body = JSON.stringify(postData);
 
   const response = await fetch(url, {
-    method: method,
+    method: request.method,
     body: body,
     headers: {
       "Content-Type": "application/json",
@@ -25,8 +21,6 @@ export default async function action({ request }) {
   const result = await response.json();
   if (!response.ok) 
     return result;
-  else if (method === "DELETE") 
-    return redirect("..");
   else 
     return redirect(`/${relUrl.split("/")[0]}/id/${result.data.id}`);
 }
