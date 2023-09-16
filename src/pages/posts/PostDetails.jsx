@@ -1,27 +1,26 @@
-import { useRouteLoaderData, useNavigate, Await } from "react-router-dom";
+import { useRouteLoaderData, useActionData } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../../components/Modal";
 import classes from "./PostDetails.module.css";
-import ActionResult from "../../components/ActionResult";
-import Actions from "../../components/ActionButtons";
+import ActionLoaderResult from "../../components/ActionLoaderResult";
+import DetailsActions from "../../components/DetailsActions";
 
 export default function PostDetails() {
-  const post = useRouteLoaderData("postdetails");
-  const navigate = useNavigate();
+  const loaderResult = useRouteLoaderData("postdetails");
+  const actionResult = useActionData();
+  const post = loaderResult.data;
 
   return (
-    <Modal onClose={() => navigate("..")}>
+    <Modal>
       <main className={classes.details}>
-        {!post && (
-          <>
-            <h1>Could not find post</h1>
-            <p>Unfortunately, the requested post could not be found.</p>
-          </>
-        )}
-        {post && (
-          <>
-            <ActionResult />
+        <DetailsActions manipulate item="posts" />
+        <ActionLoaderResult result={actionResult} />
 
+        {!loaderResult.isSuccess && (
+          <ActionLoaderResult result={loaderResult} />
+        )}
+        {loaderResult.isSuccess && (
+          <section className={classes.content}>
             <TextField
               label="Post Id"
               InputProps={{
@@ -79,9 +78,7 @@ export default function PostDetails() {
               variant="standard"
               value={post.dateModified}
             />
-
-            <Actions />
-          </>
+          </section>
         )}
       </main>
     </Modal>

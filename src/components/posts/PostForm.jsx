@@ -1,18 +1,19 @@
-import { Form } from "react-router-dom";
+import { Form, useActionData } from "react-router-dom";
 import classes from "../../pages/posts/PostDetails.module.css";
 import Modal from "../Modal";
 import { useAuth } from "react-oidc-context";
-import Actions from "../ActionButtons";
 import { TextField } from "@mui/material";
-import ActionResult from "../../components/ActionResult";
+import ActionLoaderResult from "../../components/ActionLoaderResult";
+import SubmitCancelActions from "../SubmitCancelActions";
 
 export default function PostForm({ method, post }) {
   const auth = useAuth();
+  const actionResult = useActionData();
 
   return (
     <Modal>
       <Form method={method} className={classes.details}>
-        <ActionResult />
+        <ActionLoaderResult result={actionResult}/>
 
         <TextField
           label="Post Id"
@@ -49,7 +50,7 @@ export default function PostForm({ method, post }) {
           defaultValue={post ? post.body : ""}
         />
 
-        <Actions small />
+        <SubmitCancelActions item="posts" method={method}/>
       </Form>
     </Modal>
   );

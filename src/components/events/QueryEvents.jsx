@@ -23,14 +23,7 @@ export default function QueryEvents() {
   }, [navigation, actionData]);
 
   return (
-    <Card className={classes.card}>
-      <div className={classes.header}>
-        <Typography variant="h6">Query Events</Typography>
-        <Button variant="contained" onClick={() => navigate("create")}>
-          Create Event
-        </Button>
-      </div>
-
+    <Card >
       <Form
         className={classes.form}
         method="POST"
@@ -104,6 +97,7 @@ export default function QueryEvents() {
         >
           {navigation.state === "submitting" ? "Submitting" : "Query"}
         </Button>
+
         <div className={classes.actions}>
           <Button
             disabled={directionsDisabled}
@@ -120,6 +114,10 @@ export default function QueryEvents() {
             Next
           </Button>
         </div>
+
+        <Button variant="contained" onClick={() => navigate("create")} style={{gridArea:"2/8"}}>
+            Create
+          </Button>
       </Form>
     </Card>
   );

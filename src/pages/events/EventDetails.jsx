@@ -1,26 +1,21 @@
-import { useRouteLoaderData} from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../../components/Modal";
 import classes from "./EventDetails.module.css";
-import ActionResult from "../../components/ActionResult";
-import Actions from "../../components/ActionButtons";
+import ActionLoaderResult from "../../components/ActionLoaderResult";
+import DetailsActions from "../../components/DetailsActions";
 
 export default function EventDetails() {
-  const event = useRouteLoaderData("eventdetails");
+  const loaderResult = useRouteLoaderData("eventdetails");
+  const event = loaderResult.data;
 
   return (
     <Modal>
       <main className={classes.details}>
-        {!event && (
-          <>
-            <h1>Could not find event</h1>
-            <p>Unfortunately, the requested event could not be found.</p>
-          </>
-        )}
-        {event && (
-          <>
-            <ActionResult />
-
+        <DetailsActions manipulate item="events" />
+        {!loaderResult.isSuccess && <ActionLoaderResult result={loaderResult} /> }
+        {loaderResult.isSuccess && 
+          <section>
             <TextField
               label="Event Id"
               InputProps={{
@@ -29,7 +24,6 @@ export default function EventDetails() {
               variant="standard"
               value={event.id}
             />
-
             <TextField
               label="Author"
               InputProps={{
@@ -38,7 +32,6 @@ export default function EventDetails() {
               variant="standard"
               value={event.author}
             />
-
             <TextField
               label="Title"
               InputProps={{
@@ -47,7 +40,6 @@ export default function EventDetails() {
               variant="standard"
               value={event.title}
             />
-
             <TextField
               label="Body"
               InputProps={{
@@ -58,7 +50,6 @@ export default function EventDetails() {
               variant="standard"
               value={event.body}
             />
-
             <TextField
               label="Created Date"
               InputProps={{
@@ -68,7 +59,6 @@ export default function EventDetails() {
               variant="standard"
               value={event.dateCreated}
             />
-
             <TextField
               label="Updated Date"
               InputProps={{
@@ -78,10 +68,8 @@ export default function EventDetails() {
               variant="standard"
               value={event.dateModified}
             />
-
-            <Actions />
-          </>
-        )}
+          </section>
+        }
       </main>
     </Modal>
   );

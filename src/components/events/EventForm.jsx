@@ -1,18 +1,19 @@
-import { Form } from "react-router-dom";
+import { Form, useActionData } from "react-router-dom";
 import classes from "../../pages/events/EventDetails.module.css";
 import Modal from "../Modal";
 import { useAuth } from "react-oidc-context";
-import {TextField } from "@mui/material";
-import Actions from "../ActionButtons";
-import ActionResult from "../../components/ActionResult";
+import { TextField } from "@mui/material";
+import SubmitCancelActions from "../SubmitCancelActions";
+import ActionLoaderResult from "../../components/ActionLoaderResult";
 
 export default function EventForm({ method, event }) {
   const auth = useAuth();
+  const actionResult = useActionData();
 
   return (
     <Modal>
       <Form method={method} className={classes.details}>
-        <ActionResult />
+        <ActionLoaderResult result={actionResult} />
 
         <TextField
           label="Event Id"
@@ -59,7 +60,7 @@ export default function EventForm({ method, event }) {
           defaultValue={event ? event.body : ""}
         />
 
-        <Actions small/>
+        <SubmitCancelActions item="event" method={method} />
       </Form>
     </Modal>
   );

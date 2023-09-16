@@ -1,14 +1,16 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import React from "react";
 import {
   useRouteError,
   isRouteErrorResponse,
   useNavigate,
+  useNavigation,
 } from "react-router-dom";
 import classes from "./ErrorPage.module.css";
 
 export default function ErrorPage(props) {
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const error = useRouteError();
   let errorMessage = error.message;
@@ -30,12 +32,14 @@ export default function ErrorPage(props) {
 
   return (
     <main className={classes.page}>
+      {navigation.state === "loading" && <CircularProgress/>}
+
       <p>{`Error: ${errorMessage}`}</p>
       {warning}
       <div className={classes.actions}>
         <Button
           variant="contained"
-          onClick={() => navigate("..", { relative: "path" })}
+          onClick={() => navigate("..")}
         >
           Back
         </Button>

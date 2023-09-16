@@ -1,9 +1,11 @@
 import { useAuth } from "react-oidc-context";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import React from "react";
+import { useNavigation } from "react-router-dom";
 
 export default function HomePage(props) {
   const auth = useAuth();
+  const navigation = useNavigation();
 
   return (
     <main
@@ -13,6 +15,8 @@ export default function HomePage(props) {
         alignItems: "center",
       }}
     >
+      {navigation.state === "loading" && <CircularProgress/>}
+
       <p>Welcome to React_BasicLayeredService</p>
 
       {!auth.isAuthenticated && <p>Please log in to continue</p>}

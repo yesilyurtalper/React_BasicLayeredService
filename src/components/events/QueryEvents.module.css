@@ -1,8 +1,13 @@
-.card {
-  display: flex;
-  flex-direction: column;
+
+.form {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(8,1fr);
   padding: 1rem;
-  gap: 1rem; 
+}
+
+.form button {
+  align-self: center;
 }
 
 .header, .actions, .between{
@@ -13,17 +18,12 @@
 }
 
 .between{
+  grid-column: span 2;
   border: 0.5px solid lightgrey;
 }
 
 .between legend{
   font-size: 12px;
-}
-
-.form {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 2fr;
 }
 
 @media only screen and (max-width: 1200px) {

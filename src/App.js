@@ -2,6 +2,8 @@ import "./constants.js";
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
+import { Provider } from "react-redux";
+import store from "./store/index";
 
 import CustomStatusBar from "./components/CustomStatusBar";
 import HomePage from "./pages/HomePage";
@@ -30,11 +32,9 @@ import CopyEvent from "./pages/events/CopyEvent";
 import Ingredients from "./pages/Ingredients";
 
 //loaders and actions
-import loader from "./services/loader.js";
-import manipulateItemAction from "./services/manipulateItemAction.js";
-import queryAction from "./services/queryAction.js";
-import deleteAction from "./services/deleteItemAction.js"
-import deleteItemAction from "./services/deleteItemAction.js";
+import listLoader from "./services/listLoader.js";
+import itemLoader from "./services/itemLoader.js";
+import crudAction from "./services/crudAction.js";
 
 function App() {
   const oidcConfig = {
@@ -85,16 +85,32 @@ function App() {
           path: menuPaths[0], //posts
           element: menuPages[0], //PostsLayout
           children: [
-            { index: true, element: <PostList />, loader: loader },
-            { path: "create", element: <CreatePost />, action: manipulateItemAction },
+            { index: true, element: <PostList />, loader: listLoader },
+            {
+              path: "create",
+              element: <CreatePost />,
+              action: crudAction,
+            },
             {
               path: "id/:id",
               id: "postdetails",
-              loader: loader,
+              loader: itemLoader,
               children: [
-                { index: true, element: <PostDetails />, action: deleteItemAction },
-                { path: "update", element: <UpdatePost />, action: manipulateItemAction },
-                { path: "copy", element: <CopyPost />, action: manipulateItemAction },
+                {
+                  index: true,
+                  element: <PostDetails />,
+                  action: crudAction,
+                },
+                {
+                  path: "update",
+                  element: <UpdatePost />,
+                  action: crudAction,
+                },
+                {
+                  path: "copy",
+                  element: <CopyPost />,
+                  action: crudAction,
+                },
               ],
             },
           ],
@@ -107,17 +123,33 @@ function App() {
               index: true,
               element: <EventsPage />,
               errorElement: <EventsPage />,
-              action: queryAction,
+              action: crudAction,
             },
-            { path: "create", element: <CreateEvent />, action: manipulateItemAction },
+            {
+              path: "create",
+              element: <CreateEvent />,
+              action: crudAction,
+            },
             {
               path: "id/:id",
               id: "eventdetails",
-              loader: loader,
+              loader: itemLoader,
               children: [
-                { index: true, element: <EventDetails />, action: deleteItemAction },
-                { path: "update", element: <UpdateEvent />, action: manipulateItemAction },
-                { path: "copy", element: <CopyEvent />, action: manipulateItemAction },
+                {
+                  index: true,
+                  element: <EventDetails />,
+                  action: crudAction,
+                },
+                {
+                  path: "update",
+                  element: <UpdateEvent />,
+                  action: crudAction,
+                },
+                {
+                  path: "copy",
+                  element: <CopyEvent />,
+                  action: crudAction,
+                },
               ],
             },
           ],
@@ -137,9 +169,11 @@ function App() {
 
   return (
     <React.StrictMode>
-      <AuthProvider {...oidcConfig}>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider {...oidcConfig}>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </Provider>
     </React.StrictMode>
   );
 }

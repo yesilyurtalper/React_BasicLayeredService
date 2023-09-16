@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -14,18 +14,20 @@ import ListItemText from "@mui/material/ListItemText";
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
-import { Button, CircularProgress } from "@mui/material";
+import { Button} from "@mui/material";
 import { useNavigate, useNavigation } from "react-router-dom";
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "../pages/ErrorPage";
 import classes from "./MiniVariantLeftDrawer.module.css";
 
 export default function MiniVariantDrawerWithHeader(props) {
-  const [open, setOpen] = React.useState(false);
-  const [selectedPath, setSelectedPath] = React.useState(window.location.href);
+  let relUrl = window.location.href.split(`${window.location.origin}/`)[1];
+  let currentIndex = props.menuPaths.indexOf(relUrl.split("/")[0]);
+  let currentMenuItem =
+    props.menuItems[currentIndex] ?? "";
+  const [open, setOpen] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const routerLoading = navigation.state === "loading";
 
   const handleDrawerOpen = () => {
     setOpen((prev) => !prev);
@@ -62,8 +64,8 @@ export default function MiniVariantDrawerWithHeader(props) {
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" noWrap component="div">
-              {props.title}
+            <Typography variant="h6" noWrap sx={{ alignSelf: "center" }}>
+              {props.title + " / " + currentMenuItem}
             </Typography>
           </div>
 
@@ -112,8 +114,7 @@ export default function MiniVariantDrawerWithHeader(props) {
             flexDirection: "row",
             justifyContent: "space-between",
           }}
-        >
-        </DrawerHeader>
+        ></DrawerHeader>
 
         <Divider />
 
@@ -125,24 +126,17 @@ export default function MiniVariantDrawerWithHeader(props) {
                 borderRadius: "10px",
                 overflow: "hidden",
                 margin: "5px",
-                backgroundColor: selectedPath.includes(props.menuPaths[index])
-                  ? "#dae4ef"
-                  : "white",
+                backgroundColor: index === currentIndex ? "#dae4ef" : "white",
               }}
             >
               <Link key={menu} to={props.menuPaths[index]}>
                 <ListItem disablePadding sx={{ display: "block" }}>
                   <ListItemButton
-                    onClick={() => setSelectedPath(props.menuPaths[index])}
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
-                      backgroundColor: selectedPath.includes(
-                        props.menuPaths[index]
-                      )
-                        ? "#dae4ef"
-                        : "white",
+                      backgroundColor: index === currentIndex ? "#dae4ef" : "white",
                     }}
                   >
                     <ListItemIcon
@@ -164,13 +158,13 @@ export default function MiniVariantDrawerWithHeader(props) {
             </div>
           ))}
         </List>
+        
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 10}}>
+      <Box component="main" sx={{ flexGrow: 1, p: 10 }}>
         {props.error && <ErrorPage />}
         {auth.isLoading && <p>Signing you in...</p>}
-        {routerLoading && <CircularProgress style={{position:"relative", left:"50%"}} />}
-        {!props.error && !auth.isLoading && !routerLoading && <Outlet /> }
+        {!props.error && !auth.isLoading && <Outlet />}
       </Box>
     </Box>
   );

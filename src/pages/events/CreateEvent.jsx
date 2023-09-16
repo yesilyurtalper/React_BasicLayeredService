@@ -3,6 +3,6 @@ import EventForm from "../../components/events/EventForm";
 
 export default function CreateEvent() {
   return (
-    <EventForm method="POST"/>
+    <EventForm method="post"/>
   );
 }
