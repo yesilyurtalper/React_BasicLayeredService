@@ -6,7 +6,7 @@ function UpdatePost() {
   const post = useRouteLoaderData("postdetails");
 
   return (
-    <PostForm method="put" post={post} />
+    <PostForm method="put" post={post.data} />
   );
 }
 

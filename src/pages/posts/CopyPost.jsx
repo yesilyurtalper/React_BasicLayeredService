@@ -8,7 +8,7 @@ function CopyPost() {
   const post = useRouteLoaderData("postdetails");
 
   return (
-    <PostForm method="post" post={post} />
+    <PostForm method="post" post={post.data} />
   );
 }
 
