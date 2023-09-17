@@ -7,7 +7,7 @@ function UpdateEvent() {
   const  event = useRouteLoaderData("eventdetails");
 
   return (
-    <EventForm method="put" event={event} />
+    <EventForm method="put" event={event.data} />
   );
 }
 

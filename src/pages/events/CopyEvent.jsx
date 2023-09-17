@@ -7,7 +7,7 @@ function CopyEvent() {
   const event = useRouteLoaderData("eventdetails");
 
   return (
-    <EventForm method="post" event={event} />
+    <EventForm method="post" event={event.data} />
   );
 }
 

@@ -48,7 +48,7 @@ export default function QueryEvents() {
             variant="standard"
             type="datetime-local"
             InputLabelProps={{ shrink: true }}
-            defaultValue={getCurrentDate()}
+            defaultValue={getCurrentDate(true)}
           />
           <TextField
             label="End"
