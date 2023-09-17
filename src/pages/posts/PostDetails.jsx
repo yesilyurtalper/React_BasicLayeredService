@@ -23,36 +23,28 @@ export default function PostDetails() {
           <section className={classes.content}>
             <TextField
               label="Post Id"
-              InputProps={{
-                readOnly: true,
-              }}
+              readOnly
               variant="standard"
               value={post.id}
             />
 
             <TextField
               label="Author"
-              InputProps={{
-                readOnly: true,
-              }}
+              readOnly
               variant="standard"
               value={post.author}
             />
 
             <TextField
               label="Title"
-              InputProps={{
-                readOnly: true,
-              }}
+              readOnly
               variant="standard"
               value={post.title}
             />
 
             <TextField
               label="Body"
-              InputProps={{
-                readOnly: true,
-              }}
+              readOnly
               multiline
               rows={3}
               variant="standard"
@@ -61,20 +53,14 @@ export default function PostDetails() {
 
             <TextField
               label="Created Date"
-              InputProps={{
-                readOnly: true,
-              }}
-              type="datetime"
+              readOnly
               variant="standard"
               value={post.dateCreated}
             />
 
             <TextField
               label="Updated Date"
-              InputProps={{
-                readOnly: true,
-              }}
-              type="datetime"
+              readOnly
               variant="standard"
               value={post.dateModified}
             />

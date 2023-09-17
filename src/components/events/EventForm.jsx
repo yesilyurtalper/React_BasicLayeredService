@@ -5,6 +5,7 @@ import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
 import SubmitCancelActions from "../SubmitCancelActions";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
+import getCurrentDate from "../../utility/currentDate";
 
 export default function EventForm({ method, event }) {
   const auth = useAuth();
@@ -18,31 +19,24 @@ export default function EventForm({ method, event }) {
         <TextField
           label="Event Id"
           name="Id"
-          InputProps={{
-            readOnly: true,
-          }}
+          readOnly
           variant="standard"
-          defaultValue={method === "PUT" ? event.id : 0}
-          style={method === "PUT" ? undefined : { display: "none" }}
+          value={method === "put" ? event.id : 0}
+          style={method === "put" ? undefined : { display: "none" }}
         />
 
         <TextField
           label="Author"
           name="Author"
-          InputProps={{
-            readOnly: true,
-          }}
+          readOnly
           variant="standard"
-          defaultValue={auth.user.profile.preferred_username}
+          value={auth.user.profile.preferred_username}
         />
 
         <TextField
           label="Title"
           name="Title"
           required
-          InputProps={{
-            readOnly: false,
-          }}
           variant="standard"
           defaultValue={event ? event.title : ""}
         />
@@ -51,16 +45,39 @@ export default function EventForm({ method, event }) {
           label="Body"
           name="Body"
           required
-          InputProps={{
-            readOnly: false,
-          }}
           multiline
           rows={5}
           variant="standard"
           defaultValue={event ? event.body : ""}
         />
 
-        <SubmitCancelActions item="event" method={method} />
+        <TextField
+          label="Event Date"
+          name="Date"
+          type="datetime-local"
+          InputLabelProps={{ shrink: true }}
+          variant="standard"
+          defaultValue={event ? event.date : getCurrentDate()}
+        />
+
+        <TextField
+          label="Ticket Price"
+          name="Price"
+          type="number"
+          inputProps={{ step: "0.01" }}
+          variant="standard"
+          defaultValue={event ? event.price : 0}
+        />
+
+        <TextField
+          label="Capacity"
+          name="Capacity"
+          type="number"
+          variant="standard"
+          defaultValue={event ? event.capacity : 0}
+        />
+
+        <SubmitCancelActions item="events" method={method} />
       </Form>
     </Modal>
   );

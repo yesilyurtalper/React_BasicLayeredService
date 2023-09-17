@@ -7,6 +7,7 @@ import {
   Form,
   useActionData,
 } from "react-router-dom";
+import getCurrentDate from "../../utility/currentDate";
 
 export default function QueryEvents() {
   const navigation = useNavigation();
@@ -47,6 +48,7 @@ export default function QueryEvents() {
             variant="standard"
             type="datetime-local"
             InputLabelProps={{ shrink: true }}
+            defaultValue={getCurrentDate()}
           />
           <TextField
             label="End"
@@ -54,6 +56,7 @@ export default function QueryEvents() {
             variant="standard"
             type="datetime-local"
             InputLabelProps={{ shrink: true }}
+            defaultValue={getCurrentDate()}
           />
         </fieldset>
 
@@ -95,7 +98,7 @@ export default function QueryEvents() {
           variant="contained"
           type="submit"
         >
-          {navigation.state === "submitting" ? "Submitting" : "Query"}
+          Query
         </Button>
 
         <div className={classes.actions}>

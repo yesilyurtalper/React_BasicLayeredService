@@ -5,6 +5,7 @@ import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
 import SubmitCancelActions from "../SubmitCancelActions";
+import DetailsActions from "../DetailsActions";
 
 export default function PostForm({ method, post }) {
   const auth = useAuth();
@@ -18,18 +19,18 @@ export default function PostForm({ method, post }) {
         <TextField
           label="Post Id"
           name="Id"
-          InputProps={{readOnly: true }}
+          readOnly
           variant="standard"
-          defaultValue={method === "put" ? post.id : 0}
+          value={method === "put" ? post.id : 0}
           style={method === "put" ? undefined : { display: "none" }}
         />
 
         <TextField
           label="Author"
           name="Author"
-          InputProps={{readOnly: true }}
+          readOnly
           variant="standard"
-          defaultValue={auth.user.profile.preferred_username}
+          value={auth.user.profile.preferred_username}
         />
 
         <TextField

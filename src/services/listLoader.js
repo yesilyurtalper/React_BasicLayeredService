@@ -12,7 +12,7 @@ async function loadItems(request) {
           `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT_ID}`
         )
       );
-    let access_token = window.user ? window.user.access_token : "nul";
+    let access_token = window.user ? window.user.access_token : "";
 
     const response = await fetch(url, {
       headers: {
