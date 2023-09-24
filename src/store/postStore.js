@@ -7,7 +7,7 @@ const postSlice = createSlice({
   initialState: initialState,
   reducers: {
     setPosts(state,action) {
-      state.posts = action.payload;
+      state.posts = Array.isArray(action.payload) ? action.payload : [];
     },
     createPost(state,action) {
       state.posts.unshift(action.payload);
