@@ -1,7 +1,8 @@
-export default async function itemLoader({ request }) {
+export default async function itemLoader({ request,params }) {
   try {
     const relUrl = request.url.split(`${window.location.origin}/`)[1];
-    const url = `${window.API_BASE_URL}${relUrl}`;
+    const item = relUrl.split("/")[0]
+    const url = `${window.API_BASE_URL}${item}/id/${params.id}`;
 
     if (!window.user)
       window.user = JSON.parse(

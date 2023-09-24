@@ -5,7 +5,7 @@ import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
 import SubmitCancelActions from "../SubmitCancelActions";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
-import getCurrentDate from "../../utility/currentDate";
+import getCurrentDate, { getDateUpToMinute } from "../../utility/dateConversion";
 
 export default function EventForm({ method, event }) {
   const auth = useAuth();
@@ -57,7 +57,7 @@ export default function EventForm({ method, event }) {
           type="datetime-local"
           InputLabelProps={{ shrink: true }}
           variant="standard"
-          defaultValue={event ? event.date : getCurrentDate()}
+          defaultValue={event ? getDateUpToMinute(event.date) : getCurrentDate()}
         />
 
         <TextField

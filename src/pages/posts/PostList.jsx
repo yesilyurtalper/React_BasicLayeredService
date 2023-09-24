@@ -4,7 +4,7 @@ import classes from "./PostList.module.css";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { postActions } from "../../store/post";
+import { postActions } from "../../store/postStore";
 import { Suspense } from "react";
 import { CircularProgress } from "@mui/material";
 

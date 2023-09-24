@@ -17,3 +17,17 @@ export default function getCurrentDate(justDate = false, incrementHour = 0) {
 
   return `${now.getFullYear()}-${month}-${day}T${hour}:${minute}`;
 }
+
+export function getCurrentYear() {
+  let now = new Date();
+
+  return `${now.getFullYear()}-01-01T00:00`;
+}
+
+export function getDateUpToMinute(date) {
+  if(!date) 
+   return getCurrentDate();
+
+  let seconds = date.split(".")[0];
+  return seconds.substr(0,seconds.length-3);
+}

@@ -5,10 +5,10 @@ import {
   useNavigate,
 } from "react-router-dom";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, TextField, accordionActionsClasses } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { eventActions } from "../../store/event";
+import { eventActions } from "../../store/eventStore";
 import InspectIcon from "@mui/icons-material/Search";
 import { useMemo, useEffect } from "react";
 
@@ -18,13 +18,17 @@ export default function EventsTable() {
   const navigate = useNavigate();
   const loading = navigation.state != "idle";
   const dispatch = useDispatch();
-  const cachedEvents = useSelector((state) => state.eventStore.events);
-  const events =
-    actionResult && actionResult.isSuccess ? actionResult.data : cachedEvents;
-
+  const events = useSelector((state) => state.eventStore.events);
+  //const events = actionResult && actionResult.isSuccess ? actionResult.data.items : cachedEvents;
+  const totalCount = useSelector((state) => state.eventStore.totalCount);
+  //const totalCount = actionResult && actionResult.isSuccess ? actionResult.data.count : cachedTotalCount;
+  const page = useSelector((state) => state.eventStore.page);
+  const pageSize = useSelector((state) => state.eventStore.pageSize);
+  
   useEffect(() => {
-    dispatch(eventActions.setEvents(events));
-  }, [events]);
+    if(actionResult && actionResult.isSuccess)
+      dispatch(eventActions.setQueryResult(actionResult.data));
+  }, [actionResult]); 
 
   const columns = useMemo(
     () => [
@@ -83,6 +87,7 @@ export default function EventsTable() {
   return (
     <Box sx={{height:600,width:"100%",margin:"auto"}}>
       <DataGrid columns={columns} rows={rows} rowHeight={40}
+        rowCount={totalCount}
         sx={{'MuiDataGrid-columnHeaderTitle':{fontWeight:900}}}
         onRowDoubleClick={(params) => navigate("id/"+params.row.id) }/>
     </Box>

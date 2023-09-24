@@ -4,6 +4,7 @@ import Modal from "../../components/Modal";
 import classes from "./EventDetails.module.css";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
 import DetailsActions from "../../components/DetailsActions";
+import { getDateUpToMinute } from "../../utility/dateConversion";
 
 export default function EventDetails() {
   const loaderResult = useRouteLoaderData("eventdetails");
@@ -53,7 +54,7 @@ export default function EventDetails() {
               label="Event Date"
               readOnly
               variant="standard"
-              value={event.date}
+              value={getDateUpToMinute(event.date)}
             />
 
             <TextField

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import postReducer from './post';
-import eventReducer from './event';
+import postReducer from './postStore';
+import eventReducer from './eventStore';
 
 
 const store = configureStore({

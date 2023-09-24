@@ -3,7 +3,7 @@ import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
 import { Provider } from "react-redux";
-import store from "./store/index";
+import store from "./store/indexStore";
 
 import CustomStatusBar from "./components/CustomStatusBar";
 import HomePage from "./pages/HomePage";

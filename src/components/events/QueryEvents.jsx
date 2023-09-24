@@ -1,127 +1,95 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { Card, Button, Typography, TextField } from "@mui/material";
 import classes from "./QueryEvents.module.css";
-import {
-  useNavigation,
-  useNavigate,
-  Form,
-  useActionData,
-} from "react-router-dom";
-import getCurrentDate from "../../utility/currentDate";
+import { useNavigation, useNavigate, useSubmit } from "react-router-dom";
+import getCurrentDate, { getCurrentYear } from "../../utility/dateConversion";
+import { useSelector } from "react-redux";
 
-export default function QueryEvents() {
+export default function QueryEvents(props) {
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const actionData = useActionData();
-
-  const formRef = useRef();
-  const [directionsDisabled, setDirectionsDisabled] = useState(true);
-
-  useEffect(() => {
-    setDirectionsDisabled(
-      navigation.state === "submitting" || !actionData || !actionData.data
-    );
-  }, [navigation, actionData]);
+  const submit = useSubmit();
+  const lastId = useSelector((state) => state.eventStore.lastId);
+  const lastIdRef = useRef();
 
   return (
-    <Card >
-      <Form
-        className={classes.form}
-        method="POST"
-        ref={formRef}
-        onChange={() => setDirectionsDisabled(true)}
+    <Card className={classes.form}>
+      <TextField label="Event Id" name="Id" variant="standard" type="number" />
+      <TextField label="Organizer" name="Author" variant="standard" />
+      <TextField label="Title" name="Title" variant="standard" />
+      <TextField label="Body" name="Body" variant="standard" />
+      <fieldset className={classes.between}>
+        <legend>Date Between</legend>
+        <TextField
+          label="Start"
+          name="DateStart"
+          variant="standard"
+          type="datetime-local"
+          InputLabelProps={{ shrink: true }}
+          defaultValue={getCurrentYear()}
+        />
+        <TextField
+          label="End"
+          name="DateEnd"
+          variant="standard"
+          type="datetime-local"
+          InputLabelProps={{ shrink: true }}
+          defaultValue={getCurrentDate()}
+        />
+      </fieldset>
+
+      <fieldset className={classes.between}>
+        <legend>Price Between</legend>
+        <TextField
+          label="Start"
+          name="PriceStart"
+          variant="standard"
+          type="number"
+          inputProps={{ step: "0.01" }}
+        />
+        <TextField
+          label="End"
+          name="PriceEnd"
+          variant="standard"
+          type="number"
+          inputProps={{ step: "0.01" }}
+        />
+      </fieldset>
+
+      <Button
+        disabled={navigation.state === "submitting"}
+        variant="contained"
+        onClick={() => props.formRef.current.reset()}
       >
-        <TextField
-          label="Event Id"
-          name="Id"
-          variant="standard"
-          type="number"
-        />
-        <TextField label="Organizer" name="Author" variant="standard" />
-        <TextField label="Title" name="Title" variant="standard" />
-        <TextField label="Body" name="Body" variant="standard" />
-        <fieldset className={classes.between}>
-          <legend>Date Between</legend>
-          <TextField
-            label="Start"
-            name="DateStart"
-            variant="standard"
-            type="datetime-local"
-            InputLabelProps={{ shrink: true }}
-            defaultValue={getCurrentDate(true)}
-          />
-          <TextField
-            label="End"
-            name="DateEnd"
-            variant="standard"
-            type="datetime-local"
-            InputLabelProps={{ shrink: true }}
-            defaultValue={getCurrentDate()}
-          />
-        </fieldset>
+        Clear
+      </Button>
 
-        <fieldset className={classes.between}>
-          <legend>Price Between</legend>
-          <TextField
-            label="Start"
-            name="PriceStart"
-            variant="standard"
-            type="number"
-            inputProps={{ step: "0.01" }}
-          />
-          <TextField
-            label="End"
-            name="PriceEnd"
-            variant="standard"
-            type="number"
-            inputProps={{ step: "0.01" }}
-          />
-        </fieldset>
+      <TextField
+        name="LastId"
+        type="hidden"
+        inputRef={lastIdRef}
+        value={lastId}
+        style={{ display: "none" }}
+      />
 
-        <TextField
-          label="Count"
-          name="Count"
-          variant="standard"
-          type="number"
-          inputProps={{ step: "1", min: 1, max: 1000, defaultValue: 100 }}
-        />
+      <Button
+        disabled={navigation.state === "submitting"}
+        variant="contained"
+        onClick={() => {
+          lastIdRef.current.value = "0";
+          props.formRef.current.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+        }}
+      >
+        Query
+      </Button>
 
-        <Button
-          disabled={navigation.state === "submitting"}
-          variant="contained"
-          onClick={() => formRef.current.reset()}
-        >
-          Clear
-        </Button>
-        <Button
-          disabled={navigation.state === "submitting"}
-          variant="contained"
-          type="submit"
-        >
-          Query
-        </Button>
-
-        <div className={classes.actions}>
-          <Button
-            disabled={directionsDisabled}
-            variant="contained"
-            onClick={() => formRef.current.reset()}
-          >
-            Prev
-          </Button>
-          <Button
-            disabled={directionsDisabled}
-            variant="contained"
-            onClick={() => formRef.current.reset()}
-          >
-            Next
-          </Button>
-        </div>
-
-        <Button variant="contained" onClick={() => navigate("create")} style={{gridArea:"2/8"}}>
-            Create
-          </Button>
-      </Form>
+      <Button
+        variant="contained"
+        onClick={() => navigate("create")}
+        style={{ gridArea: "2/8" }}
+      >
+        Create
+      </Button>
     </Card>
   );
 }
