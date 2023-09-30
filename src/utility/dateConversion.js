@@ -24,6 +24,18 @@ export function getCurrentYear() {
   return `${now.getFullYear()}-01-01T00:00`;
 }
 
+export function getCurrentDay() {
+  let now = new Date();
+
+  let month = (now.getMonth() + 1).toString();
+  if (month.length < 2) month = "0" + month;
+
+  let day = now.getDate().toString();
+  if (day.length < 2) day = "0" + day;
+
+  return `${now.getFullYear()}-${month}-${day}T00:00`;
+}
+
 export function getDateUpToMinute(date) {
   if(!date) 
    return getCurrentDate();

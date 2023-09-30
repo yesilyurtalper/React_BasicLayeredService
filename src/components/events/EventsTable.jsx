@@ -3,6 +3,7 @@ import {
   useNavigation,
   Link,
   useNavigate,
+  useSubmit
 } from "react-router-dom";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
 import { Box, CircularProgress, TextField, accordionActionsClasses } from "@mui/material";
@@ -10,7 +11,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { eventActions } from "../../store/eventStore";
 import InspectIcon from "@mui/icons-material/Search";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useCallback } from "react";
 
 export default function EventsTable() {
   const actionResult = useActionData();
@@ -19,16 +20,20 @@ export default function EventsTable() {
   const loading = navigation.state != "idle";
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventStore.events);
-  //const events = actionResult && actionResult.isSuccess ? actionResult.data.items : cachedEvents;
+  const queryInput = useSelector((state) => state.eventStore.queryInput);
   const totalCount = useSelector((state) => state.eventStore.totalCount);
-  //const totalCount = actionResult && actionResult.isSuccess ? actionResult.data.count : cachedTotalCount;
-  const page = useSelector((state) => state.eventStore.page);
-  const pageSize = useSelector((state) => state.eventStore.pageSize);
+  const paginationModel = useSelector((state) => state.eventStore.paginationModel);
+  const submit = useSubmit();
   
   useEffect(() => {
     if(actionResult && actionResult.isSuccess)
-      dispatch(eventActions.setQueryResult(actionResult.data));
+      dispatch(eventActions.setEvents(actionResult.data)); 
   }, [actionResult]); 
+
+  const handlePaginationChange = useCallback((newModel) => {
+    dispatch(eventActions.setPaginationModel(newModel));
+    submit({...queryInput,...newModel},{method:"post"});
+  },[queryInput]);
 
   const columns = useMemo(
     () => [
@@ -72,8 +77,8 @@ export default function EventsTable() {
       }
     )),[events]);
 
-  if (loading) 
-    return <CircularProgress />;
+  /* if (loading) 
+    return <CircularProgress />; */
 
   if(actionResult && !actionResult.isSuccess)
     return <ActionLoaderResult result={actionResult}/>;
@@ -85,10 +90,14 @@ export default function EventsTable() {
     return;
 
   return (
-    <Box sx={{height:600,width:"100%",margin:"auto"}}>
+    <Box sx={{height:500,width:"100%",margin:"auto"}}>
       <DataGrid columns={columns} rows={rows} rowHeight={40}
+        loading={loading}
         rowCount={totalCount}
         sx={{'MuiDataGrid-columnHeaderTitle':{fontWeight:900}}}
+        paginationMode = "server"
+        paginationModel={paginationModel}
+        onPaginationModelChange={handlePaginationChange}
         onRowDoubleClick={(params) => navigate("id/"+params.row.id) }/>
     </Box>
   );
