@@ -33,11 +33,13 @@ const eventSlice = createSlice({
     createEvent(state, action) {
       state.events.unshift(action.payload);
       state.totalCount++;
+      state.paginationModel.pageSize++;
     },
 
     deleteEvent(state, action) {
       state.events = state.events.filter((ev) => ev.id != action.payload);
       state.totalCount--;
+      state.paginationModel.pageSize--;
     },
 
     updateEvent(state, action) {
