@@ -15,8 +15,8 @@ const initialState = {
     Body:"",
     DateStart:getCurrentYear(),
     DateEnd:getCurrentDate(),
-    PriceStart:0,
-    PriceEnd:0
+    PriceStart:"",
+    PriceEnd:""
   }
 };
 

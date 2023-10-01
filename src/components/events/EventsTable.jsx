@@ -3,15 +3,20 @@ import {
   useNavigation,
   Link,
   useNavigate,
-  useSubmit
+  useSubmit,
 } from "react-router-dom";
 import ActionLoaderResult from "../../components/ActionLoaderResult";
-import { Box, CircularProgress, TextField, accordionActionsClasses } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  TextField,
+  accordionActionsClasses,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { eventActions } from "../../store/eventStore";
 import InspectIcon from "@mui/icons-material/Search";
-import { useMemo, useEffect, useCallback } from "react";
+import { useMemo, useEffect, useCallback, useState } from "react";
 
 export default function EventsTable() {
   const actionResult = useActionData();
@@ -22,18 +27,29 @@ export default function EventsTable() {
   const events = useSelector((state) => state.eventStore.events);
   const queryInput = useSelector((state) => state.eventStore.queryInput);
   const totalCount = useSelector((state) => state.eventStore.totalCount);
-  const paginationModel = useSelector((state) => state.eventStore.paginationModel);
   const submit = useSubmit();
-  
-  useEffect(() => {
-    if(actionResult && actionResult.isSuccess)
-      dispatch(eventActions.setEvents(actionResult.data)); 
-  }, [actionResult]); 
+  const paginationModel = useSelector(
+    (state) => state.eventStore.paginationModel
+  );
 
-  const handlePaginationChange = useCallback((newModel) => {
-    dispatch(eventActions.setPaginationModel(newModel));
-    submit({...queryInput,...newModel},{method:"post"});
-  },[queryInput]);
+  useEffect(() => {
+    if (actionResult && actionResult.isSuccess)
+      dispatch(eventActions.setEvents(actionResult.data));
+  }, [actionResult]);
+
+  const handlePaginationChange = useCallback(
+    (newModel) => {
+      if (newModel.page > paginationModel.page)
+        submit(
+          { ...queryInput, LastId: events[events.length - 1].id },
+          { method: "post" }
+        );
+      else if (newModel.page < paginationModel.page)
+        submit({ ...queryInput, FirstId: events[0].id }, { method: "post" });
+      dispatch(eventActions.setPaginationModel(newModel));
+    },
+    [queryInput]
+  );
 
   const columns = useMemo(
     () => [
@@ -46,24 +62,78 @@ export default function EventsTable() {
             <InspectIcon />
           </Link>
         ),
-        flex: 1
+        flex: 1,
       },
-      { field: "id", headerName: "Id", headerAlign: "center", align: "center", flex: 1},
-      { field: "author", headerName: "Organizer", headerAlign: "center", align: "center", flex: 3 },
-      { field: "title", headerName: "Title", headerAlign: "center", align: "center", flex: 3 },
-      { field: "body", headerName: "Body", headerAlign: "center", align: "center", flex: 5 },
-      { field: "capacity", headerName: "Capacity", headerAlign: "center", align: "center", flex: 2 },
-      { field: "price", headerName: "Price", headerAlign: "center", align: "center", flex: 2 },
-      { field: "date", headerName: "Date", headerAlign: "center", align: "center", flex: 4},
-      { field: "dateCreated", headerName: "Created Date", headerAlign: "center", align: "center", flex: 4 },
-      { field: "dateModified", headerName: "Modified Date", headerAlign: "center", align: "center", flex: 4 }
+      {
+        field: "id",
+        headerName: "Id",
+        headerAlign: "center",
+        align: "center",
+        flex: 1,
+      },
+      {
+        field: "author",
+        headerName: "Organizer",
+        headerAlign: "center",
+        align: "center",
+        flex: 3,
+      },
+      {
+        field: "title",
+        headerName: "Title",
+        headerAlign: "center",
+        align: "center",
+        flex: 3,
+      },
+      {
+        field: "body",
+        headerName: "Body",
+        headerAlign: "center",
+        align: "center",
+        flex: 5,
+      },
+      {
+        field: "capacity",
+        headerName: "Capacity",
+        headerAlign: "center",
+        align: "center",
+        flex: 2,
+      },
+      {
+        field: "price",
+        headerName: "Price",
+        headerAlign: "center",
+        align: "center",
+        flex: 2,
+      },
+      {
+        field: "date",
+        headerName: "Date",
+        headerAlign: "center",
+        align: "center",
+        flex: 4,
+      },
+      {
+        field: "dateCreated",
+        headerName: "Created Date",
+        headerAlign: "center",
+        align: "center",
+        flex: 4,
+      },
+      {
+        field: "dateModified",
+        headerName: "Modified Date",
+        headerAlign: "center",
+        align: "center",
+        flex: 4,
+      },
     ],
     []
   );
 
-  const rows = useMemo(() =>
-    events.map((ev) => (
-      {
+  const rows = useMemo(
+    () =>
+      events.map((ev) => ({
         details: ev.id,
         id: ev.id,
         author: ev.author,
@@ -73,32 +143,36 @@ export default function EventsTable() {
         price: ev.price,
         date: ev.date,
         dateCreated: ev.dateCreated,
-        dateModified: ev.dateModified
-      }
-    )),[events]);
+        dateModified: ev.dateModified,
+      })),
+    [events]
+  );
 
-  /* if (loading) 
-    return <CircularProgress />; */
+  if (loading && (events.length == 0 || !actionResult || !actionResult.isSuccess) )  
+    return <CircularProgress />;
 
-  if(actionResult && !actionResult.isSuccess)
-    return <ActionLoaderResult result={actionResult}/>;
+  if (!actionResult && events.length == 0) return;
 
-  if (actionResult && events.length < 1)
+  if (actionResult && !actionResult.isSuccess)
+    return <ActionLoaderResult result={actionResult} />;
+
+  if (actionResult && events.length == 0) 
     return <p>No events found!</p>;
 
-  if (!actionResult && events.length < 1) 
-    return;
-
   return (
-    <Box sx={{height:500,width:"100%",margin:"auto"}}>
-      <DataGrid columns={columns} rows={rows} rowHeight={40}
+    <Box sx={{ height: 500, width: "100%", margin: "auto" }}>
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        rowHeight={40}
         loading={loading}
         rowCount={totalCount}
-        sx={{'MuiDataGrid-columnHeaderTitle':{fontWeight:900}}}
-        paginationMode = "server"
+        sx={{ "MuiDataGrid-columnHeaderTitle": { fontWeight: 900 } }}
+        paginationMode="server"
         paginationModel={paginationModel}
         onPaginationModelChange={handlePaginationChange}
-        onRowDoubleClick={(params) => navigate("id/"+params.row.id) }/>
+        onRowDoubleClick={(params) => navigate("id/" + params.row.id)}
+      />
     </Box>
   );
 }
