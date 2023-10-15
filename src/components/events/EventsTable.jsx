@@ -22,20 +22,21 @@ export default function EventsTable() {
   const actionResult = useActionData();
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const loading = navigation.state != "idle";
+  const loading = navigation.state != "idle" && navigation.location?.pathname.includes("events");
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventStore.events);
   const queryInput = useSelector((state) => state.eventStore.queryInput);
   const totalCount = useSelector((state) => state.eventStore.totalCount);
   const submit = useSubmit();
+  console.log(navigation);
   const paginationModel = useSelector(
     (state) => state.eventStore.paginationModel
   );
 
   useEffect(() => {
-    if (actionResult && actionResult.isSuccess)
+    if (actionResult?.isSuccess && navigation.location?.pathname === "/events")
       dispatch(eventActions.setEvents(actionResult.data));
-  }, [actionResult]);
+  }, [actionResult,navigation]);
 
   const handlePaginationChange = useCallback(
     (newModel) => {
