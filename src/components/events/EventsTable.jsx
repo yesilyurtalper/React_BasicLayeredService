@@ -34,9 +34,9 @@ export default function EventsTable() {
   );
 
   useEffect(() => {
-    if (actionResult?.isSuccess && navigation.location?.pathname === "/events")
+    if (actionResult?.isSuccess)
       dispatch(eventActions.setEvents(actionResult.data));
-  }, [actionResult,navigation]);
+  }, [actionResult]);
 
   const handlePaginationChange = useCallback(
     (newModel) => {
