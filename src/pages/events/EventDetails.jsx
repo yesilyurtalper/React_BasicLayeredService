@@ -10,6 +10,7 @@ export default function EventDetails() {
   const loaderResult = useRouteLoaderData("eventdetails");
   const actionResult = useActionData();
   const event = loaderResult.data;
+  console.log(actionResult);
 
   return (
     <Modal>

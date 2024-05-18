@@ -28,10 +28,12 @@ export default function EventsTable() {
   const queryInput = useSelector((state) => state.eventStore.queryInput);
   const totalCount = useSelector((state) => state.eventStore.totalCount);
   const submit = useSubmit();
-  console.log(navigation);
   const paginationModel = useSelector(
     (state) => state.eventStore.paginationModel
   );
+
+
+  console.log(actionResult);
 
   useEffect(() => {
     if (actionResult?.isSuccess)
