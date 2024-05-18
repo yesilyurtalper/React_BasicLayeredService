@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "react-router-dom";
 
-import PostForm from "../../components/posts/PostForm";
+import PostForm from "./PostForm";
 
 function UpdatePost() {
   const post = useRouteLoaderData("postdetails");

@@ -1,9 +1,9 @@
 import { useRouteLoaderData, useActionData } from "react-router-dom";
 import { TextField } from "@mui/material";
-import Modal from "../../components/Modal";
+import Modal from "../common/Modal";
 import classes from "./EventDetails.module.css";
-import ActionLoaderResult from "../../components/ActionLoaderResult";
-import DetailsActions from "../../components/DetailsActions";
+import ActionLoaderResult from "../common/actions/ActionLoaderResult";
+import DetailsActions from "../common/actions/DetailsActions";
 import { getDateUpToMinute } from "../../utility/dateConversion";
 
 export default function EventDetails() {

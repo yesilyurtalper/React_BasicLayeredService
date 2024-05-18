@@ -3,33 +3,33 @@ import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
 import { Provider } from "react-redux";
-import store from "./store/indexStore";
+import store from "./store/indexStore.js";
 
-import CustomStatusBar from "./components/CustomStatusBar";
-import HomePage from "./pages/HomePage";
-import MiniVariantDrawerWithHeader from "./components/MiniVariantLeftDrawer";
+import CustomStatusBar from "./components/common/layout/CustomStatusBar";
+import HomePage from "./components/common/layout/HomePage.jsx";
+import MiniVariantDrawerWithHeader from "./components/common/layout/MiniVariantLeftDrawer";
 
 //menu icons
 import PostsIcon from "@mui/icons-material/PostAdd.js";
 import EventsIcon from "@mui/icons-material/Event.js";
 import IngredientsIcon from "@mui/icons-material/Settings.js";
 
-//route pages
-import PostsLayout from "./pages/posts/PostsLayout";
-import PostList from "./pages/posts/PostList";
-import CreatePost from "./pages/posts/CreatePost.jsx";
-import PostDetails from "./pages/posts/PostDetails";
-import UpdatePost from "./pages/posts/UpdatePost.jsx";
-import CopyPost from "./pages/posts/CopyPost";
+//route components
+import PostsLayout from "./components/posts/PostsLayout";
+import PostList from "./components/posts/PostList";
+import CreatePost from "./components/posts/CreatePost.jsx";
+import PostDetails from "./components/posts/PostDetails";
+import UpdatePost from "./components/posts/UpdatePost.jsx";
+import CopyPost from "./components/posts/CopyPost";
 
 //route events
-import EventsPage from "./pages/events/EventsPage.jsx";
-import CreateEvent from "./pages/events/CreateEvent.jsx";
-import EventDetails from "./pages/events/EventDetails";
-import UpdateEvent from "./pages/events/UpdateEvent.jsx";
-import CopyEvent from "./pages/events/CopyEvent";
+import EventsPage from "./components/events/EventsPage.jsx";
+import CreateEvent from "./components/events/CreateEvent.jsx";
+import EventDetails from "./components/events/EventDetails";
+import UpdateEvent from "./components/events/UpdateEvent.jsx";
+import CopyEvent from "./components/events/CopyEvent";
 
-import Ingredients from "./pages/Ingredients";
+import Ingredients from "./components/ingredients/Ingredients.jsx";
 
 //loaders and actions
 import listLoader from "./services/listLoader.js";
@@ -51,7 +51,7 @@ function App() {
   const menuPaths = ["posts", "events", "ingredients"];
   const menuItems = ["User Posts", "Technology Events", "Ingredients"];
   const menuIcons = [<PostsIcon />, <EventsIcon />, <IngredientsIcon />];
-  const menuPages = [<PostsLayout />, <EventsPage />, <Ingredients />];
+  const menucomponents = [<PostsLayout />, <EventsPage />, <Ingredients />];
 
   const router = createBrowserRouter([
     {
@@ -62,7 +62,7 @@ function App() {
           menuPaths={menuPaths}
           menuItems={menuItems}
           menuIcons={menuIcons}
-          menuPages={menuPages}
+          menucomponents={menucomponents}
           //customStatusBar={<CustomStatusBar />}
         />
       ),
@@ -72,7 +72,7 @@ function App() {
           menuPaths={menuPaths}
           menuItems={menuItems}
           menuIcons={menuIcons}
-          menuPages={menuPages}
+          menucomponents={menucomponents}
           //customStatusBar={<CustomStatusBar />}
           error
         />
@@ -83,7 +83,7 @@ function App() {
 
         {
           path: menuPaths[0], //posts
-          element: menuPages[0], //PostsLayout
+          element: menucomponents[0], //PostsLayout
           children: [
             { index: true, element: <PostList />, loader: listLoader },
             {
@@ -157,7 +157,7 @@ function App() {
 
         {
           path: menuPaths[2], //ingredients
-          element: menuPages[2],
+          element: menucomponents[2],
         },
       ],
     },

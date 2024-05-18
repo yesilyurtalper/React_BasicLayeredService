@@ -1,10 +1,10 @@
 import { Form, useActionData } from "react-router-dom";
-import classes from "../../pages/events/EventDetails.module.css";
-import Modal from "../Modal";
+import classes from "../../components/events/EventDetails.module.css";
+import Modal from "../common/Modal";
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
-import SubmitCancelActions from "../SubmitCancelActions";
-import ActionLoaderResult from "../../components/ActionLoaderResult";
+import SubmitCancelActions from "../common/actions/SubmitCancelActions";
+import ActionLoaderResult from "../common/actions/ActionLoaderResult";
 import getCurrentDate, { getDateUpToMinute } from "../../utility/dateConversion";
 
 export default function EventForm({ method, event }) {

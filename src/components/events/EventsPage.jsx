@@ -1,7 +1,7 @@
 
 import classes from "./EventsPage.module.css";
-import QueryEvents from "../../components/events/QueryEvents";
-import EventsTable from "../../components/events/EventsTable";
+import QueryEvents from "./QueryEvents";
+import EventsTable from "./EventsTable";
 import { useRef } from "react";
 
 export default function EventsPage() {

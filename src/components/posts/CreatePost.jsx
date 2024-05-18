@@ -1,5 +1,5 @@
 
-import PostForm from "../../components/posts/PostForm";
+import PostForm from "./PostForm";
 
 export default function CreatePost() {
   return (

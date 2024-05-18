@@ -1,7 +1,7 @@
 import { useLoaderData, Await, useNavigation } from "react-router-dom";
-import Post from "../../components/posts/Post";
+import Post from "./Post";
 import classes from "./PostList.module.css";
-import ActionLoaderResult from "../../components/ActionLoaderResult";
+import ActionLoaderResult from "../common/actions/ActionLoaderResult";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { postActions } from "../../store/postStore";

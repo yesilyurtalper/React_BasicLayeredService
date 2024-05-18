@@ -7,8 +7,8 @@ import {
   useActionData,
 } from "react-router-dom";
 import { useEffect } from "react";
-import { eventActions } from "../store/eventStore";
-import { postActions } from "../store/postStore";
+import { eventActions } from "../../../store/eventStore";
+import { postActions } from "../../../store/postStore";
 
 export default function SubmitCancelActions(props) {
   const navigate = useNavigate();

@@ -1,11 +1,11 @@
 import { Form, useActionData } from "react-router-dom";
-import classes from "../../pages/posts/PostDetails.module.css";
-import Modal from "../Modal";
+import classes from "../../components/posts/PostDetails.module.css";
+import Modal from "../common/Modal";
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
-import ActionLoaderResult from "../../components/ActionLoaderResult";
-import SubmitCancelActions from "../SubmitCancelActions";
-import DetailsActions from "../DetailsActions";
+import ActionLoaderResult from "../common/actions/ActionLoaderResult";
+import SubmitCancelActions from "../common/actions/SubmitCancelActions";
+import DetailsActions from "../common/actions/DetailsActions";
 
 export default function PostForm({ method, post }) {
   const auth = useAuth();

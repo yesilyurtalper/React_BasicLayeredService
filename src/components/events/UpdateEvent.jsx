@@ -1,6 +1,6 @@
 import { useRouteLoaderData,useActionData} from "react-router-dom";
 
-import EventForm from "../../components/events/EventForm";
+import EventForm from "./EventForm";
 
 function UpdateEvent() {
 

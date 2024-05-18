@@ -5,7 +5,7 @@ import {
   useNavigate,
   useSubmit,
 } from "react-router-dom";
-import ActionLoaderResult from "../../components/ActionLoaderResult";
+import ActionLoaderResult from "../common/actions/ActionLoaderResult";
 import {
   Box,
   CircularProgress,

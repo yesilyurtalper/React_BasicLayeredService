@@ -16,7 +16,7 @@ import { useAuth } from "react-oidc-context";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
 import { Button} from "@mui/material";
 import { useNavigate, useNavigation } from "react-router-dom";
-import ErrorPage from "../pages/ErrorPage";
+import ErrorPage from "./ErrorPage";
 import classes from "./MiniVariantLeftDrawer.module.css";
 
 export default function MiniVariantDrawerWithHeader(props) {

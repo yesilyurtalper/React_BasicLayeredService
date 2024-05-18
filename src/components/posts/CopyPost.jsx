@@ -1,7 +1,7 @@
 import { useRouteLoaderData, Await } from "react-router-dom";
 import { Suspense } from "react";
 
-import PostForm from "../../components/posts/PostForm";
+import PostForm from "./PostForm";
 
 function CopyPost() {
 

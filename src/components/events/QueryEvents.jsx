@@ -39,7 +39,7 @@ export default function QueryEvents(props) {
   return (
     <Card>
       <Form className={classes.form} ref={formRef} method="post"
-        onSubmit={() => dispatch(eventActions.setPaginationModel({page:0,pageSize:10}))}>
+        onSubmit={() => dispatch(eventActions.setPaginationModel({page:0,componentsize:10}))}>
         <TextField
           label="Event Id"
           name="Id"
@@ -133,7 +133,7 @@ export default function QueryEvents(props) {
         />
 
         <TextField
-          name="PageSize"
+          name="componentsize"
           type="hidden"
           style={{ display: "none", flex:1 }}
           value="10"
