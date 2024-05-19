@@ -5,7 +5,10 @@ import eventReducer from './eventStore';
 
 
 const store = configureStore({
-  reducer: { postStore: postReducer, eventStore: eventReducer },
+  reducer: { 
+    postStore: postReducer, 
+    eventStore: eventReducer 
+  },
 });
 
 export default store;

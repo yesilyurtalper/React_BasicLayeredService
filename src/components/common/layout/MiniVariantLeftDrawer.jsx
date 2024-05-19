@@ -12,12 +12,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Outlet, Link } from "react-router-dom";
-import { useAuth } from "react-oidc-context";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
-import { Button} from "@mui/material";
-import { useNavigate, useNavigation } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
-import classes from "./MiniVariantLeftDrawer.module.css";
+import Login from "../Login";
 
 export default function MiniVariantDrawerWithHeader(props) {
   let relUrl = window.location.href.split(`${window.location.origin}/`)[1];
@@ -25,9 +22,6 @@ export default function MiniVariantDrawerWithHeader(props) {
   let currentMenuItem =
     props.menuItems[currentIndex] ?? "";
   const [open, setOpen] = useState(false);
-  const auth = useAuth();
-  const navigate = useNavigate();
-  const navigation = useNavigation();
 
   const handleDrawerOpen = () => {
     setOpen((prev) => !prev);
@@ -69,41 +63,7 @@ export default function MiniVariantDrawerWithHeader(props) {
             </Typography>
           </div>
 
-          {!auth.isAuthenticated && (
-            <Button
-              variant="contained"
-              onClick={() => void auth.signinRedirect()}
-            >
-              Log in
-            </Button>
-          )}
-
-          {auth.isAuthenticated && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                gap: "10px",
-                alignItems: "center",
-              }}
-            >
-              {props.customStatusBar}
-              <Typography variant="h6" noWrap component="div">
-                {auth.user?.profile.name}{" "}
-              </Typography>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  auth.removeUser();
-                  window.user = null;
-                  navigate("/");
-                }}
-              >
-                Log out
-              </Button>
-            </div>
-          )}
+         <Login/>
         </Toolbar>
       </AppBar>
 
@@ -162,9 +122,7 @@ export default function MiniVariantDrawerWithHeader(props) {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 10 }}>
-        {props.error && <ErrorPage />}
-        {auth.isLoading && <p>Signing you in...</p>}
-        {!props.error && !auth.isLoading && <Outlet />}
+        {props.error ? <ErrorPage /> : <Outlet /> }
       </Box>
     </Box>
   );
