@@ -1,8 +1,11 @@
 
 import { defer } from "react-router-dom";
+import store from "../store/indexStore";
 
 async function loadItems(request) {
   try {
+    const state = store.getState();
+    
     const relUrl = request.url.split(`${window.location.origin}/`)[1];
     const url = `${window.API_BASE_URL}${relUrl}`;
 
@@ -12,7 +15,7 @@ async function loadItems(request) {
           `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT_ID}`
         )
       );
-    let access_token = window.user ? window.user.access_token : "";
+      let access_token = state.commonStore.user?.access_token ?? "";
 
     const response = await fetch(url, {
       headers: {

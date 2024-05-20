@@ -1,5 +1,9 @@
+import store from "../store/indexStore"
+
 export default async function crudAction({ request }) {
   try {
+    const state = store.getState();
+
     const relUrl = request.url.split(`${window.location.origin}/`)[1];
     const url = `${window.API_BASE_URL}${relUrl}`;
 
@@ -9,7 +13,7 @@ export default async function crudAction({ request }) {
           `oidc.user:${window.OIDC_AUTHORITY}:${window.OIDC_CLIENT_ID}`
         )
       );
-    let access_token = window.user ? window.user.access_token : "";
+    let access_token = state.commonStore.user?.access_token ?? "";
 
     const formData = await request.formData();
     let objectData = Object.fromEntries(formData);
