@@ -24,8 +24,8 @@ import CopyEvent from "../components/events/CopyEvent";
 import Ingredients from "../components/ingredients/Ingredients.jsx";
 
 //loaders and actions
-import listLoader from "../services/listLoader.js";
-import itemLoader from "../services/itemLoader.js";
+//import listLoader from "../services/listLoader.js";
+//import itemLoader from "../services/itemLoader.js";
 import crudAction from "../services/crudAction.js";
 
 import { createBrowserRouter } from "react-router-dom";
@@ -63,7 +63,7 @@ export default function createRoutes(user) {
           path: menuPaths[0], //posts
           element: <PostsLayout/>,
           children: [
-            { index: true, element: <PostList />, loader: listLoader },
+            { index: true, element: <PostList /> },
             {
               path: "create",
               element: <CreatePost />,
@@ -72,7 +72,6 @@ export default function createRoutes(user) {
             {
               path: "id/:id",
               id: "postdetails",
-              loader: itemLoader,
               children: [
                 {
                   index: true,
@@ -111,7 +110,6 @@ export default function createRoutes(user) {
             {
               path: "id/:id",
               id: "eventdetails",
-              loader: itemLoader,
               children: [
                 {
                   index: true,

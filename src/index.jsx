@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "react-oidc-context";
 import { Provider } from "react-redux";
 import store from "./store/indexStore.js";
+import { SWRConfig } from "swr";
+import swrFetcher from "./services/swrFetcher.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -23,7 +25,14 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <AuthProvider {...oidcConfig}>
-        <App />
+        <SWRConfig
+          value={{
+            //refreshInterval: 3000,
+            fetcher: swrFetcher,
+          }}
+        >
+          <App />{" "}
+        </SWRConfig>
       </AuthProvider>
     </Provider>
   </React.StrictMode>

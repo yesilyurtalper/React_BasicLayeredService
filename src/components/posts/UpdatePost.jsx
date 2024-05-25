@@ -1,13 +1,14 @@
-import { useRouteLoaderData } from "react-router-dom";
+import withSWR from "../common/withSWR";
 
 import PostForm from "./PostForm";
 
-function UpdatePost() {
-  const post = useRouteLoaderData("postdetails");
+function UpdatePostComponent({data:post}) {
 
   return (
-    <PostForm method="put" post={post.data} />
+    <PostForm method="put" post={post} />
   );
 }
+
+const UpdatePost = withSWR(UpdatePostComponent, "posts");
 
 export default UpdatePost;

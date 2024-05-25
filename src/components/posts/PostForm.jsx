@@ -3,9 +3,8 @@ import classes from "../../components/posts/PostDetails.module.css";
 import Modal from "../common/Modal";
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
-import ActionLoaderResult from "../common/actions/ActionLoaderResult";
+import Error from "../common/Error";
 import SubmitCancelActions from "../common/actions/SubmitCancelActions";
-import DetailsActions from "../common/actions/DetailsActions";
 
 export default function PostForm({ method, post }) {
   const auth = useAuth();
@@ -14,7 +13,7 @@ export default function PostForm({ method, post }) {
   return (
     <Modal>
       <Form method={method} className={classes.details}>
-        <ActionLoaderResult result={actionResult}/>
+        <Error result={actionResult}/>
 
         <TextField
           label="Post Id"

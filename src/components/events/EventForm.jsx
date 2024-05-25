@@ -4,7 +4,7 @@ import Modal from "../common/Modal";
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
 import SubmitCancelActions from "../common/actions/SubmitCancelActions";
-import ActionLoaderResult from "../common/actions/ActionLoaderResult";
+import Error from "../common/Error";
 import getCurrentDate, { getDateUpToMinute } from "../../utility/dateConversion";
 
 export default function EventForm({ method, event }) {
@@ -14,7 +14,7 @@ export default function EventForm({ method, event }) {
   return (
     <Modal>
       <Form method={method} className={classes.details}>
-        <ActionLoaderResult result={actionResult} />
+        <Error result={actionResult} />
 
         <TextField
           label="Event Id"

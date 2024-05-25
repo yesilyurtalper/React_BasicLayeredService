@@ -5,7 +5,7 @@ import {
   useNavigate,
   useSubmit,
 } from "react-router-dom";
-import ActionLoaderResult from "../common/actions/ActionLoaderResult";
+import Error from "../common/Error";
 import {
   Box,
   CircularProgress,
@@ -157,7 +157,7 @@ export default function EventsTable() {
   if (!actionResult && events.length == 0) return;
 
   if (actionResult && !actionResult.isSuccess)
-    return <ActionLoaderResult result={actionResult} />;
+    return <Error result={actionResult} />;
 
   if (actionResult && events.length == 0) 
     return <p>No events found!</p>;

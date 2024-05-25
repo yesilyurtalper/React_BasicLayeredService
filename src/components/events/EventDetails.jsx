@@ -2,7 +2,7 @@ import { useRouteLoaderData, useActionData } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Modal from "../common/Modal";
 import classes from "./EventDetails.module.css";
-import ActionLoaderResult from "../common/actions/ActionLoaderResult";
+import Error from "../common/Error";
 import DetailsActions from "../common/actions/DetailsActions";
 import { getDateUpToMinute } from "../../utility/dateConversion";
 
@@ -16,9 +16,9 @@ export default function EventDetails() {
     <Modal>
       <main className={classes.details}>
         <DetailsActions manipulate item="events" />
-        <ActionLoaderResult result={actionResult} />
+        <Error result={actionResult} />
 
-        {!loaderResult.isSuccess && <ActionLoaderResult result={loaderResult} /> }
+        {!loaderResult.isSuccess && <Error result={loaderResult} /> }
         {loaderResult.isSuccess && 
           <section className={classes.content}>
             <TextField

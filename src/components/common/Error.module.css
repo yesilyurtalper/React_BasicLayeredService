@@ -1,0 +1,15 @@
+.error {
+  color: red;
+  text-decoration: none;
+}
+
+.success {
+  color: green;
+  text-align: center;
+}
+
+.li {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}

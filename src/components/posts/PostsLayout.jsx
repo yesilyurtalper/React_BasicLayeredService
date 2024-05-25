@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useNavigation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import classes from "./PostsLayout.module.css"
 
