@@ -1,15 +1,14 @@
-import { useRouteLoaderData, Await } from "react-router-dom";
-import { Suspense } from "react";
+import withSWR from "../common/withSWR";
 
 import PostForm from "./PostForm";
 
-function CopyPost() {
-
-  const post = useRouteLoaderData("postdetails");
+function CopyPostComponent({data:post}) {
 
   return (
-    <PostForm method="post" post={post.data} />
+    <PostForm method="post" post={post} />
   );
 }
+
+const CopyPost = withSWR(CopyPostComponent,"posts");
 
 export default CopyPost;
