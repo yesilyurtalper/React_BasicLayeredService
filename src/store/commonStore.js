@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { 
-    user : {}
+    user : {},
+    refresh: false,
 };
 
 const commonSlice = createSlice({
@@ -10,6 +11,10 @@ const commonSlice = createSlice({
   reducers: {
     setUser(state,action) {
       state.user = action.payload ?? {};
+    },
+
+    setRefresh(state) {
+      state.refresh = !state.refresh
     },
   },
 });

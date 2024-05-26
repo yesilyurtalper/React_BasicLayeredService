@@ -1,5 +1,5 @@
 import { Form } from "react-router-dom";
-import classes from "./withSWRForDetails.module.css";
+import classes from "./withModalForDetails.module.css";
 import Modal from "./Modal";
 import SubmitCancelActions from "./actions/SubmitCancelActions";
 

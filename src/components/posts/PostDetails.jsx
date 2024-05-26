@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import withSWRForDetails from "../common/withSWRForDetails";
+import withModalForDetails from "../common/withModalForDetails";
 
 function PostDetailsComponent({ data: post }) {
   return (
@@ -46,6 +46,6 @@ function PostDetailsComponent({ data: post }) {
   );
 }
 
-const PostDetails = withSWRForDetails(PostDetailsComponent, "posts");
+const PostDetails = withModalForDetails(PostDetailsComponent, "posts");
 
 export default PostDetails;

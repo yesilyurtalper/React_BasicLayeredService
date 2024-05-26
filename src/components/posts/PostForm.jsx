@@ -1,7 +1,7 @@
 
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
-import withSWRForForm from "../common/withSWRForForm";
+import withModalForUpdate from "../common/withModalForUpdate";
 import withEmptyForm from "../common/withEmptyForm ";
 
 function PostForm({ method, data:post }) {
@@ -14,7 +14,7 @@ function PostForm({ method, data:post }) {
         name="Id"
         readOnly
         variant="standard"
-        value={method === "put" ? post.id : 0}
+        value={method === "put" ? post?.id : 0}
         style={method === "put" ? undefined : { display: "none" }}
       />
 
@@ -47,6 +47,6 @@ function PostForm({ method, data:post }) {
   );
 }
 
-export const UpdatePost = withSWRForForm(PostForm,"posts","put");
-export const CopyPost = withSWRForForm(PostForm,"posts","post");
+export const UpdatePost = withModalForUpdate(PostForm,"posts","put");
+export const CopyPost = withModalForUpdate(PostForm,"posts","post");
 export const CreatePost = withEmptyForm(PostForm,"posts");

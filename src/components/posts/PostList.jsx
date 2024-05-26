@@ -1,4 +1,4 @@
-import withSWRForList from "../common/withSWRForList";
+import withLoadingAndError from "../common/withLoadingAndError";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 
@@ -27,6 +27,6 @@ function PostListComponent({data}) {
   );
 }
 
-const PostList = withSWRForList(PostListComponent,"posts");
+const PostList = withLoadingAndError(PostListComponent,"posts");
 
 export default PostList;

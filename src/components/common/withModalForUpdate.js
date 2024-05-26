@@ -1,16 +1,14 @@
-import useSWR from "swr";
-import { useParams, Form } from "react-router-dom";
+import useSWRCustom from "../../services/useSWRCustom";
 import { CircularProgress } from "@mui/material";
 import Error from "./Error";
-import classes from "./withSWRForDetails.module.css";
+import classes from "./withModalForDetails.module.css";
 import Modal from "./Modal";
 import SubmitCancelActions from "./actions/SubmitCancelActions";
+import { Form } from "react-router-dom";
 
-export default function withSWRForForm(WrappedComponent, entity, method) {
+export default function withModalForForm(WrappedComponent, entity, method) {
   return (props) => {
-    const { id } = useParams();
-    const relUrl = `${entity}/${id ? "id/" + id : ""}`;
-    const { isValidating, error, data } = useSWR(entity ? relUrl : null);
+    const { isValidating, error, data } = useSWRCustom(entity);
 
     return (
       <Modal>

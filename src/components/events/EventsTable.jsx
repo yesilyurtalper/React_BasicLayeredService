@@ -32,9 +32,6 @@ export default function EventsTable() {
     (state) => state.eventStore.paginationModel
   );
 
-
-  console.log(actionResult);
-
   useEffect(() => {
     if (actionResult?.isSuccess)
       dispatch(eventActions.setEvents(actionResult.data));

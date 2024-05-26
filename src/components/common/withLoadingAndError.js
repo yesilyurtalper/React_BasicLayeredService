@@ -1,11 +1,10 @@
-import useSWR from "swr";
 import { CircularProgress } from "@mui/material";
 import Error from "./Error";
+import useSWRCustom from "../../services/useSWRCustom";
 
-export default function withSWRForList(WrappedComponent, entity) {
+export default function withLoadingAndError(WrappedComponent, entity) {
   return (props) => {
-    const { isValidating, error, data } = useSWR(entity ? entity : null);
-
+    const {isValidating,error,data} = useSWRCustom(entity);
     return (
       <>
         {isValidating && <CircularProgress />}
@@ -13,8 +12,6 @@ export default function withSWRForList(WrappedComponent, entity) {
         <WrappedComponent
           {...props}
           data={data}
-          isValidating={isValidating}
-          error={error}
         ></WrappedComponent>
       </>
     );

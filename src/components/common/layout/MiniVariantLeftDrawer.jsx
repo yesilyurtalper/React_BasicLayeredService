@@ -15,16 +15,23 @@ import { Outlet, Link } from "react-router-dom";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
 import ErrorPage from "./ErrorPage";
 import Login from "../Login";
+import { commonActions } from "../../../store/commonStore";
+import { useDispatch } from "react-redux";
 
 export default function MiniVariantDrawerWithHeader(props) {
-  let relUrl = window.location.href.split(`${window.location.origin}/`)[1];
-  let currentIndex = props.menuPaths.indexOf(relUrl.split("/")[0]);
-  let currentMenuItem =
-    props.menuItems[currentIndex] ?? "";
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  let currentMenuItem = props.menuItems[currentIndex] ?? "";
 
   const handleDrawerOpen = () => {
     setOpen((prev) => !prev);
+  };
+
+  const handleMenuClick = (clickedIndex) => {
+    if(clickedIndex === currentIndex )
+      dispatch(commonActions.setRefresh(true));
+    setCurrentIndex(clickedIndex);
   };
 
   return (
@@ -81,6 +88,7 @@ export default function MiniVariantDrawerWithHeader(props) {
         <List>
           {props.menuItems.map((menu, index) => (
             <div
+              onClick={()=>handleMenuClick(index)}
               key={menu}
               style={{
                 borderRadius: "10px",
