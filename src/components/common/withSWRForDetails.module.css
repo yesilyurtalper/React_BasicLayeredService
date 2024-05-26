@@ -1,13 +1,16 @@
 .details {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
   padding: 0.5rem;
   width: 35rem;
 }
 
 .content {
+  align-self: flex-start;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }

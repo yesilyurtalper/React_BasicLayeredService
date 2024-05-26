@@ -1,10 +1,9 @@
 import { TextField } from "@mui/material";
-import classes from "./PostDetails.module.css";
-import withSWRInModal from "../common/withSWRInModal";
+import withSWRForDetails from "../common/withSWRForDetails";
 
 function PostDetailsComponent({ data: post }) {
   return (
-    <section className={classes.content}>
+    <>
       <TextField label="Post Id" readOnly variant="standard" value={post?.id} />
 
       <TextField
@@ -43,10 +42,10 @@ function PostDetailsComponent({ data: post }) {
         variant="standard"
         value={post?.dateModified}
       />
-    </section>
+    </>
   );
 }
 
-const PostDetails = withSWRInModal(PostDetailsComponent, "posts");
+const PostDetails = withSWRForDetails(PostDetailsComponent, "posts");
 
 export default PostDetails;

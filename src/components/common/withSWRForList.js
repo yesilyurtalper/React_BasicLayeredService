@@ -1,13 +1,10 @@
 import useSWR from "swr";
-import { useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import Error from "./Error";
 
-export default function withSWR(WrappedComponent, entity) {
+export default function withSWRForList(WrappedComponent, entity) {
   return (props) => {
-    const { id } = useParams();
-    const relUrl = `${entity}/${id ? "id/" + id : ""}`;
-    const { isValidating, error, data } = useSWR(entity ? relUrl : null);
+    const { isValidating, error, data } = useSWR(entity ? entity : null);
 
     return (
       <>

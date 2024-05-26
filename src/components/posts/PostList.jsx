@@ -1,4 +1,4 @@
-import withSWR from "../common/withSWR";
+import withSWRForList from "../common/withSWRForList";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 
@@ -27,6 +27,6 @@ function PostListComponent({data}) {
   );
 }
 
-const PostList = withSWR(PostListComponent,"posts");
+const PostList = withSWRForList(PostListComponent,"posts");
 
 export default PostList;

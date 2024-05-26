@@ -9,10 +9,8 @@ import IngredientsIcon from "@mui/icons-material/Settings.js";
 //route components
 import PostsLayout from "../components/posts/PostsLayout";
 import PostList from "../components/posts/PostList";
-import CreatePost from "../components/posts/CreatePost.jsx";
+import {CreatePost, UpdatePost, CopyPost} from "../components/posts/PostForm";
 import PostDetails from "../components/posts/PostDetails";
-import UpdatePost from "../components/posts/UpdatePost.jsx";
-import CopyPost from "../components/posts/CopyPost";
 
 //route events
 import EventsPage from "../components/events/EventsPage.jsx";
