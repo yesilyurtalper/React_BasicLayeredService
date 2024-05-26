@@ -21,11 +21,6 @@ import CopyEvent from "../components/events/CopyEvent";
 
 import Ingredients from "../components/ingredients/Ingredients.jsx";
 
-//loaders and actions
-//import listLoader from "../services/listLoader.js";
-//import itemLoader from "../services/itemLoader.js";
-import crudAction from "../services/crudAction.js";
-
 import { createBrowserRouter } from "react-router-dom";
 
 export default function createRoutes(user) {
@@ -65,7 +60,6 @@ export default function createRoutes(user) {
             {
               path: "create",
               element: <CreatePost />,
-              action: crudAction,
             },
             {
               path: "id/:id",
@@ -74,17 +68,14 @@ export default function createRoutes(user) {
                 {
                   index: true,
                   element: <PostDetails />,
-                  action: crudAction,
                 },
                 {
                   path: "update",
                   element: <UpdatePost />,
-                  action: crudAction,
                 },
                 {
                   path: "copy",
                   element: <CopyPost />,
-                  action: crudAction,
                 },
               ],
             },
@@ -98,12 +89,10 @@ export default function createRoutes(user) {
               index: true,
               element: <EventsPage />,
               errorElement: <EventsPage />,
-              action: crudAction,
             },
             {
               path: "create",
               element: <CreateEvent />,
-              action: crudAction,
             },
             {
               path: "id/:id",
@@ -112,17 +101,14 @@ export default function createRoutes(user) {
                 {
                   index: true,
                   element: <EventDetails />,
-                  action: crudAction,
                 },
                 {
                   path: "update",
                   element: <UpdateEvent />,
-                  action: crudAction,
                 },
                 {
                   path: "copy",
                   element: <CopyEvent />,
-                  action: crudAction,
                 },
               ],
             },
