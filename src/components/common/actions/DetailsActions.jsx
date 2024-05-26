@@ -1,6 +1,6 @@
 import classes from "./DetailsActions.module.css";
 import { Button, CircularProgress } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   useNavigate,
   useSubmit,
@@ -11,21 +11,18 @@ import {
 import { useEffect } from "react";
 import { eventActions } from "../../../store/eventStore";
 import { postActions } from "../../../store/postStore";
+import useDataFromCache from "../../../services/useDataFromCache";
 
-export default function DetailsActions(props) {
+export default function DetailsActions({item: key, manipulate}) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const submitting = navigation.state === "submitting";
   const loading = navigation.state === "loading";
   const params = useParams();
-  const items = useSelector((state) => {
-    if (props.item === "events") return state.eventStore.events;
-    else if (props.item === "posts") return state.postStore.posts;
-    else return [];
-  });
-
+  const items = useDataFromCache(key);
+  
   const dispatch = useDispatch();
-  const itemIndex = items.findIndex((item) => item.id == params.id);
+  const itemIndex = items.findIndex(item => item.id == params.id);
   const actionResult = useActionData();
   const submit = useSubmit();
 
@@ -38,11 +35,11 @@ export default function DetailsActions(props) {
     if (actionResult && actionResult.isSuccess) {
       let filtered = items.filter((c) => c.id != actionResult.data.id);
       let redirect =
-        filtered.length > 0 ? `/${props.item}/id/${filtered[0].id}` : "";
+        filtered.length > 0 ? `/${key}/id/${filtered[0].id}` : "";
 
-      if (props.item === "events")
+      if (key === "events")
         dispatch(eventActions.deleteEvent(actionResult.data.id));
-      else if (props.item === "posts")
+      else if (key === "posts")
         dispatch(postActions.deletePost(actionResult.data.id));
 
       navigate(redirect);
@@ -62,7 +59,7 @@ export default function DetailsActions(props) {
 
         <Button
           onClick={() =>
-            navigate(`/${props.item}/id/${items[itemIndex - 1].id}`)
+            navigate(`/${key}/id/${items[itemIndex - 1].id}`)
           }
           variant="contained"
           disabled={submitting || loading || !items[itemIndex - 1]}
@@ -72,7 +69,7 @@ export default function DetailsActions(props) {
 
         <Button
           onClick={() =>
-            navigate(`/${props.item}/id/${items[itemIndex + 1].id}`)
+            navigate(`/${key}/id/${items[itemIndex + 1].id}`)
           }
           variant="contained"
           disabled={submitting || loading || !items[itemIndex + 1]}
@@ -83,7 +80,7 @@ export default function DetailsActions(props) {
 
       {navigation.state != "idle" && <CircularProgress />}
 
-      {props.manipulate && (
+      {manipulate && (
         <div className={classes.manipulate}>
           <Button
             onClick={() => navigate("copy")}
