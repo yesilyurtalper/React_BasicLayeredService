@@ -17,7 +17,7 @@ export default function useSWRCustom(entity) {
     useEffect(() => {
       if (refresh) {
         mutate();
-        dispatch(commonActions.setRefresh(false));
+        dispatch(commonActions.toggleRefresh(false));
       }
     }, [refresh, mutate, dispatch]);
 

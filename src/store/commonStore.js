@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { 
-    user : {},
+    user : null,
     refresh: false,
+    //Login sonrası apiye yapılan istekle set ediliyor
+    authProfile :{},
+    superAdmin: false,
+    readingAdmin: false,
+    role: ""
 };
 
 const commonSlice = createSlice({
@@ -10,10 +15,22 @@ const commonSlice = createSlice({
   initialState: initialState,
   reducers: {
     setUser(state,action) {
-      state.user = action.payload ?? {};
+      let user = action.payload;
+      state.user = user ?? {};
+      let role = user?.profile?.realm_role;
+      state.role = role;
+      state.superAdmin = role?.some(role => role === "superAdmin");
+      state.readingAdmin = role?.some(role => role === "readingAdmin");
     },
 
-    setRefresh(state) {
+    setAuthProfile(state, action){
+      state.authProfile = action.payload;
+      // state.role = 
+      // state.superAdmin = 
+      // state.yetkiliMi = 
+    },
+
+    toggleRefresh(state) {
       state.refresh = !state.refresh
     },
   },

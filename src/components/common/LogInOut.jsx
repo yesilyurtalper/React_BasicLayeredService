@@ -1,12 +1,26 @@
 import { Button } from "@mui/material";
 import { useAuth } from "react-oidc-context";
 import Typography from "@mui/material/Typography";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { commonActions } from "../../store/commonStore";
+import {CircularProgress} from "@mui/material";
 
-export default function Login({ text }) {
+export default function LogInOut({ text }) {
   const auth = useAuth();
+  const dispatch = useDispatch();
+  const [userSet, setUserSet] = useState(false);
 
-  if (auth?.activeNavigator === "signinRedirect") return <span disabled>Signing you in...</span>;
-  if (auth?.activeNavigator === "signoutSilent") return <span disabled>Signing you out...</span>;
+  useEffect(() => {
+    if(auth?.isAuthenticated && auth?.user && !userSet) {
+      console.log("user set in common store");
+      dispatch(commonActions.setUser(auth?.user));
+      setUserSet(true);
+    }
+  }, [auth,userSet,dispatch])
+  
+  if (auth?.isLoading)
+    return <CircularProgress/>;
 
   return (
     <>
@@ -14,10 +28,10 @@ export default function Login({ text }) {
         <Button
           variant="contained"
           onClick={() => {
-            auth.signinRedirect();
+            auth.signinPopup();
           }}
         >
-          {text ?? "Log in"}
+          {text ?? "Login"}
         </Button>
       ) : (
         <div
@@ -35,11 +49,11 @@ export default function Login({ text }) {
           <Button
             variant="contained"
             onClick={() => {
-              //auth.removeUser();
-              auth.signoutSilent();
+              auth.removeUser();
+              dispatch(commonActions.setUser(null));
             }}
           >
-            Log out
+            Logout
           </Button>
         </div>
       )}

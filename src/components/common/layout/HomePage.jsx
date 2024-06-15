@@ -2,7 +2,7 @@
 import { CircularProgress } from "@mui/material";
 import React from "react";
 import { useNavigation } from "react-router-dom";
-import Login from "../Login";
+import LogInOut from "../LogInOut";
 
 export default function HomePage(props) {
   const navigation = useNavigation();
@@ -19,7 +19,7 @@ export default function HomePage(props) {
 
       <p>Welcome to React_BasicLayeredService</p>
 
-      <Login />
+      <LogInOut />
     </main>
   );
 }

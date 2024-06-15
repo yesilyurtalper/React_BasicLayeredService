@@ -14,7 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Outlet, Link } from "react-router-dom";
 import { Drawer, DrawerHeader, AppBar } from "./MiniVariantHelpers";
 import ErrorPage from "./ErrorPage";
-import Login from "../Login";
+import LogInOut from "../LogInOut";
 import { commonActions } from "../../../store/commonStore";
 import { useDispatch } from "react-redux";
 
@@ -30,7 +30,7 @@ export default function MiniVariantDrawerWithHeader(props) {
 
   const handleMenuClick = (clickedIndex) => {
     if(clickedIndex === currentIndex )
-      dispatch(commonActions.setRefresh(true));
+      dispatch(commonActions.toggleRefresh(true));
     setCurrentIndex(clickedIndex);
   };
 
@@ -70,7 +70,7 @@ export default function MiniVariantDrawerWithHeader(props) {
             </Typography>
           </div>
 
-         <Login/>
+         <LogInOut/>
         </Toolbar>
       </AppBar>
 
