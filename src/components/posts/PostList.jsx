@@ -1,18 +1,17 @@
-import withLoadingAndError from "../common/withLoadingAndError";
+import withSWR from "../HOCs/withSWR";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 
-function PostListComponent({data}) {
-  
+const PostList = ({data}) => {  
   return (
     <>
       {!data?.length ? (
-        <div style={{ textAlign: "center", color: "white" }}>
+        <div style={{ textAlign: "center"}}>
           <h2>There are no posts yet.</h2>
           <p>Start adding some!</p>
         </div>
       ) : (
-        <ul className={classes.list}>
+        <div className={classes.list}>
           {data?.map((post) => (
             <Post
               key={post.id}
@@ -22,12 +21,12 @@ function PostListComponent({data}) {
               body={post.body}
             />
           ))}
-        </ul>
+        </div>
       )}
     </>
   );
 }
 
-const PostList = withLoadingAndError(PostListComponent,"posts");
+const PostListWithSWR = withSWR(PostList,"posts");
 
-export default PostList;
+export default PostListWithSWR;

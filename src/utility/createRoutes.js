@@ -7,10 +7,11 @@ import EventsIcon from "@mui/icons-material/Event.js";
 import IngredientsIcon from "@mui/icons-material/Settings.js";
 
 //route components
-import PostsLayout from "../components/posts/PostsLayout";
-import PostList from "../components/posts/PostList";
-import {CreatePost, UpdatePost, CopyPost} from "../components/posts/PostForm";
-import PostDetails from "../components/posts/PostDetails";
+import Posts from "../components/posts/PostsPage.jsx";
+import UpdatePost from "../components/posts/UpdatePost.jsx";
+import CopyPost from "../components/posts/CopyPost.jsx";
+import CreatePost from "../components/posts/CopyPost.jsx";
+import PostDetails from "../components/posts/PostDetails.jsx";
 
 //route events
 import EventsPage from "../components/events/EventsPage.jsx";
@@ -54,16 +55,14 @@ export default function createRoutes(user) {
 
         {
           path: menuPaths[0], //posts
-          element: <PostsLayout/>,
+          element: <Posts/>,
           children: [
-            { index: true, element: <PostList /> },
             {
               path: "create",
               element: <CreatePost />,
             },
             {
               path: "id/:id",
-              id: "postdetails",
               children: [
                 {
                   index: true,

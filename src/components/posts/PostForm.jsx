@@ -1,10 +1,8 @@
 
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
-import withModalForUpdate from "../common/withModalForUpdate";
-import withEmptyForm from "../common/withEmptyForm ";
 
-function PostForm({ method, data:post }) {
+export default function PostForm({ method, data:post }) {
   const auth = useAuth();
 
   return (
@@ -46,7 +44,3 @@ function PostForm({ method, data:post }) {
     </>
   );
 }
-
-export const UpdatePost = withModalForUpdate(PostForm,"posts","put");
-export const CopyPost = withModalForUpdate(PostForm,"posts","post");
-export const CreatePost = withEmptyForm(PostForm,"posts");

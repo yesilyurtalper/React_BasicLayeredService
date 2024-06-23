@@ -1,6 +1,6 @@
 import { useRouteLoaderData, useActionData } from "react-router-dom";
 import { TextField } from "@mui/material";
-import Modal from "../common/Modal";
+import CustomModal from "../common/CustomModal";
 import classes from "./EventDetails.module.css";
 import Error from "../common/Error";
 import DetailsActions from "../common/actions/DetailsActions";
@@ -13,7 +13,7 @@ export default function EventDetails() {
   console.log(actionResult);
 
   return (
-    <Modal>
+    <CustomModal>
       <main className={classes.details}>
         <DetailsActions manipulate item="events" />
         <Error result={actionResult} />
@@ -88,6 +88,6 @@ export default function EventDetails() {
           </section>
         }
       </main>
-    </Modal>
+    </CustomModal>
   );
 }

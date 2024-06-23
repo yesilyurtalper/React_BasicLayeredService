@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import useSWR from "swr";
 import { useParams } from "react-router-dom";
 
-export default function useSWRCustom(entity) {
+export default function useSWRCustom(entity, isItem=false) {
     const { id } = useParams();
-    const relUrl = id ? `${entity}/id/${id}` : entity;
+    const relUrl = isItem && id ? `${entity}/id/${id}` : entity;
     const { isValidating, error, data, mutate } = useSWR(
       entity ? relUrl : null
     );

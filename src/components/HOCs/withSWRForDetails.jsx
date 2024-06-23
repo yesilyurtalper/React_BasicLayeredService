@@ -1,16 +1,16 @@
 import useSWRCustom from "../../services/useSWRCustom";
 import { CircularProgress } from "@mui/material";
-import Error from "./Error";
-import classes from "./withModalForDetails.module.css";
-import Modal from "./Modal";
-import DetailsActions from "./actions/DetailsActions";
+import Error from "../common/Error";
+import classes from "./withSWRForDetails.module.css";
+import CustomModal from "../common/CustomModal";
+import DetailsActions from "../common/actions/DetailsActions";
 
 export default function withModalForDetails(WrappedComponent, entity) {
   return (props) => {
-    const { isValidating, error, data } = useSWRCustom(entity);
+    const { isValidating, error, data } = useSWRCustom(entity,true);
 
     return (
-      <Modal>
+      <CustomModal>
         <main className={classes.details}>
           <DetailsActions manipulate item={entity} />
           {isValidating && <CircularProgress />}
@@ -24,7 +24,7 @@ export default function withModalForDetails(WrappedComponent, entity) {
             ></WrappedComponent>
           </section>
         </main>
-      </Modal>
+      </CustomModal>
     );
   };
 }

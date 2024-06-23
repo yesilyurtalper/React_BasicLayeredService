@@ -1,6 +1,6 @@
 import { Form, useActionData } from "react-router-dom";
 import classes from "../../components/events/EventDetails.module.css";
-import Modal from "../common/Modal";
+import CustomModal from "../common/CustomModal";
 import { useAuth } from "react-oidc-context";
 import { TextField } from "@mui/material";
 import SubmitCancelActions from "../common/actions/SubmitCancelActions";
@@ -12,7 +12,7 @@ export default function EventForm({ method, event }) {
   const actionResult = useActionData();
 
   return (
-    <Modal>
+    <CustomModal>
       <Form method={method} className={classes.details}>
         <Error result={actionResult} />
 
@@ -79,6 +79,6 @@ export default function EventForm({ method, event }) {
 
         <SubmitCancelActions item="events" method={method} />
       </Form>
-    </Modal>
+    </CustomModal>
   );
 }
