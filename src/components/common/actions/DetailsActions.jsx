@@ -13,13 +13,13 @@ import { eventActions } from "../../../store/eventStore";
 import { postActions } from "../../../store/postStore";
 import useDataFromCache from "../../../services/useDataFromCache";
 
-export default function DetailsActions({item: key, manipulate}) {
+export default function DetailsActions({entity, manipulate}) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const submitting = navigation.state === "submitting";
   const loading = navigation.state === "loading";
   const params = useParams();
-  const items = useDataFromCache(key);
+  const items = useDataFromCache(entity);
   
   const dispatch = useDispatch();
   const itemIndex = items.findIndex(item => item.id == params.id);
@@ -35,11 +35,11 @@ export default function DetailsActions({item: key, manipulate}) {
     if (actionResult && actionResult.isSuccess) {
       let filtered = items.filter((c) => c.id != actionResult.data.id);
       let redirect =
-        filtered.length > 0 ? `/${key}/id/${filtered[0].id}` : "";
+        filtered.length > 0 ? `/${entity}/id/${filtered[0].id}` : "";
 
-      if (key === "events")
+      if (entity === "events")
         dispatch(eventActions.deleteEvent(actionResult.data.id));
-      else if (key === "posts")
+      else if (entity === "posts")
         dispatch(postActions.deletePost(actionResult.data.id));
 
       navigate(redirect);
@@ -59,7 +59,7 @@ export default function DetailsActions({item: key, manipulate}) {
 
         <Button
           onClick={() =>
-            navigate(`/${key}/id/${items[itemIndex - 1].id}`)
+            navigate(`/${entity}/id/${items[itemIndex - 1].id}`)
           }
           variant="contained"
           disabled={submitting || loading || !items[itemIndex - 1]}
@@ -69,7 +69,7 @@ export default function DetailsActions({item: key, manipulate}) {
 
         <Button
           onClick={() =>
-            navigate(`/${key}/id/${items[itemIndex + 1].id}`)
+            navigate(`/${entity}/id/${items[itemIndex + 1].id}`)
           }
           variant="contained"
           disabled={submitting || loading || !items[itemIndex + 1]}

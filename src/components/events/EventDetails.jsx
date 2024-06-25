@@ -15,7 +15,7 @@ export default function EventDetails() {
   return (
     <CustomModal>
       <main className={classes.details}>
-        <DetailsActions manipulate item="events" />
+        <DetailsActions manipulate entity="events" />
         <Error result={actionResult} />
 
         {!loaderResult.isSuccess && <Error result={loaderResult} /> }

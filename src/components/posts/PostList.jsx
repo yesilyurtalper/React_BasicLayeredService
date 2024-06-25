@@ -2,7 +2,7 @@ import withSWR from "../HOCs/withSWR";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 
-const PostList = ({data}) => {  
+const PostList = ({data}) => {
   return (
     <>
       {!data?.length ? (

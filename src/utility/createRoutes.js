@@ -14,11 +14,11 @@ import CreatePost from "../components/posts/CopyPost.jsx";
 import PostDetails from "../components/posts/PostDetails.jsx";
 
 //route events
-import EventsPage from "../components/events/EventsPage.jsx";
+import Events from "../components/events/EventsPage.jsx";
 import CreateEvent from "../components/events/CreateEvent.jsx";
 import EventDetails from "../components/events/EventDetails";
 import UpdateEvent from "../components/events/UpdateEvent.jsx";
-import CopyEvent from "../components/events/CopyEvent";
+import CopyEvent from "../components/events/CopyEvent.jsx";
 
 import Ingredients from "../components/ingredients/Ingredients.jsx";
 
@@ -82,20 +82,15 @@ export default function createRoutes(user) {
         },
 
         {
-          path: menuPaths[1], //events
+          path: menuPaths[0], //events
+          element: <Events/>,
           children: [
-            {
-              index: true,
-              element: <EventsPage />,
-              errorElement: <EventsPage />,
-            },
             {
               path: "create",
               element: <CreateEvent />,
             },
             {
               path: "id/:id",
-              id: "eventdetails",
               children: [
                 {
                   index: true,

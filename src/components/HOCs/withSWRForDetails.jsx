@@ -5,14 +5,14 @@ import classes from "./withSWRForDetails.module.css";
 import CustomModal from "../common/CustomModal";
 import DetailsActions from "../common/actions/DetailsActions";
 
-export default function withModalForDetails(WrappedComponent, entity) {
+export default function withSWRForDetails(WrappedComponent, entity) {
   return (props) => {
     const { isValidating, error, data } = useSWRCustom(entity,true);
 
     return (
       <CustomModal>
         <main className={classes.details}>
-          <DetailsActions manipulate item={entity} />
+          <DetailsActions manipulate entity={entity} />
           {isValidating && <CircularProgress />}
           {error && <Error result={error} />}
           <section className={classes.content}>

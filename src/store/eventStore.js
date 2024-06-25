@@ -2,21 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import getCurrentDate, { getCurrentYear } from "../utility/dateConversion";
 
 const initialState = { 
-  events: [],
-  totalCount: 0,
-  paginationModel: {
+  query :{
+    id:"",
+    author:"",
+    title:"",
+    body:"",
+    dateStart:getCurrentYear(),
+    dateEnd:getCurrentDate(),
+    priceStart:"",
+    priceEnd:"",
     page:0,
-    componentsize: 10
-  },
-  queryInput :{
-    Id:"",
-    Author:"",
-    Title:"",
-    Body:"",
-    DateStart:getCurrentYear(),
-    DateEnd:getCurrentDate(),
-    PriceStart:"",
-    PriceEnd:""
+    pageSize:5
   }
 };
 
@@ -24,36 +20,10 @@ const eventSlice = createSlice({
   name: "eventStore",
   initialState: initialState,
   reducers: {
-    setEvents(state, action) {
-      let items = Array.isArray(action.payload.items) ? action.payload.items : [];
-      state.events = items;
-      state.totalCount = action.payload.count;
-    },
 
-    createEvent(state, action) {
-      state.events.unshift(action.payload);
-      state.totalCount++;
-      state.paginationModel.componentsize++;
+    setQuery(state, action) {
+      state.query = {...state.query, ...action.payload};
     },
-
-    deleteEvent(state, action) {
-      state.events = state.events.filter((ev) => ev.id != action.payload);
-      state.totalCount--;
-      state.paginationModel.componentsize--;
-    },
-
-    updateEvent(state, action) {
-      let index = state.events.findIndex((ev) => ev.id === action.payload.id);
-      state.events[index] = action.payload;
-    },
-
-    setQueryInput(state, action) {
-      state.queryInput = action.payload;
-    },
-
-    setPaginationModel(state, action){
-      state.paginationModel = action.payload;
-    }
   },
 });
 
