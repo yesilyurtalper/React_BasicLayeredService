@@ -1,23 +1,50 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { posts : []};
+export const generateQueryKey = (query) => {
+  let key = "";
+  for (const prop in query) {
+    if(query[prop]){
+      let name = prop === "page" ? "pageNumber" : prop;
+      let value = prop === "page" ? query[prop]+1 : query[prop];
+      key = `${key}${name}=${value}&`;
+    }
+  }
+  key = `?${key}`;
+  return key;
+}
+
+const initQuery = {
+  id:"",
+  author:"",
+  title:"",
+  body:"",
+  dateCreatedStart:null,
+  dateCreatedEnd:null,
+  dateModifiedStart:null,
+  dateModifiedEnd:null,
+  page:0,
+  pageSize:10,
+  sortByDateCreated: 1,
+  sortByDateModified: 0,
+  sortByAuthor: 0,
+  sortByTitle: 0,
+  sortByBody: 0,
+};
+
+const initialState = { 
+  query : initQuery,
+  queryKey: generateQueryKey(initQuery)
+};
 
 const postSlice = createSlice({
-  name: 'postStore',
+  name: "postStore",
   initialState: initialState,
   reducers: {
-    setPosts(state,action) {
-      state.posts = Array.isArray(action.payload) ? action.payload : [];
-    },
-    createPost(state,action) {
-      state.posts.unshift(action.payload);
-    },
-    deletePost(state, action) {
-      state.posts = state.posts.filter(p => p.id != action.payload);
-    },
-    updatePost(state, action) {
-      let index = state.posts.findIndex(p => p.id === action.payload.id);
-      state.posts[index] = action.payload;
+
+    setQuery(state, action) {
+      let query = {...state.query, ...action.payload};
+      state.query = query;
+      state.queryKey = generateQueryKey(query);
     },
   },
 });

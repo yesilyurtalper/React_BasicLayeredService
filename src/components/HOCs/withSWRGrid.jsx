@@ -1,45 +1,46 @@
 import Error from "../common/Error";
 import useSWRCustom from "../../services/useSWRCustom";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { eventActions } from "../../store/eventStore";
-import { useCallback } from "react";
+import { postActions } from "../../store/postStore";
+import { useEffect } from "react";
 
 export default function withSWRGrid(Grid, entity) {
   return (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const query = useSelector((state) =>
-      entity === "events"
-        ? state.eventStore.query
-        : state.postStore.query
+      entity === "events" ? state.eventStore.query : state.postStore.query
     );
-    const key = 
-    const { isValidating, error, data } = useSWRCustom(entity);
+    const queryKey = useSelector((state) =>
+      entity === "events" ? state.eventStore.queryKey : state.postStore.queryKey
+    );
+    const swrMutate = useSelector((state) => state.commonStore.swrMutate);
+    const { isValidating, error, data, mutate } = useSWRCustom(`${entity}${queryKey}`, {
+      revalidateOnMount: false,
+    });
 
-    const handlePaginationChange = useCallback(
-      (newModel) => {
-        if (newModel.page > paginationModel.page)
-          submit(
-            { ...queryInput, LastId: events[events.length - 1].id },
-            { method: "post" }
-          );
-        else if (newModel.page < paginationModel.page)
-          submit({ ...queryInput, FirstId: events[0].id }, { method: "post" });
-        dispatch(eventActions.setPaginationModel(newModel));
-      },
-      [queryInput]
-    );
+    useEffect(() => {
+      if (queryKey){
+        mutate();
+      } 
+    }, [queryKey, swrMutate, mutate]);
+
+    const handlePaginationChange = (newModel) => {
+      entity === "events" ? dispatch(eventActions.setQuery(newModel)) : 
+        dispatch(postActions.setQuery(newModel));
+    };
 
     return (
       <>
         {error && <Error result={error} />}
         <Grid
           {...props}
-          data={data}
+          items={data?.items ?? []}
           loading={isValidating}
-          totalCount={totalCount}
-          paginationModel={paginationModel}
+          totalItems={data?.totalItems ?? 0}
+          paginationModel={{page:query.page, pageSize:query.pageSize}}
           onPaginationChange={handlePaginationChange}
           onRowDoubleClick={(id) => navigate("id/" + id)}
         />

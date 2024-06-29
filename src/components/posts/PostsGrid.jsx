@@ -3,8 +3,8 @@ import InspectIcon from "@mui/icons-material/Search";
 import CustomGrid from "../common/CustomGrid";
 import withSWRGrid from "../HOCs/withSWRGrid";
 
-const EventsGrid = ({
-  items: events,
+const PostsGrid = ({
+  items: posts,
   loading,
   totalItems,
   paginationModel,
@@ -53,27 +53,6 @@ const EventsGrid = ({
       flex: 5,
     },
     {
-      field: "capacity",
-      headerName: "Capacity",
-      headerAlign: "center",
-      align: "center",
-      flex: 2,
-    },
-    {
-      field: "price",
-      headerName: "Price",
-      headerAlign: "center",
-      align: "center",
-      flex: 2,
-    },
-    {
-      field: "date",
-      headerName: "Date",
-      headerAlign: "center",
-      align: "center",
-      flex: 4,
-    },
-    {
       field: "dateCreated",
       headerName: "Created Date",
       headerAlign: "center",
@@ -89,15 +68,12 @@ const EventsGrid = ({
     },
   ];
 
-  const rows = events?.map((ev) => ({
+  const rows = posts?.map((ev) => ({
     details: ev.id,
     id: ev.id,
     author: ev.author,
     title: ev.title,
     body: ev.body,
-    capacity: ev.capacity,
-    price: ev.price,
-    date: ev.date,
     dateCreated: ev.dateCreated,
     dateModified: ev.dateModified,
   }));
@@ -111,11 +87,10 @@ const EventsGrid = ({
         paginationModel={paginationModel}
         onPaginationChange={onPaginationChange}
         onRowDoubleClick={(params) => onRowDoubleClick(params.row.id)}
-        height={450}
       />
   );
 }
 
-const EventsGridWithSWR = withSWRGrid(EventsGrid,"events");
+const PostsGridWithSWR = withSWRGrid(PostsGrid,"posts");
 
-export default EventsGridWithSWR;
+export default PostsGridWithSWR;

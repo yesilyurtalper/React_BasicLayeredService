@@ -1,21 +1,30 @@
 import store from "../store/indexStore";
 
 export default async function swrFetcher(relUrl) {
-  let access_token = store.getState()?.commonStore?.user?.access_token;
-  if (!access_token) throw new Error("no access_token found!");
+  try {
+    let access_token = store.getState()?.commonStore?.access_token;
+    if (!access_token) throw new Error("no access_token found!");
 
-  const url = `${window.API_BASE_URL}${relUrl}`;
+    const url = `${window.API_BASE_URL}${relUrl}`;
 
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer  ${access_token}`,
-    },
-  });
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer  ${access_token}`,
+      },
+    });
 
-  let result = await response.json();
-  if (result?.isSuccess) return result.data;
-  else throw result;
+    let data = await response.json();
+    if (response.ok) return data;
+    else throw data;
+  } catch (error) {
+    let err = {
+      message: error.message,
+      resultCode: "",
+      errorMessages: [error.message],
+    };
+    throw err;
+  }
 }
 
 //const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)

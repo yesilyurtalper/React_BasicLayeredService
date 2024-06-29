@@ -10,8 +10,7 @@ export default function QueryEvents(props) {
   const navigate = useNavigate();
   const formRef = useRef();
   const dispatch = useDispatch();
-  const input = useSelector((state) => state.eventStore.queryInput);
-  const actionData = useActionData();
+  const query = useSelector((state) => state.eventStore.query);
   
   const idRef = useRef();
   const titleRef = useRef();
@@ -21,46 +20,40 @@ export default function QueryEvents(props) {
   const dateEndRef = useRef();
   const priceStartRef = useRef();
   const priceEndRef = useRef();
-
-  useEffect(() => {
-    if(actionData && actionData.isSuccess)
-      dispatch(eventActions.setQueryInput({
-        Id : idRef.current.value,
-        Title : titleRef.current.value,
-        Author : authorRef.current.value,
-        Body : bodyRef.current.value,
-        DateStart : dateStartRef.current.value,
-        DateEnd : dateEndRef.current.value,
-        PriceStart : priceStartRef.current.value,
-        PriceEnd : priceEndRef.current.value,
-      }))
-  },[actionData]);
+   
+  const handleSubmit = () => {
+    dispatch(eventActions.setQuery({
+      id : idRef.current.value,
+      title : titleRef.current.value,
+      author : authorRef.current.value,
+      body : bodyRef.current.value,
+      dateStart : dateStartRef.current.value,
+      dateEnd : dateEndRef.current.value,
+      priceStart : priceStartRef.current.value,
+      priceEnd : priceEndRef.current.value,
+    }));
+  };
 
   return (
     <Card>
-      <Form className={classes.form} ref={formRef} method="post"
-        onSubmit={() => dispatch(eventActions.setPaginationModel({page:0,componentsize:10}))}>
+      <form className={classes.form} ref={formRef} method="post"
+        onSubmit={handleSubmit}>
         <TextField
           label="Event Id"
           name="Id"
           variant="standard"
           type="number"
-          defaultValue={input.Id}
+          defaultValue={query.id}
           size="small"
           style={{flex:1}}
           inputRef={idRef}
-          onChange={(e) =>
-            dispatch(
-              eventActions.setQueryInput({ ...input, Id: e.target.value })
-            )
-          }
         />
 
         <TextField
           label="Organizer"
           name="Author"
           variant="standard"
-          defaultValue={input.Author}
+          defaultValue={query.author}
           size="small"
           style={{flex:1}}
           inputRef={authorRef}
@@ -70,7 +63,7 @@ export default function QueryEvents(props) {
           label="Title"
           name="Title"
           variant="standard"
-          defaultValue={input.Title}
+          defaultValue={query.title}
           size="small"
           style={{flex:1}}
           inputRef={titleRef}
@@ -80,7 +73,7 @@ export default function QueryEvents(props) {
           label="Body"
           name="Body"
           variant="standard"
-          defaultValue={input.Body}
+          defaultValue={query.body}
           size="small"
           style={{flex:1}}
           inputRef={bodyRef}
@@ -92,7 +85,7 @@ export default function QueryEvents(props) {
           variant="standard"
           type="datetime-local"
           InputLabelProps={{ shrink: true }}
-          defaultValue={input.DateStart}
+          defaultValue={query.dateStart}
           size="small"
           style={{flex:2}}
           inputRef={dateStartRef}
@@ -103,7 +96,7 @@ export default function QueryEvents(props) {
           variant="standard"
           type="datetime-local"
           InputLabelProps={{ shrink: true }}
-          defaultValue={input.DateEnd}
+          defaultValue={query.dateEnd}
           size="small"
           style={{flex:2}}
           inputRef={dateEndRef}
@@ -115,7 +108,7 @@ export default function QueryEvents(props) {
           variant="standard"
           type="number"
           inputProps={{ step: "0.01" }}
-          defaultValue={input.PriceStart}
+          defaultValue={query.priceStart}
           size="small"
           style={{flex:1}}
           inputRef={priceStartRef}
@@ -126,26 +119,10 @@ export default function QueryEvents(props) {
           variant="standard"
           type="number"
           inputProps={{ step: "0.01" }}
-          defaultValue={input.PriceEnd}
+          defaultValue={query.priceEnd}
           size="small"
           style={{flex:1}}
           inputRef={priceEndRef}
-        />
-
-        <TextField
-          name="componentsize"
-          type="hidden"
-          style={{ display: "none", flex:1 }}
-          value="10"
-          size="small"
-        />
-
-        <TextField
-          name="LastId"
-          type="hidden"
-          style={{ display: "none", flex:1 }}
-          value="0"
-          size="small"
         />
 
         <Button
@@ -172,7 +149,7 @@ export default function QueryEvents(props) {
         >
           Create
         </Button>
-      </Form>
+      </form>
     </Card>
   );
 }

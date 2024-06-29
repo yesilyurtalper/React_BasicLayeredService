@@ -3,16 +3,17 @@ import Post from "./Post";
 import classes from "./PostList.module.css";
 
 const PostList = ({data}) => {
+  const items = data?.items;
   return (
     <>
-      {!data?.length ? (
+      {!items?.length ? (
         <div style={{ textAlign: "center"}}>
           <h2>There are no posts yet.</h2>
           <p>Start adding some!</p>
         </div>
       ) : (
         <div className={classes.list}>
-          {data?.map((post) => (
+          {items?.map((post) => (
             <Post
               key={post.id}
               id={post.id}

@@ -1,12 +1,17 @@
 
 import QueryEvents from "./QueryEvents";
-import EventsTable from "./EventsTable";
+import EventsGrid from "./EventsGrid";
+import withOutlet from "../HOCs/withOutlet";
 
-export default function EventsPage() {
+const EventsPage = () => {
   return (
     <>
       <QueryEvents/>
-      <EventsTable/>
+      <EventsGrid/>
     </>
   );
 }
+
+const EventsWithOutlet = withOutlet(EventsPage);
+
+export default EventsWithOutlet;

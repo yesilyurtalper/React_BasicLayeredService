@@ -7,13 +7,13 @@ export default function CustomGrid({
   columns,
   rows,
   loading,
-  totalCount,
+  totalItems,
   paginationModel,
   onPaginationChange,
   onRowDoubleClick,
   rowHeight = 40,
   paginationMode = "server",
-  height = 500,
+  height = 510,
   width = "100%",
 }) {
 
@@ -24,15 +24,17 @@ export default function CustomGrid({
     <Box sx={{ height: height, width: width, margin: "auto" }}>
       <DataGrid
         columns={memoizedColumns}
+        pagination
         rows={memoizedRows}
         rowHeight={rowHeight}
         loading={loading}
-        rowCount={totalCount}
+        rowCount={totalItems}
         sx={{ "MuiDataGrid-columnHeaderTitle": { fontWeight: 900 } }}
         paginationMode={paginationMode}
         paginationModel={paginationModel}
         onPaginationModelChange={onPaginationChange}
         onRowDoubleClick={(params) => onRowDoubleClick(params.row.id)}
+        pageSizeOptions={[5, 10, 25]}
       />
     </Box>
   );

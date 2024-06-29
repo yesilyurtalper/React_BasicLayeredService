@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import withOutlet from "../HOCs/withOutlet";
-import PostListWithSWR from "./PostList";
+import PostsGrid from "./PostsGrid";
 
-const Posts = (props) => {
+const PostsPage = (props) => {
   const navigate = useNavigate();
 
   return (
@@ -11,11 +11,11 @@ const Posts = (props) => {
       <Button variant="contained" onClick={() => navigate("create")}>
         New Post
       </Button>
-      <PostListWithSWR/>
+      <PostsGrid/>
     </>
   );
 };
 
-const PostsWithOutlet = withOutlet(Posts);
+const PostsWithOutlet = withOutlet(PostsPage);
 
 export default PostsWithOutlet;

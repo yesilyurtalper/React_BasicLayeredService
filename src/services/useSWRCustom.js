@@ -5,14 +5,16 @@ import { useDispatch } from "react-redux";
 import useSWR from "swr";
 import { useParams } from "react-router-dom";
 
-export default function useSWRCustom(entity, isItem=false) {
+export default function useSWRCustom(entity, isItem=false, options) {
     const { id } = useParams();
     const relUrl = isItem && id ? `${entity}/id/${id}` : entity;
     const { isValidating, error, data, mutate } = useSWR(
-      entity ? relUrl : null
+      entity ? relUrl : null, options
     );
     const refresh = useSelector((state) => state.commonStore.refresh);
     const dispatch = useDispatch();
+
+    console.log(entity);
 
     useEffect(() => {
       if (refresh) {
@@ -24,6 +26,7 @@ export default function useSWRCustom(entity, isItem=false) {
     return {
         isValidating,
         error,
-        data
+        data,
+        mutate
     }
 }

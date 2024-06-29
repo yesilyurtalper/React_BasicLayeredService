@@ -82,7 +82,7 @@ export default function createRoutes(user) {
         },
 
         {
-          path: menuPaths[0], //events
+          path: menuPaths[1], //events
           element: <Events/>,
           children: [
             {

@@ -14,7 +14,8 @@ export default function LogInOut({ text }) {
   useEffect(() => {
     if(auth?.isAuthenticated && auth?.user && !userSet) {
       console.log("user set in common store");
-      dispatch(commonActions.setUser(auth?.user));
+      dispatch(commonActions.setOidcProfile(auth?.user?.profile));
+      dispatch(commonActions.setAccessToken(auth?.user?.access_token));
       setUserSet(true);
     }
   }, [auth,userSet,dispatch])
