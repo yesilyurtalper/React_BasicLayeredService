@@ -14,8 +14,6 @@ export default function useSWRCustom(entity, isItem=false, options) {
     const refresh = useSelector((state) => state.commonStore.refresh);
     const dispatch = useDispatch();
 
-    console.log(entity);
-
     useEffect(() => {
       if (refresh) {
         mutate();

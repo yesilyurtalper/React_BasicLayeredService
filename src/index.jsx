@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import store from "./store/indexStore.js";
 import { SWRConfig } from "swr";
 import swrFetcher from "./services/swrFetcher.js";
+import 'primereact/resources/themes/saga-blue/theme.css'; // or any other theme
+import 'primereact/resources/primereact.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

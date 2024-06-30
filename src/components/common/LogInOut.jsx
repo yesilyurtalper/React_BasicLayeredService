@@ -51,7 +51,8 @@ export default function LogInOut({ text }) {
             variant="contained"
             onClick={() => {
               auth.removeUser();
-              dispatch(commonActions.setUser(null));
+              dispatch(commonActions.setOidcProfile(null));
+              dispatch(commonActions.setAccessToken(""));
             }}
           >
             Logout

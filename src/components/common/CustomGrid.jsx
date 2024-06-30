@@ -1,7 +1,6 @@
-
-import { Box } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { useMemo } from "react";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 export default function CustomGrid({
   columns,
@@ -9,33 +8,48 @@ export default function CustomGrid({
   loading,
   totalItems,
   paginationModel,
+  sortModel,
   onPaginationChange,
+  onSortChange,
   onRowDoubleClick,
-  rowHeight = 40,
-  paginationMode = "server",
-  height = 510,
-  width = "100%",
+  height = 450,
+  width = 1310,
 }) {
-
-  const memoizedColumns = useMemo(() => columns, [columns] );
-  const memoizedRows = useMemo(() => rows, [rows] );
+  const memoizedColumns = useMemo(() => columns, [columns]);
+  const memoizedRows = useMemo(() => rows, [rows]);
 
   return (
-    <Box sx={{ height: height, width: width, margin: "auto" }}>
-      <DataGrid
-        columns={memoizedColumns}
-        pagination
-        rows={memoizedRows}
-        rowHeight={rowHeight}
-        loading={loading}
-        rowCount={totalItems}
-        sx={{ "MuiDataGrid-columnHeaderTitle": { fontWeight: 900 } }}
-        paginationMode={paginationMode}
-        paginationModel={paginationModel}
-        onPaginationModelChange={onPaginationChange}
-        onRowDoubleClick={(params) => onRowDoubleClick(params.row.id)}
-        pageSizeOptions={[5, 10, 25]}
-      />
-    </Box>
+    <DataTable
+      value={memoizedRows}
+      style={{ maxWidth: width }}
+      showGridlines
+      stripedRows
+      resizableColumns
+      scrollable
+      scrollHeight={height}
+      paginator
+      rowsPerPageOptions={[5, 10, 25, 50]}
+      lazy
+      totalRecords={totalItems}
+      page={paginationModel.page}
+      rows={paginationModel.pageSize}
+      first={paginationModel.page * paginationModel.pageSize}
+      onPage={onPaginationChange}
+      loading={loading}
+      sortMode="single"
+      removableSort
+      onSort={onSortChange}
+      sortField={sortModel?.sortField}
+      sortOrder={sortModel?.sortOrder}
+    >
+      {memoizedColumns?.map((col) => (
+        <Column
+          field={col?.field}
+          header={col?.headerName}
+          body={col?.renderCell}
+          sortable={col?.sortable}
+        />
+      ))}
+    </DataTable>
   );
 }

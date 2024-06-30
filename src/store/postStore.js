@@ -23,7 +23,7 @@ const initQuery = {
   dateModifiedStart:null,
   dateModifiedEnd:null,
   page:0,
-  pageSize:10,
+  pageSize:5,
   sortByDateCreated: 1,
   sortByDateModified: 0,
   sortByAuthor: 0,
@@ -33,7 +33,8 @@ const initQuery = {
 
 const initialState = { 
   query : initQuery,
-  queryKey: generateQueryKey(initQuery)
+  queryKey: generateQueryKey(initQuery),
+  sortModel: {}
 };
 
 const postSlice = createSlice({
@@ -45,6 +46,14 @@ const postSlice = createSlice({
       let query = {...state.query, ...action.payload};
       state.query = query;
       state.queryKey = generateQueryKey(query);
+    },
+
+    setSortModel(state, action) {
+      let sortModel = action.payload;
+      state.sortModel = {
+        sortField: sortModel.sortField,
+        sortOrder: sortModel.sortOrder,
+      };
     },
   },
 });

@@ -13,6 +13,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "oidc-client-ts": "^2.2.4",
+    "primereact": "^10.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-oidc-context": "^2.2.2",
@@ -50,7 +51,6 @@
     "@types/node": "^20.13.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "typescript": "^5.4.5"
+    "@vitejs/plugin-react": "^4.2.1"
   }
 }

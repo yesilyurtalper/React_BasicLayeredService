@@ -16,20 +16,43 @@ export default function withSWRGrid(Grid, entity) {
     const queryKey = useSelector((state) =>
       entity === "events" ? state.eventStore.queryKey : state.postStore.queryKey
     );
+    const sortModel = useSelector((state) =>
+      entity === "events" ? state.eventStore.sortModel : state.postStore.sortModel
+    );
     const swrMutate = useSelector((state) => state.commonStore.swrMutate);
-    const { isValidating, error, data, mutate } = useSWRCustom(`${entity}${queryKey}`, {
-      revalidateOnMount: false,
-    });
+    const { isValidating, error, data, mutate } = useSWRCustom(
+      `${entity}${queryKey}`,
+      {
+        revalidateOnMount: false,
+      }
+    );
 
     useEffect(() => {
-      if (queryKey){
+      if (queryKey) {
         mutate();
-      } 
+      }
     }, [queryKey, swrMutate, mutate]);
 
     const handlePaginationChange = (newModel) => {
-      entity === "events" ? dispatch(eventActions.setQuery(newModel)) : 
-        dispatch(postActions.setQuery(newModel));
+      console.log(newModel);
+      let newPage = {
+        page: newModel.page,
+        pageSize: newModel.rows,
+      };
+      entity === "events"
+        ? dispatch(eventActions.setQuery(newPage))
+        : dispatch(postActions.setQuery(newPage));
+    };
+
+    const handleSortChange = (newSort) => {
+      console.log(newSort);
+      let sortModel = {
+        sortField: newSort.sortField,
+        sortOrder: newSort.sortOrder,
+      };
+      entity === "events"
+        ? dispatch(eventActions.setSortModel(sortModel))
+        : dispatch(postActions.setSortModel(sortModel));
     };
 
     return (
@@ -40,8 +63,10 @@ export default function withSWRGrid(Grid, entity) {
           items={data?.items ?? []}
           loading={isValidating}
           totalItems={data?.totalItems ?? 0}
-          paginationModel={{page:query.page, pageSize:query.pageSize}}
+          paginationModel={{ page: query.page, pageSize: query.pageSize }}
+          sortModel={sortModel}
           onPaginationChange={handlePaginationChange}
+          onSortChange={handleSortChange}
           onRowDoubleClick={(id) => navigate("id/" + id)}
         />
       </>

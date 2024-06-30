@@ -8,8 +8,10 @@ const PostsGrid = ({
   loading,
   totalItems,
   paginationModel,
+  sortModel,
   onPaginationChange,
   onRowDoubleClick,
+  onSortChange,
   rowHeight,
 }) => {
   const columns = [
@@ -17,8 +19,8 @@ const PostsGrid = ({
       field: "details",
       headerName: "",
       sortable: false,
-      renderCell: (params) => (
-        <Link to={"id/" + params.value}>
+      renderCell: (row) => (
+        <Link to={"id/" + row?.id}>
           <InspectIcon />
         </Link>
       ),
@@ -34,37 +36,27 @@ const PostsGrid = ({
     {
       field: "author",
       headerName: "Organizer",
-      headerAlign: "center",
-      align: "center",
-      flex: 3,
+      sortable: true,
     },
     {
       field: "title",
       headerName: "Title",
-      headerAlign: "center",
-      align: "center",
-      flex: 3,
+      sortable: true,
     },
     {
       field: "body",
       headerName: "Body",
-      headerAlign: "center",
-      align: "center",
-      flex: 5,
+      sortable: true,
     },
     {
       field: "dateCreated",
       headerName: "Created Date",
-      headerAlign: "center",
-      align: "center",
-      flex: 4,
+      sortable: true,
     },
     {
       field: "dateModified",
       headerName: "Modified Date",
-      headerAlign: "center",
-      align: "center",
-      flex: 4,
+      sortable: true,
     },
   ];
 
@@ -85,7 +77,9 @@ const PostsGrid = ({
         loading={loading}
         totalItems={totalItems}
         paginationModel={paginationModel}
+        sortModel={sortModel}
         onPaginationChange={onPaginationChange}
+        onSortChange={onSortChange}
         onRowDoubleClick={(params) => onRowDoubleClick(params.row.id)}
       />
   );
